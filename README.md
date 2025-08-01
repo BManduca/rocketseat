@@ -129,7 +129,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 **Brunno Manduca** - Desenvolvedor em constante aprendizado, focado em React e tecnologias modernas de desenvolvimento web.
 
 ### Contato
-- **GitHub**: [@seu-usuario](https://github.com/BManduca)
+- **GitHub**: [@BManduca](https://github.com/BManduca)
 - **LinkedIn**: [Brunno Manduca](www.linkedin.com/in/brunnomanduca)
 
 ---
