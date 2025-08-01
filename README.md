@@ -130,7 +130,6 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ### Contato
 - **GitHub**: [@BManduca](https://github.com/BManduca)
-- **LinkedIn**: [Brunno Manduca]()
 
 ---
 
