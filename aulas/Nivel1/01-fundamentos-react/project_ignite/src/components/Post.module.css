@@ -29,6 +29,11 @@
   color: var(--green-300);
 }
 
+.hashtag {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
 .post > header {
   display: flex;
   align-items: center;

@@ -1,45 +1,106 @@
 /** biome-ignore-all lint/performance/noImgElement: importando componente padrão img */
 /** biome-ignore-all lint/a11y/useAltText: não precisa de alt para esse caso */
+
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { Avatar } from './Avatar'
 import { Comment } from './Comment'
 import styles from './Post.module.css'
 
-export function Post() {
+export function Post({ post }) {
+  const publishedDateFormatted = format(
+    post.publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+    }
+  )
+
+  const publishedDateRelativeToNow = formatDistanceToNow(post.publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/BManduca.png" />
+          <Avatar src={post.author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Brunno Manduca</strong>
-            <span>Desenvolvedor Web</span>
+            <strong>{post.author.name}</strong>
+            <span>{post.author.role}</span>
           </div>
         </div>
 
         <time
-          dateTime="2025-07-22 08:20:45"
-          title="22 de Julho de 2025 às 08:20:45"
+          dateTime={post.publishedAt.toISOString()}
+          title={publishedDateFormatted}
         >
-          Publicado há 1h
+          {publishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
+        {(() => {
+          const elements = []
+          let hashtags = []
 
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
+          post.content.forEach((line, index) => {
+            if (line.type === 'paragraph') {
+              // Se temos hashtags acumuladas, renderizá-las primeiro
+              if (hashtags.length > 0) {
+                elements.push(
+                  <p key={`hashtags-${index}`}>
+                    {hashtags.map((hashtag, hashtagIndex) => (
+                      <a className={styles.hashtag} href="/" key={hashtagIndex}>
+                        {hashtag.content}
+                      </a>
+                    ))}
+                  </p>
+                )
+                hashtags = []
+              }
+              elements.push(<p key={index}>{line.content}</p>)
+            } else if (line.type === 'link') {
+              // Se temos hashtags acumuladas, renderizá-las primeiro
+              if (hashtags.length > 0) {
+                elements.push(
+                  <p key={`hashtags-${index}`}>
+                    {hashtags.map((hashtag, hashtagIndex) => (
+                      <a className={styles.hashtag} href="/" key={hashtagIndex}>
+                        {hashtag.content}
+                      </a>
+                    ))}
+                  </p>
+                )
+                hashtags = []
+              }
+              elements.push(
+                <p key={index}>
+                  <a href="/">{line.content}</a>
+                </p>
+              )
+            } else if (line.type === 'hashtag') {
+              hashtags.push(line)
+            }
+          })
 
-        <p>
-          👉 <a href="/"> jane.design/doctorcare</a>
-        </p>
+          // Renderizar hashtags restantes no final
+          if (hashtags.length > 0) {
+            elements.push(
+              <p key="hashtags-final">
+                {hashtags.map((hashtag, hashtagIndex) => (
+                  <a className={styles.hashtag} href="/" key={hashtagIndex}>
+                    {hashtag.content}
+                  </a>
+                ))}
+              </p>
+            )
+          }
 
-        <p>
-          <a href="/">#novoprojeto</a> <a href="/">#nlw </a>{' '}
-          <a href="/">#rocketseat</a>
-        </p>
+          return elements
+        })()}
       </div>
 
       <form className={styles.commentForm}>
