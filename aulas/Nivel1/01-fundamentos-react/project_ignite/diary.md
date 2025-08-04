@@ -173,6 +173,41 @@ Este projeto foi desenvolvido para aprender:
   1. Quando algo repete muito na tela (com mesmo visual, mesmo comportamento, mesmo funcionamento..)
   2. Quando você consegue tirar 'algo' de um componente maior sem que aquele componente maior pare de funcionar, deixando assim o componente maior mais limpo, uma funcionalidade mais clara de receber manutenção.
 
+
+### Programação imperativa vs. Programação declarativa
+1. Programação imperativa
+   * Uma forma de escrevemos nosso código
+   * 'Dizemos' ao nosso software o que deve ser feito
+   * É colocado exatamente passo-a-passo o que deve ser
+   * Tipo de programação mais comum
+
+2. Programação declarativa
+   * Declaramos qual o resultado que é esperado, em vez de declarar todo o processo (passo-a-passo)
+   * Declara quais as condições para ter o resultado final
+
+
+### Key no React
+- Porque única?
+
+* Há 3 momentos em que um componente é renderizado novamente no React
+  1. Quando o estado é alterado.
+  2. Quando a propriedade é alterado
+  3. Quando um componente pai renderiza novamente
+     * Exemplo: Quando um estado sofre alteração, tofo o código do componente sofre um novo fluxo de renderização. O Componente Post, é componente pai de todos os Componentes de comentário, os componentes de comentário também serão recalculados em tela, mesmo não alterando nada.
+     * Por uma questão aonde blogues possam ter mais de 500 posts, ficaria um processo consideravelmente lento na percepção de usuário e é por isso que existem as Keys.
+
+  * Exemplo:
+  
+    | 1 | 2 | 3 | 4 |
+    ---------
+    | 1 | 2 | 3 | 4 | 5 |
+    ---------
+
+    * ao comparar as keys, como no modelos acima, ele ira ver que o único ID que não existia e é preciso mostrar em tela é o 5, porque o resto já estava presente 
+
+
 ---
+
+<!-- https://app.rocketseat.com.br/classroom/chapter-i-6/group/os-motores-do-react/lesson/entendendo-a-key 16:25 -->
 
 *Este diário foi criado para documentar todo o processo de desenvolvimento e servir como referência para futuras melhorias e aprendizados.* 
