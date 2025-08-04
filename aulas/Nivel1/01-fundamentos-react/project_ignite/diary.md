@@ -206,6 +206,14 @@ Este projeto foi desenvolvido para aprender:
     * ao comparar as keys, como no modelos acima, ele ira ver que o único ID que não existia e é preciso mostrar em tela é o 5, porque o resto já estava presente 
 
 
+### Comunicação entre componentes
+* Para comunicar dois componentes, pode ser realizado através das suas propriedades.
+
+### Imutabilidade
+* É o princípio de não modificar diretamente os dados (estados ou props), mas sim criar uma nova versão atualizada deles
+* Porque imutabilidade é importante no React?
+  * React detecta mudanças de estado de referências (shallow comparison). Se você modifica um objeto diretamente, React não pode perceber a mudança e. com isso, não renderizar novamente o componente.
+
 ---
 
 <!-- https://app.rocketseat.com.br/classroom/chapter-i-6/group/os-motores-do-react/lesson/entendendo-a-key 16:25 -->

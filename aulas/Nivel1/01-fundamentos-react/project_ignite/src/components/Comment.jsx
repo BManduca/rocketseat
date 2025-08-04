@@ -1,9 +1,14 @@
 /** biome-ignore-all lint/performance/noImgElement: importando componente padrão img */
+/** biome-ignore-all lint/suspicious/noConsole: use to debug */
 import { ThumbsUpIcon, TrashIcon } from '@phosphor-icons/react'
 import { Avatar } from './Avatar'
 import styles from './Comment.module.css'
 
-export function Comment({ content }) {
+export function Comment({ content, onDeleteComment }) {
+  function handleDeletComment() {
+    onDeleteComment(content)
+  }
+
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src="https://github.com/BManduca.png" />
@@ -21,7 +26,11 @@ export function Comment({ content }) {
               </time>
             </div>
 
-            <button title="Deletar comentário" type="button">
+            <button
+              onClick={handleDeletComment}
+              title="Deletar comentário"
+              type="button"
+            >
               <TrashIcon size={24} />
             </button>
           </header>
