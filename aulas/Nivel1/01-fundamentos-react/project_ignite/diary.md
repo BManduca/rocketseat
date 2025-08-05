@@ -214,8 +214,25 @@ Este projeto foi desenvolvido para aprender:
 * Porque imutabilidade é importante no React?
   * React detecta mudanças de estado de referências (shallow comparison). Se você modifica um objeto diretamente, React não pode perceber a mudança e. com isso, não renderizar novamente o componente.
 
+### Eventos(React)
+* Todos os eventos no React como onClick, onSubmit, onBlur, onHover, onInvalid.. Eles esperam uma função como propriedade.
+
+### Closures
+*  Sempre que for atualizar uma informação e essa informação depende do valor que ela tinha anteriormente, o mais indicado é fazer atualização usando o padrão de funções
+    ```
+    function handleLikeComment() {
+      setLikeComment((state) => {
+        return state + 1
+      })
+    }
+    ```
+
 ---
 
-<!-- https://app.rocketseat.com.br/classroom/chapter-i-6/group/os-motores-do-react/lesson/entendendo-a-key 16:25 -->
+## JavaScript
+* Nasceu como um superset(superconjunto) em cima da linguagem JavaScript para que seja possível adicionar tipagem estática em cima de uma linguagem JavaScript que tem linguagem dinâmica
+* 
+
+---
 
 *Este diário foi criado para documentar todo o processo de desenvolvimento e servir como referência para futuras melhorias e aprendizados.* 
