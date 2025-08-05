@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Test coverage
+dist-ssr
+coverage
+
+# Ambiente local
+.env
+.env.*.local
+
+# Relatórios de erros do sistema operacional
+Thumbs.db
+ehthumbs.db
