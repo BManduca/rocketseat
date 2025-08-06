@@ -27,26 +27,30 @@ export interface Content {
   content: string
 }
 
-export interface PostProps {
+export interface PostType {
   author: Author
   publishedAt: Date
   content: Content[]
 }
 
-export function Post({ author, publishedAt, content }: PostProps) {
+interface PostProps {
+  post: PostType
+}
+
+export function Post({ post }: PostProps) {
   const [comments, setComments] = useState(['Post muito bacana, hein?!'])
 
   const [newCommentText, setNewCommentText] = useState('')
 
   const publishedDateFormatted = format(
-    publishedAt,
+    post.publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
     {
       locale: ptBR,
     }
   )
 
-  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+  const publishedDateRelativeToNow = formatDistanceToNow(post.publishedAt, {
     locale: ptBR,
     addSuffix: true,
   })
@@ -144,22 +148,22 @@ export function Post({ author, publishedAt, content }: PostProps) {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src={author.avatarUrl} />
+          <Avatar src={post.author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>{author.name}</strong>
-            <span>{author.role}</span>
+            <strong>{post.author.name}</strong>
+            <span>{post.author.role}</span>
           </div>
         </div>
 
         <time
-          dateTime={publishedAt.toISOString()}
+          dateTime={post.publishedAt.toISOString()}
           title={publishedDateFormatted}
         >
           {publishedDateRelativeToNow}
         </time>
       </header>
 
-      <div className={styles.content}>{renderContent(content)}</div>
+      <div className={styles.content}>{renderContent(post.content)}</div>
 
       <form className={styles.commentForm} onSubmit={handleCreateNewComment}>
         <strong>Deixe seu feedback</strong>

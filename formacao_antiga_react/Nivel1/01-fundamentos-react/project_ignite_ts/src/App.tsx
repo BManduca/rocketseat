@@ -1,5 +1,5 @@
 import { Header } from './components/Header'
-import { Post, type PostProps } from './components/Post'
+import { Post, type PostType } from './components/Post'
 import { Sidebar } from './components/Sidebar'
 
 import './global.css'
@@ -9,7 +9,7 @@ import styles from './App.module.css'
 // publisedAt: Date <- como serão varios formatos de data, então será utilizado Date
 // content: String
 
-type PostData = PostProps & { id: number }
+type PostData = PostType & { id: number }
 
 const posts: PostData[] = [
   {
@@ -64,12 +64,7 @@ export function App() {
         <Sidebar />
         <main>
           {posts.map((post) => (
-            <Post
-              author={post.author}
-              content={post.content}
-              key={post.id}
-              publishedAt={post.publishedAt}
-            />
+            <Post key={post.id} post={post} />
           ))}
         </main>
       </div>

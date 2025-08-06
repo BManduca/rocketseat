@@ -8,13 +8,12 @@ interface AvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
 }
 
 // aplicando conceito de desestruturação
-export function Avatar({ hasBorder = true, src, alt, title }: AvatarProps) {
+export function Avatar({ hasBorder = true, alt = '', ...props }: AvatarProps) {
   return (
     <img
       alt={alt}
       className={hasBorder ? styles.avatarWithBorder : styles.avatar}
-      src={src}
-      title={title}
+      {...props}
     />
   )
 }
