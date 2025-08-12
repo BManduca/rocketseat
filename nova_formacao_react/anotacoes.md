@@ -253,3 +253,41 @@
   * Propriedades especiais: **children** e **key** são duas propriedades do React e não podem ser utilizadas de maneira customizada.
     * children: é uma prop especial do React que representa o conteúdo passado entre as tags do componente.
     * key: é uma prop usada pelo React para identificar elementos de uma lista e otimizar a renderização.
+
+## Eventos
+* Os eventos no React funcionam de forma semelhante aos eventos do JavaScript, mas com algumas diferenças na sintaxe.
+
+### Principais diferenças entre eventos no React e no Vanilla JavaScript
+* No React, os eventos são encapsulados em um sistema chamado **SyntheticEvent**, que melhora o desempenho e a compatibilidade entre navegadores.
+  * No HTML, faríamos algo como:
+    ``` <button onclick='handleClick()'> ``` 
+
+  * Já nos componentes passamos uma função diretamente:
+    ```<button onClick={handleClick}>```
+
+<br />
+
+* No React, a função de evento recebe automaticamente um objeto do evento, que pode ser utilizado como referência ao DOM.
+
+<br />
+
+* Comparação Vanilla JavaScript e React
+
+  | Vanilla JavaScript                    | React     |
+  | ------------------------------------- | --------- |
+  | onclick/addEventListener('click')     | onCLick   |
+  | onchange/addEventListener('change')   | onChange  |
+  | onkeydown/addEventListener('keydown') | onKeyDown |
+  | onsubmit/addEventListener('submit')   | onSubmit  |
+
+## SyntheticEvent
+* É um wrapper (encapsulador) sobre os eventos nativos do navedor no React.
+* Ele serve para garantir que os eventos funcionem de forma consistente em diferentes navegadores e para melhorar a eficiência da performance.
+* O react gerencia todos os eventos através de um **event delegation** (delegação de eventos) em um único listener no nível superior.
+* Ele sabe quais eventos criar ou destruir conforme faz a renderização dos componentes em tela.
+
+```
+  👆 Isso melhora a performance porque evita a criação e múltiplos event listeners no DOM.
+```
+
+
