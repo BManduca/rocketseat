@@ -291,3 +291,31 @@
 ```
 
 
+## Raeact Hooks
+* Foram introduzidos no React 16.8 para permitir o uso de estado e outras funcionalidades do React em componentes funcionais
+* Antes dos Hooks, só componente de classe podiam ter estado e acessar o ciclo de vida do React, o que tornava o código masi complexo  e díficil de reutilizar.
+
+  ![Logo Icon ReactJS](./assets/reactjs_logo_icon.png) ``` Os Hooks são como serviços reutilizáveis, porém obrigatoriamente criados com funções. Você pode utilizar eles para reaproveitamento e organização do código. ```
+
+* O React conta com os seus **próprios hooks**, sendo os **principais**:
+  * useState
+  * useEffect
+  * useContext
+
+* **Complementares**:
+  * useRef
+  * useMemo
+  * useCallback
+  * useReducer
+  * useTransition, entre outros...
+
+* Por boas práticas, sempre devem começar com a palavra **use** seguido o próposito dele.
+* Permitem usar estado, ciclos de vida, memorização e outras funções nos componentes
+* Segue a regra de invocação, devendo ser chamados no topo do componente
+  ```
+    ⚠️ Os Hooks NÃO podem ser executados em loops, condições ou funções aninhadas.
+  ```
+
+* Tornam o código mais reutilizável e organizado com hooks customizados
+* Eliminam a necessidade do uso do 'this', 'bind', etc. Facilitando a escrita e compreensão do código
+* São a base para a abordagem moderna do React, sendo amplamente usados em projetos recentes.
