@@ -291,9 +291,9 @@
 ```
 
 
-## Raeact Hooks
+## React Hooks
 * Foram introduzidos no React 16.8 para permitir o uso de estado e outras funcionalidades do React em componentes funcionais
-* Antes dos Hooks, só componente de classe podiam ter estado e acessar o ciclo de vida do React, o que tornava o código masi complexo  e díficil de reutilizar.
+* Antes dos Hooks, só componente de classe podiam ter estado e acessar o ciclo de vida do React, o que tornava o código mais complexo  e díficil de reutilizar.
 
   ![Logo Icon ReactJS](./assets/reactjs_logo_icon.png) ``` Os Hooks são como serviços reutilizáveis, porém obrigatoriamente criados com funções. Você pode utilizar eles para reaproveitamento e organização do código. ```
 
@@ -319,3 +319,187 @@
 * Tornam o código mais reutilizável e organizado com hooks customizados
 * Eliminam a necessidade do uso do 'this', 'bind', etc. Facilitando a escrita e compreensão do código
 * São a base para a abordagem moderna do React, sendo amplamente usados em projetos recentes.
+
+<br />
+
+<details>
+  <summary>useState</summary>
+
+  - É um **Hook** do React que permite gerenciar o estado dentro de um componente funcional.
+  - Ele aramzena um valor e fornece uma função para atualizá-lo, garantindo que o React saiba quando re-renderizar o componente.
+  - Você pode transportar valores das props para um estado e então eles serão mutáveis.
+  - Não há limite de estados para um componente.
+
+    <details>
+      <summary>Sintaxe básica</summary>
+
+      - O **useState** recebe um valor inicial em seu parâmetro
+      - Ele retorna uma tupla , sendo o primeiro índice o valor do estado e o segundo a função para atualizar o estado.
+        - **useState(0)**: Define o estado inicial como 0
+        - **contador**: Armazena o valor atual do estado
+        - **setContador**: Função usada para atualizar o estado
+
+      - Quando **setContador(novoValor)** é chamado, o componente re-renderiza automaticamente
+
+        ```
+          function Counter() {
+            const [counter, setCounter] = React.useState(0)
+
+            return (
+              <>
+                <p>Contador: {counter}</p>
+                <button onClick={() => setCounter(10)}>Atualizar</button>
+              </p>
+            )
+          }
+        ```
+    </details>
+
+    <details>
+      <summary>prevValue</summary>
+
+      - Em uma atualização é possível utilizar o valor anterior do estado
+      - Se o novo valor depender do estado anterior, passe uma função que tem como primeiro parâmetro o **prevValue**
+      
+        ```
+          function Counter() {
+            const [counter, setCounter] = React.useState(0)
+
+            return (
+              <>
+                <p>Contador: {counter}</p>
+                <button onclick={() => setCounter(10)}>Atualizar</button>
+                <button onClick={() => setCounter((prevValue = prevValue + 1))}>Incrementar</button>
+              </button>
+            )
+          }
+        ```
+    </details>
+</details>
+
+## Renderização condicional
+* A renderização condicional no React permite exibir ou ocultar elementos com base em uma condição. Isso é útil para alternar interfaces, mostrar mensagens dinâmicas e muito mais.
+* ![JS logo](./assets/js_16_x_16.png) ``` Aqui temos o melhor do JavaScript dentro do React. Para fazer condicionais podemos utilizar qualquer tipo de if do JS ```
+
+
+<details>
+  <summary>Formas de fazer renderização condicional</summary>
+
+  - Operador ternário(**?:**)-Usado quando há duas opções possíveis.
+    ```
+      const [counter, setCounter] = useState(0)
+
+      return (
+        <>
+          <p>{counter > 10 ? 'Maior que 10' : 'Menor ou igual a 10'}</p>
+          <button onCLick={() => setCounter((prevValue) => prevValue + 1)}>
+            Incrementar
+          </button>
+        <>
+      )
+    ```
+
+  - Curto-circuito(&&) - Usado quando só há um conteúdo a exibir caso a condição seja verdadeira
+    ```
+      const [counter, setCounter] = React.useState(0)
+
+      return (
+        <>
+          {counter > 15 && <p>Maior que 15</p>}
+          <button 
+            onClick={() => setCounter((prevValue) => prevValue + 1)}
+          >
+            Incrementar
+          </button>
+        </p>
+      )
+    ```
+
+  - Condicional tradicional(if) - Melhor para lógica mais complexa antes do retorno.
+    ```
+      const [counter, setCounter] = useState(0)
+
+      if (counter > 20) {
+        return (
+          <p>Maior que 20</p>
+        )
+      }
+
+      return (
+        <button onClick={() => setCounter((prevValue) => prevValue + 1)}>
+          Incrementar
+        </button>
+      )
+    ```
+
+    ``` 👆 Essa regra se aplica também para renderização de outros componentes ```
+
+</details>
+
+
+## Renderização de listas
+* A renderização de listas no React é feita iterando sobre um array e gerando elementos dinamicamente
+* O método mais comum para isso é o **.map()**, mas também podemos usar o **.filter()** e outras funções de listas do JavaScript para exibir apenas itens específicos
+  
+  ![Logo JS](./assets/js_16_x_16.png) ``` Novamente o melhor do JavaScript dentro do React. Para organizar listas podemos utilizar qualquer tipo de Array Prototype do JS ```
+
+<details>
+  <summary>Formas de fazer renderização de listas</summary>
+
+  - Renderizando listas com **.map()** => O meio mais fácil e comum.
+    ```
+      function ListName() {
+        const [names] = React.useState(['Ana', 'Aline', 'Brunno'])
+
+        return (
+          <ul>
+            {names.map((name, index) => (
+              <li key={`${index}-${name}`}>{name}</li>
+            ))}
+          </ul>
+        )
+      }
+    ```
+    ```
+      🚨⚠️ Lembrada propriedade Key?
+      É aqui que ela é utilizada para organizar os elementos da árvore de renderização
+
+      Não utiliza apenas o 'index' como chave
+    ```
+  
+  - Filtrando valores com **.filter()**
+    
+    Podemos fazer um mix dos eventos com o método **filter** para listar apenas os nome que batem com o campo de texto
+      ```
+        function ListNames() {
+
+          const [names] = React.useState(['Ana', 'Brunno', 'Carlos', 'Daniel', 'Eduarda'])
+          const [search, setSearch] = React.useState("")
+
+          return (
+            <div>
+              <input
+                type='text'
+                placeholder='Buscar nome..'
+                value={search}
+                onChange = {(e) => setSearch(e.target.value)}
+              />
+
+              <ul>
+                {names.filter(
+                  names => names.toLowerCase().includes(search.toLowerCase())
+                ).map(
+                  (name, index) => (
+                    <li key={`${index}-${name}`}>{name}</li>
+                  )
+                )}
+              </ul>
+            </div>
+          )
+        }
+      ```
+
+  ```
+    🔥 Qualquer função de lista pode ser utilizada pra chegar no resultado que você desejar.
+  ```
+</details>
