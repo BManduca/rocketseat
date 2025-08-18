@@ -2,7 +2,7 @@
 
 > Repositório dedicado aos estudos e projetos desenvolvidos durante o curso de React da [Rocketseat](https://rocketseat.com.br)
 
-![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react)
+![React](https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge)
 ![Vite](https://img.shields.io/badge/Vite-7.0.4-646CFF?style=for-the-badge&logo=vite)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript)
 ![Rocketseat](https://img.shields.io/badge/Rocketseat-000000?style=for-the-badge&logo=rocketseat)
