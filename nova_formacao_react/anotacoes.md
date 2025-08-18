@@ -503,3 +503,260 @@
     🔥 Qualquer função de lista pode ser utilizada pra chegar no resultado que você desejar.
   ```
 </details>
+
+## Context API
+- Context API (ou store) permite compartilhar estados e funções entre componentes sem precisar passar props manualmente de um componente para outro
+  - Imagina que você tem vários componentes que precisam acessar o mesmo dado, como um tema escuro/claro, usuário logado ou configurações globais
+  - Sem Context API, precisaríamos passar as informações como props, de pai para filho, o que pode se tornar um grande problema ao escalar.
+  - Com o Context API, criamos um contexto (Context) e um provedor (Provider) que pode ser acessado por qualquer componente na árvore.
+
+  <details>
+    <summary>Principais características</summary>
+
+    - ![Context API](./assets/context-api.png)
+    
+    - ![Logo react](./assets/reactjs_logo_icon.png) ``` Principalmente utilizado quando você precisa passar dados de filho para pai ou em componentes paralelos ```
+    - Você pode ter múltiplos componentes de Context API - eles não precisam necessariamente estarem disponíveis para a aplicação toda
+    - Para utiliza-lá dentro dos seus componentes a Context API precisar estar como um "wrapper" deles.
+  </details>
+
+  <details>
+    <summary>Então, porque não usar sempre a Context API?</summary>
+
+    - Você nem sempre precisa de uma bazooka para matar uma formiga. Context API pode ser um "overkill" para estados simples, use o 'useState'
+    - Performance: Usar apenas a Context API pode causar renders desncessários na árvore
+    - O famoso **Hadouken**: Para cada contexto, você precisará chamar um Provedor, esse provedor deve ser chamado(normalmente) no primeiro componente da aplicação.
+    ![Context API Hadouken](./assets/image_hadouken_context_api.png)
+  </details>
+
+  <details>
+    <summary>Criando estado global com <b>createContext</b> e <b>useContext</b></summary>
+
+    1. O componente do contexto
+        ```
+          const CounterContext = React.createContext()
+
+          function CounterProvider({ children }) {
+
+            const [savedCounts, setSavedCounts] = React.useState([])
+
+            function saveCount(count) {
+              setSavedCounts((prev) => [...prev, count])
+            }
+
+            return (
+              <CounterContext.Provider value={{ savedCounts, saveCOunt }}>
+                {children}
+              </CounterContext.Provider>
+            )
+          }
+        ```
+
+    2. Integrar o contexto como um 'wrapper'
+        ```
+
+          function App() {
+            return (
+              <CounterProvider>
+                <Counter />
+                <CounterList />
+              </CounterProvider>
+            )
+          }
+        ```
+
+    3. Utilizar o contexto para salvar os dados
+        ```
+
+          function Counter() {
+
+            const [count, setCount] = useState(0)
+            const { saveCount } = React.useContext(CounterContext)
+
+            return (
+              <div>
+                <h2>Contador: {count}</h2>
+
+                <button onClick={() => setCount(count + 1)}>Incrementar</button>
+                <button onClick={() => saveCount(count)}>Salvar</button>
+              </div>
+            )
+
+          }
+
+        ```
+
+    4. Utilizar o contexto para ler os dados
+        ```
+
+          function CounterList() {
+
+            const { savedCounts } = React.useContext(CounterContext)
+
+            return (
+              <div>
+                <h2>Valores Salvos</h2>
+                <ul>
+                  {savedCounts.map((value, index) => (
+                    <li key={`item-${index}`}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+
+          }
+        ```
+
+  </details>
+
+## React Hooks: Efeitos
+![use-effect image](./assets/use-effect_50.webp)
+
+<details>
+  <summary>Ciclo de vida de um componente</summary>
+
+  - No React, todos os componentes têm um ciclo de vida (ou efeitos colaterais), que são os momentos em que eles:
+    - **Montam (mount)**
+      - Ocorre quando o componente aparece na tela pela primeira vez.
+      - Podemos executar ações iniciais, como buscar dados de uma API ou adicionar eventos através do **addEventListener**
+
+    - **Atualizam (update)**: Quando seu estado ou props mudam.
+    - **Desmontam (unmount)**: Quando saem da tela ou são removidos da DOM
+    
+    ```
+      Os ciclos de vida são fundamentais para entender quando e como o React deve atualizar um componente, 
+      executar efeitos colaterais ou limpar recursos.
+    ```
+
+    - Na prática com ele você pode fazer alguns dos exemplos abaixo:
+      - Manipular o DOM (exemplo: alterar o título da página)
+      - Atualizar estados quando uma propriedade for alterada
+      - Fazer requisições HTTP (exemplo: buscar dados de uma API)
+      - Gerenciar timers (exemplo: **setTimeOut** ou **setInterval**)
+      - Subscrever eventos (exemplo: **addEventListenter**)
+      - Lidar com WebSockets, localStorage e outras integrações externas
+      - Atualizar estrutura de campos de formulário quando um outro campo for alterado
+</details>
+
+<details>
+  <summary>Criando Efeitos com <b>useEffect</b></summary>
+
+  - O **useEffect** é um hook do React usado para lidar com efeitos colaterais em componentes funcionais. Por conta da sua escrita, 
+  ele parece dífícil, mas na verdade é extremamente simples.
+
+    <details>
+      <summary>Primeiro parâmetro: Função de callback</summary>
+
+      - No primeio parâmetro o **useEffect** recebe uma função anônima responsável por ser executada quando o efeito for ativado (callback), essa é a função do mount e update.
+        ```
+          React.useEffect(() => (
+            // Código do efeito (executado quando necessário)
+          ))
+        ```
+
+        <details>
+          <summary>Opcional: Função de retorno</summary>
+
+          - Ao retornar outra função anônima dentro do callback o componente a executa quando ele é destruído, essa é a função do **unmount**
+          ```
+            React.useEffect(() => {
+              //Código do efeito (executado quando necessário)
+
+              return (
+                // Código de limpeza
+                // (executando antes de refazer o efeito ou desmontar)
+              )
+            })
+          ```
+
+          - Casos de uso
+            - Executar o **removedEventListener** para não acumular eventos sem o componente existir
+            - Limpar intervalos de **setTImeOut** ou **setInterval**
+            - Cancelar requisições com o **AbortController**
+            - Desconectar de WebSockets ou Streams
+        </details>
+    </details>
+
+    <details>
+      <summary>Segundo parâmetro: Lista de dependências</summary>
+      
+      - O segundo parâmetro do **useEffect** define quando o efeito deve ser executado.
+      - Obrigatoriamente deve ser uma lista (array) com ou sem elementos
+      
+      ```
+       Criar um novo efeito sem nenhuma dependência poderá causar um loop infinito de renderização. 
+       Sempre passe uma dependência.
+      ```
+
+      - **[]** Lista vazia - sem depenências
+        - Executa somente uma vez, quando o componente monta.
+        - Útil para buscas iniciais de dados ou eventos globais.
+        
+        ```
+          React.useEffect(() => {
+            console.log('Executa apenas no mount!')
+          }, [])
+        ```
+
+      - **[dep1, dep2]** Lista preenchida - com uma ou mais dependências
+        - Executa quando qualquer uma das variáveis no array mudar.
+        - Em quase todos os casos essas variáveis são propriedades ou estados
+        
+        ```
+          const [count, setCount] = React.useState(0)
+          const [name, setName] = React.useState('')
+
+          React.useEffect(() => {
+            console.log(`Count atualizado: ${count}`)
+          }, [count]) // -> fica monitorando count e executa quando o valor de count mudar
+
+          React.useEffect(() => {
+            console.log('Count ou Name mudou!')
+          }, [count, name]) // -> monitora as variaveis count e name | executa quando uma das duas tiver seu valor alterado
+        ```
+
+        ```
+          Você pode ter quantos useEffect quiser no seu componente e 
+          essa função conta com dois parâmetros obrigatórios.
+        ```
+    </details>
+</details>
+
+<details>
+  <summary>Hooks Customizados</summary>
+
+  - Um hook customizado ou custom hook, é uma função JavaScript customizada que encapsula lógica dentro do contexto do React
+  - Ele funciona como um hook nativo do React (**useState**, **useEffect**, etc), mas é criado pelo desenvolvedor para atender 
+  a um caso de uso específico, tornando o código mais organizado, reutilizável e fácil de manter e testar
+  ```
+    Um custom hook é qualquer componente funcional fora do React. Podem ser de bibliotecas como React Hook Form, React Query ou seus próprios.
+
+    Lembrando que por boas práticas seu custom hook deve começar com "use"
+  ```
+
+  <details>
+    <summary>O que fazer em um custom hook:</summary>
+
+    - Utilizar outros hooks do React como estados, efeitos e outros
+    - Também outros hooks 'third-parties', ou seja, de bibliotecas instaladas
+    - Fazer requisições de API e criar diferentes estados, como carregamento, resposta, erros.
+    - Enviar dados para API e retornar uma informação para o usuário
+    - Manipular e/ou validar dados enviados e/ou recebidos de APIs
+    - Encapsular lógica de negócio necessário no frontend
+    - Encapsular o useContext diretamente no hook
+  </details>
+
+  <details>
+    <summary>O que evitar em um custom hook:</summary>
+
+    - Criar o evento do componente direto. O melhor é criar uma função e um evento a executa
+    - Criar e retornar estados específicos para renderização de elementos
+    - Se o caso de uso for muito específico, pode ser que você não precise de um custom hook, pode ser resolvido no componente
+  </details>
+</details>
+
+## SWC 
+- Compilador escrito em Rust
+- Extremamente rápido
+- Mais performático do que criar com JavaScript ou TypeScript comum
+- Tem mais performance para realizar recarregamento em tempo real, compilar o projeto em si de maneira mais rápida

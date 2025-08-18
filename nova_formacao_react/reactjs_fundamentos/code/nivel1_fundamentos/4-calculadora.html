@@ -155,6 +155,114 @@
             ]
         ]
 
+        const CalculatorContext = React.createContext()
+        function CalculatorProvider({children}) {
+
+            const [ history, setHistory ] = React.useState([])
+            const historyStorageKey = 'history'
+
+            React.useEffect(() => {
+                const savedHistory = localStorage.getItem(historyStorageKey)
+
+                setHistory(JSON.parse(savedHistory || '[]'))
+            }, [])
+
+            function updateHistory(operation, parsedResult) {
+                setHistory((prev) => {
+                    const updatedHistory = [
+                        ...prev, 
+                        `${operation}=${parsedResult}`
+                    ]
+
+                    localStorage.setItem(
+                        historyStorageKey, 
+                        JSON.stringify(updatedHistory)
+                    )
+
+                    return updatedHistory
+                })
+            }
+
+            function clearHistory() {
+                setHistory([]);
+                localStorage.removeItem(historyStorageKey);
+            }
+
+            
+            return (
+                // history => consumir para fazer a lista
+                // updateHistory => utilizar para adicionar um novo valor no historico
+                <CalculatorContext.Provider
+                    value={{ history, updateHistory, clearHistory }}
+                >
+                    {children}    
+                </CalculatorContext.Provider>
+            )
+        }
+
+        function useCalculator() {
+            const [operation, setOperation] = React.useState('')
+            const [result, setResult] = React.useState('')
+            const { updateHistory } = React.useContext(CalculatorContext)
+
+            function doOperation(input) {
+                // limpar toda a operação
+                if (input === 'C') {
+                    setOperation('')
+                    setResult('')
+
+                    return
+                }
+
+                // limpar a última operação, incluindo o espaço, por isso
+                // o uso do slice(0, -1)
+                if (input === 'CE') {
+                    setResult('')
+                    setOperation(operation.slice(0, -1))
+
+                    return
+                }
+
+                // condicional para trocar momentaneamente a ',' por '.'
+                // para realizar os calculos, pois no Brasil usamos ','
+                // para separação de casas decimais e em outros padrões
+                // é o '.'
+                if (input === '=') {
+                    const operationResult = eval(operation.replace(/,/g, '.'))
+                    const parsedResult = operationResult.toString()?.replace(/\./g, ',')
+                    setResult(parsedResult)
+                    updateHistory(operation, parsedResult)
+
+                    return
+                }
+
+                if (result) {
+                    setOperation(isNaN(input)
+                    ? `${result}${input}`
+                    : input)
+                    setResult('')
+                    return
+                }
+
+                if (input === ',' && !operation.endsWith(',')) {
+                    setOperation(`${operation},`)
+
+                    return
+                }
+
+                setOperation(`
+                    ${operation}${input}`
+                )
+            }
+
+            return {
+                operation,
+                result,
+                doOperation
+            }
+        }
+
+
         function CalculatorDisplay({ operation, result }) {
             return (
                 <div className={`
@@ -185,56 +293,11 @@
 
         function Calculator({ children }) {
 
-            const [operation, setOperation] = React.useState('')
-            const [result, setResult] = React.useState('')
+            const { operation, result, doOperation } = useCalculator()
+            
 
             function handleInputClick(input) {
-
-                // limpar toda a operação
-                if (input === 'C') {
-                    setOperation('')
-                    setResult('')
-
-                    return
-                }
-
-                // limpar a última operação, incluindo o espaço, por isso
-                // o uso do slice(0, -1)
-                if (input === 'CE') {
-                    setResult('')
-                    setOperation(operation.slice(0, -1))
-
-                    return
-                }
-
-                // condicional para trocar momentaneamente a ',' por '.'
-                // para realizar os calculos, pois no Brasil usamos ','
-                // para separação de casas decimais e em outros padrões
-                // é o '.'
-                if (input === '=') {
-                    const operationResult = eval(operation.replace(/,/g, '.'))
-                    const parsedResult = operationResult.toString()?.replace(/\./g, ',')
-                    setResult(parsedResult)
-
-                    return
-                }
-
-                if (result) {
-                    setOperation(isNaN(input)
-                    ? `${result}${input}`
-                    : input)
-                    setResult('')
-                    return
-                }
-
-                if (input === ',' && !operation.endsWith(',')) {
-                    setOperation(`${operation},`)
-
-                    return
-                }
-
-                setOperation(`
-                    ${operation}${input}`)
+                doOperation(input)
             }
 
             return (
@@ -268,21 +331,36 @@
         }
 
         function OperationHistory() {
+            const {history, clearHistory } = React.useContext(CalculatorContext)
+
             return (
                 <Card className='w-full py-10 px-8'>
-                    <Text
-                        as='h1'
-                        variant='heading'
-                        className='mb-4'
-                    >
-                        Histórico de Operações
-                    </Text>
+                    <div className="flex justify-between items-center mb-4">
+                        <Text as='h1' variant='heading'>
+                            Histórico de Operações
+                        </Text>
+                        {history.length > 0 && (
+                            <Button variant='default' className="w-auto px-4 py-2 text-sm"
+                                onClick={clearHistory}
+                            >
+                                Limpar
+                            </Button>
+                        )}
+                    </div>
 
-                    <ul className='flex flex-col gap-3'>
-                        <Text as='li'>1 + 1 = 2</Text>
-                        <Text as='li'>2 + 1 + 3 = 6</Text>
-                        <Text as='li'>2 + 3 = 5</Text>
-                    </ul>
+                    {history.length > 0 ? (
+                        <ul className='flex flex-col gap-3'>
+                            {history.map((value, index) => 
+                                <Text key={`item-${index}`} as='li'>
+                                    {value}
+                                </Text>
+                            )}
+                        </ul>
+                    ) : (
+                        <Text as='p' variant='muted'>
+                            Nenhuma operação recente
+                        </Text>
+                    )}
                 </Card>
             )
         }
@@ -295,8 +373,10 @@
                     items-center sm:items-stretch
                     gap-2
                 `}>
-                    <Calculator />
-                    <OperationHistory />
+                    <CalculatorProvider>
+                        <Calculator />
+                        <OperationHistory />
+                    </CalculatorProvider>
                 </main>
             )
         }

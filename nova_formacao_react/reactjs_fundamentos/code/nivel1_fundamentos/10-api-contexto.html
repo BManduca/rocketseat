@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJs - Fundamentos</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        const CounterContext = React.createContext(0)
+
+        function CounterProvider({ children }) {
+
+            // salvar aonde o contador parou
+            const [savedCounts, setSavedCounts] = React.useState([])
+
+            function saveCount(count) {
+                // atualizando a listagem, através de um novo array
+                // adicionando o novo elemento no final da lista
+                setSavedCounts((prev) => [...prev, count])
+            }
+
+            return (
+                // provedor
+                <CounterContext.Provider
+                    value={{ savedCounts, saveCount }}
+                >
+                    {children}
+                </CounterContext.Provider>
+            )
+            
+        }
+
+        function Counter() {
+            const [counter, setCounter] = React.useState(0)
+            const { savedCounts, saveCount } = React.useContext(CounterContext)
+
+            return (
+                <>
+                    <p className='text-2xl mb-5'>Contador: {counter}</p>
+                    <p className='text-xl mb-3'>Último valor salvo: {savedCounts[savedCounts.length - 1] || '-'}</p>
+                    <button className='border bg-zinc-200 p-2 m-2 rounded-xl cursor-pointer' onClick={() => setCounter(10)}>Atualizar</button>
+                    <button className='border bg-zinc-200 p-2 m-2 rounded-xl cursor-pointer' onClick={() => setCounter((prevValue => prevValue + 1))}>Incrementar</button>
+                    <button className='border bg-zinc-200 p-2 m-2 rounded-xl cursor-pointer' onClick={() => setCounter((prevValue => prevValue - 1))}>Decrementar</button>
+                    <button className='border bg-zinc-200 p-2 m-2 rounded-xl cursor-pointer' onClick={() => saveCount(counter)}>Salvar</button>
+                </>
+            )
+        }
+
+        function CounterList() {
+
+            const { savedCounts } = React.useContext(CounterContext)
+
+            return (
+                <div className='pl-10'>
+                    <h2 className='text-2xl font-bold text-zinc-800'>Valores salvos</h2>
+                    <ul className='list-disc'>
+                        {savedCounts.map((value, index) => <li key={`item-${index}`}>{value}</li>)}
+                    </ul>
+                </div>
+
+                
+            )
+
+        }
+
+        function App() {
+            return (
+                <main>
+                    <CounterProvider>
+                        <Counter />
+                        <hr className='mb-4 mt-4' />
+                        <CounterList />
+                    </CounterProvider>
+                </main>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+
+    </script>
+</body>
+</html>
