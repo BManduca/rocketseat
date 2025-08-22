@@ -195,3 +195,86 @@
         telefone VARCHAR(20)
       );
     ```
+
+  
+## Manipulação Bàsica de Dados
+- Criação de tabelas simples (CREATE TABLE)
+  - ### Criando uma tabela no banco de dados
+    * Boas práticas
+      * Uma tabela bem criada segue boas práticas desde o início:
+        * Estrutura clara e consistente
+        * Tipos corretos para cada campo
+        * Restrições bem aplicadas
+        * Facilidade de manutenção e expansão
+
+
+    * Passos
+      * Execute o seguinte comando:
+        ```
+          CREATE TABLE clientes(
+            id SERIAL PRIMARY KEY,
+            nome VARCHAR(100) NOT NULL,
+            email VARCHAR(150) UNIQUE NOT NULL,
+            data_nascimento DATE,
+            saldo NUMERIC(10,2),
+            ativo BOOLEAN DEFAULT TRUE,
+            criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+        ```
+
+- Tipos de Dados no Postgres
+  - Principais tipos
+    - Integer (INT, INTEGER, SMALLINT, BIGINT)
+      - Números inteiros com diferentes tamanhos
+
+    - Decimal (NUMERIC, DECIMAL, REAL, DOUBLE PRECISION)
+      - Números com ponto flutuante.
+      - NUMERIC e DECIMAL são mais precisos.
+
+## Tipos de Dados - Números
+
+* Inteiros:
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------ | :-------- |
+  | SMALLINT | idade SMALLINT | Para valores pequenos, até 32.767. Ex.: Idades |
+  | INTEGER ou INT | quantidade INT | Valor padrão para inteiros. Ex.: quantidade de produtos |
+  | BIGINT | POPULAÇÃO BIGINT | Pelos números muito grande. Ex.: População de países |
+
+
+  * Exemplo (inteiros):
+    ```
+      CREATE TABLE exemplo_inteiros (
+        id SERIAL PRIMARY KEY,
+        idade SMALLINT,
+        quantidade INT,
+        populacao BIGINT
+      );
+    ```
+
+* Float (ponto flutuante)
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------ | :-------- |
+  | NUMERIC(1, 2) | salario NUMERIC(10, 2) | Para valores monetários (10 digítos, 2 casas decimais) |
+  | DECIMAL(5, 3) | percentual DECIMAL(5, 3) | Ex.: Porcentagem com alta precisão |
+  | REAL | temperatura REAL | Para medições menos críticas (32 bits) |
+  | DOUBLE PRECISION | distancia DOUBLE PRECISION | Para medições de alta escala (64 bits) |
+
+  * Exemplo (ponto flutuante)
+    ```
+      CREATE TABLE exemplo_decimais (
+        id SERIAL PRIMARY KEY,
+        salario NUMERIC(10, 2),
+        percentual DECIMAL(5, 3),
+        temperatura REAL,
+        distancia DOUBLE PRECISION
+      );
+    ```
+
+## Tipos de Dados - Textos
+* Principais tipos
+  * Textos (CHAR, VARCHAR, TEXT)
+    * CHAR(n): texto com tamanho fixo
+    * VARCHAR(n): texto com tamanho variável com limite
+    * TEXT: Texto com tamanho ilimitado
