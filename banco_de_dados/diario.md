@@ -278,3 +278,157 @@
     * CHAR(n): texto com tamanho fixo
     * VARCHAR(n): texto com tamanho variável com limite
     * TEXT: Texto com tamanho ilimitado
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | CHAR(n) | sigla CHAR(3) | Tamanho fixo. Sempre ocupa exatamente n caracteres, preenchendo espaços se necessário. Ex.: siglas como "Br", "USA". |
+  | VARCHAR(n) | nome VARCHAR(100) | Tamanho variável, até um limite n. Ex.: Nomes de pessoas |
+  | TEXT | descricao TEXT | Sem limite prático de tamanho. Ex.: Descrições longas, artigos, postagens de blog. |
+
+  ```
+    CREATE TABLE exemplo_textos (
+      id SERIAL PRIMARY KEY,
+      sigla CHAR(3),
+      nome VARCHAR(100),
+      descricao TEXT
+    );
+  ```
+
+
+## Tipos de Dados - Boolean
+- Boolean
+  * Armazena valores lógicos: TRUE, FALSE or NULL.
+  * Ideal para status, flags de ativação, verificações binárias.
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | BOOLEAN | ativo BOOLEAN | Representa verdadeiro ou falso. Ex.: usuário ativo, visível, etc. |
+
+  ```
+    CREATE TABLE exemplo_boolean (
+      id SERIAL PRIMARY KEY,
+      nome VARCHAR(100),
+      ativo BOOLEN
+    );
+  ```
+
+## Tipos de Dados - DATA e HORA
+- DATA e HORA
+  * Usados para registrar momentos no tempo, muito comuns para logs, eventos e cadastros.
+  
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | DATE | nascimento DATE | Apenas a data (ano, mês, dia) |
+  | TIME | hora_abertura TIME | Apenas o horário (hora, minuto, segundo) |
+  | TIMESTAMP | criado_em TIMESTAMP | Data e hora (sem fuso horário) |
+  | TIMESTAMPTZ | evento_inicio TIMESTAMPTZ | Data e hora com fuso horário. Ideal para sistemas globais. |
+
+  ```
+    CREATE TABLE exemplo_data_hora (
+      id SERIAL PRIMARY KEY,
+      nascimento DATE,
+      hora_abertura TIME,
+      criado_em TIMESTAMP,
+      evento_inicio TIMESTAMPTZ
+    );
+  ```
+
+
+## Demais Tipos de Dados
+* SERIAL: auto incremente (ex.: ID)
+* UUID: identificador único universal
+* ARRAY: Lista de valores
+* JSON/JSONB: dados em formato JSON
+
+## Tipo de Dados - SERIAL
+* Gera automaticamente um valor sequencial para a coluna
+* Muito usado para IDs únicos
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | SERIAL | id SERIAL PRIMARY KEY | Valor auto-incrementado automaticamente a cada novo registro |
+
+  ```
+    CREATE TABLE exemplo_serial (
+      id SERIAL PRIMARY KEY,
+      nome varchar(100)
+    );
+  ```
+
+
+## Tipo de Dados - UUID
+- Universally Unique Identifier
+  * um identificador único de 128 bits
+  * Útil para gerar IDs globais únicos, mesmo entre diferentes bancos
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | UUID | id UUID PRIMARY KEY | Identificador único global. Precisa ser gerado via função ou aplicação  |
+
+  ```
+    CREATE TABLE exemplo_uuid (
+      id UUID PRIMARY KEY,
+      nome varchar(100)
+    );
+  ```
+
+## Tipo de Dados - ARRAY
+  * Armazena listas de valores no mesmo campo (ex.: vários telefones, tags, notas).
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | INTEGER[] | notas INTEGER[] | Lista de inteiros |
+  | TEXT[] | tags TEXT[] | Lista de textos |
+
+  ```
+    CREATE TABLE exemplo_array (
+      id SERIAL PRIMARY KEY,
+      notas INTEGER[],
+      tags EXIT[]
+    );
+  ```
+
+## Tipos de dados - JSON e JSNOB
+  * Armazena objetos em formato JSON.
+  * JSON: Armazena como texto simples (mais leve)
+  * JSONB: Armazena como binário otimizado (mais rápido para busca e filtragem)
+
+  | Tipo | Exemplo de Uso | Descrição |
+  | :--- | :------------- | :-------- |
+  | JSON | dados JSON | Armazena dados estruturados como texto. Preserva a ordem |
+  | JSONB | dados JSONB | Armazena como binário otimizado. Mais eficiente para consultas. |
+
+  ```
+    CREATE TABLE EXEMPLO_JSON (
+      id SERIAL PRIMARY KEY,
+      dados JSON(ou JSONB)
+    )
+  ```
+
+## Inserindo Dados (INSERT)
+
+* O comando INSERT é utilizado para adicionar dados em uma tabela existente
+* Sintaxe:
+  ```
+    INSERT INTO nome_tabela(coluna1, coluna2,...)
+    VALUES (valor1, valor2,...)
+  ```
+
+* Ao criar uma tabela, é essencial definir corretamente os tipos de dados de cada coluna
+* Isso garante integridade, desempenho e economia de espaço
+* Exemplo:
+  ```
+    INSERT INTO alunos(nome, idade, email)
+    VALUES('João', 21, 'joao@email.com')
+  ```
+
+* Dica:
+  * Você também pode inserir múltiplas linhas:
+  ```
+    INSERT INTO alunos(nome, idade, email)
+                  VALUES
+    ('Maria Santos', 22, 'maria@email.com'),
+    ('Carlos Lima', 20, 'carlos@email.com');
+  ```
+
+  * Se a tabela possui uma coluna SERIAL, não é necessário informar o valor dela - o PostgresSQL gera automaticamente;
