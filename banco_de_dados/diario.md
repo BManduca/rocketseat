@@ -432,3 +432,170 @@
   ```
 
   * Se a tabela possui uma coluna SERIAL, não é necessário informar o valor dela - o PostgresSQL gera automaticamente;
+
+## Consulta de Dados (SELECT)
+- O comando SELECT permite buscar informações armazenadas em uma tabela:
+  ```
+    SELECT coluna1, coluna2 FROM nome_tabela
+  ```
+
+* Exemplo:
+  ```
+    SELECT nome, idade FROM alunos;
+  ```
+
+  * para trazer todos os dados da tabela, em vez de colocar todos os campos um a uma, podemos fazer da seguinte forma:
+    ```
+      SELECT * FROM alunos;
+    ```
+
+* Dica:
+  * Busque trazer somente os dados necessários em cada consulta, pois, cada solicitação gera um custo de hardware
+  
+
+## Modificando Dados (UPDATE)
+
+* O comando UPDATE altera valores existentes em uma tabela:
+  ```
+    UPDATE nome_tabela
+    SET coluna1 = novo_valor1, coluna2 = novo_valor2
+    WHERE condição;
+  ```
+
+  * O WHERE aqui ele vem como um filtro para direcionar aonde será aplicado as atualizações por via do UPDATE, caso ele não esteja presente, será aplicado na tabela inteira.
+
+  * Exemplo:
+    ```
+      UPDATE alunos
+      SET idade = 23
+      WHERE nome = 'Maria Santos';
+    ```
+
+    * Tabela clientes:
+    
+    ```
+      UPDATE clientes
+      SET NOME = 'Felipe'
+      WHERE email = 'ana.oliveira@email.com'
+    ```
+
+## Removendo Dados (DELETE)
+
+* O comando DELETE remove dados de uma tabela
+
+  ```
+    DELETE FROM nome_tabela WHERE condição;
+  ```
+
+* Exemplo:
+  ```
+    DELETE FROM alunos
+    WHERE idade < 18;
+  ```
+
+* Dica:
+  * Sem o WHERE, todos os registros serão apagados.
+
+  ```
+    DELETE FROM alunos; -- APAGA TUDO!
+  ```
+
+  * Tabela clientes:
+    ```
+      DELETE FROM clientes
+      WHERE id = 2;
+    ```
+
+&nbsp;
+---
+&nbsp;
+
+# Modelagem de Dados Essencial
+
+&nbsp;
+## Conceito de modelagem entidade-relacionamento
+
+### Introdução à modelagem de dados
+  * Compreender o que é modelagem de dados;
+  * Entender sua importância no desenvolvimento de sistemas;
+  * Diferenciar os níveis de modelagem(conceitual, lógica e física)
+  * Introduzir o modelo Entidade-Relacionamento(ER)
+  
+### O que é Modelagem de Dados?
+  * Processo de representar estruturas de dados de um sistema;
+  * Criação de representação visuais (diagramas) para mapear entidades e relacionamentos;
+  * Serve como ponte entre os requisitos do negócio e o banco de dados;
+  * Fundamenta o projeto e a implementação de sistema de informação;
+
+### Por que é importante?
+  * Organiza a complexidade dos dados;
+  * Ajuda a evitar redundância e inconsistência;
+  * Facilita a comunicação entre equipe técnica e stakeholders;
+  * Permite melhor manutenção e evolução do sistema;
+  * Garante que os dados reflitam regras de negócio reais;
+
+### Consequências de uma má modelagem
+  * Dificuldadade de manutenção;
+  * Dados duplicados ou contraditórios;
+  * Relatórios incorretos;
+  * Baixo desempenho nas consultas;
+  * Dificuldade em escalar o sistema;
+
+
+### Níveis de Modelagem de Dados
+
+  * Modelo Conceitual
+    * Foco no negócio, sem detalhes técnicos;
+    * Utiliza digramas ER;
+
+  * Modelo Lógico
+    * Traduz o modelo conceitual em estruturas compatíveis com SGBDs;
+    * Define tipos de dados, chaves primárias e estrangeiras;
+
+  * Modelo Físico
+    * Detalha como os dados serão armazenados no SGBD específico;
+    * Inclui índices, tabelas físicas, partições, etc.
+
+### Modelo Entidade-Relacionamento(ER)
+  * Criado por Peter Chen(1976)
+  * Representa entidades, atributos e relacionamentos;
+  * Base para o modelo relacional de banco de dados;
+  * Ferramenta visual para modelagem conceitual;
+
+### Componentes do Modelo Entidade-Relacionamento(ER)
+
+* Entidades
+  * O que é uma Entidade?
+    * Representa um objeto do mundo real sobre o qual queremos armazenar dados;
+    * Exemplo: Aluno, Curso, Produto, Funcionário;
+    * Representada por um retângulo nos diagramas ER;
+
+  * Tipos de Entidades
+    * Entidade Forte;
+      * Possui atríbuto identificador próprio(chave primária);
+      * Exemplo: Aluno, Curso;
+
+    * Entidade Fraca
+      * Depende de outra entidade para existir;
+      * Não possui chave própria;
+      * Representada por retãngulo duplo;
+      * Exemplo: Dependente(de um Funcionário);
+
+* Atributos
+  * Propriedade ou característica da entidade;
+  * Exemplo:
+    * Aluno => nome, matrícula, data de nascimento
+  * Representados por elipses ligadas à entidade
+
+  * Tipos de atributos
+    * Simples(Atômico): Não pode ser subdividido
+      * Nome, Idade
+
+    * Composto: Pode ser dividido
+      * Endereço => rua, número, cidade
+
+    * Derivado: Pode ser calculado
+      * Idade (a partir da data denascimento)
+
+    * Multivalorado: Pode conter mais de um valor
+      * Telefones 
