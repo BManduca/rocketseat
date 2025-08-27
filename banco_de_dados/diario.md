@@ -599,3 +599,120 @@
 
     * Multivalorado: Pode conter mais de um valor
       * Telefones 
+
+### Componentes do Modelo Er(Relacionamentos)
+
+* O que é um Relacionamento?
+  * Um relacionamento liga duas ou mais entidades;
+  * Representa uma associação lógica entre os dados;
+  * Exemplo:
+    * Aluno se matricula em Curso;
+  * Representado por um losango nos diagramas ER;
+    ![Demonstração de um esquema ER](./assets/relacionamento_pessoa_endereco_ER.png)
+
+  * Grau do Relacionamento
+    * Grau => Quantidade de entidades envolvidas;
+      * Binário: 2 entidades => mais comum;
+      * Ternário: 3 entidades;
+      * N-ário: Mais de 3 entidades;
+      * Representação gráfica muda conforme o grau;
+
+    * Relacionamento Binário (2 entidades)
+      * Mais comum em sistemas reais;
+      * Exemplo:
+        * Funcionário trabalha em Departamento;
+      * Pode ter cardinalidade:
+        * 1:1, 1:N ou N:N
+
+    * Relacionamento Ternário (3 entidades)
+      * Envolve 3 entidades ao mesmo tempo;
+      * Exemplo:
+        * Médico atende Paciente com uso de Equipamento;
+      * Não pode ser modelado com três relacionamentos binários;
+      * Deve ser representado com um único losango conectado a 3 entidades
+
+    * Relacionamento Recursivo
+      * Entidade se relaciona com ela mesma;
+      * Exemplo:
+        * Funcionário gerencia outro Funcionário;
+      * Exige papéis (ex.: 'gerente' e 'subordinado') no diagrama;
+      * Representado com um seta que volta para a própria entidade;
+
+  * Atributos de Relacionamentos
+    * Alguns relacionamentos possuem informações próprias;
+    * Exemplo:
+      * Aluno => Matrícula => Curso
+      
+        ![Atributo de relacionamentos presente em digramas ER](./assets/atributo_relacionamento_digrama_ER.png)
+
+    * Atributo do relacionamento: data da matrícula, nota;
+    * Representado por elipses ligadas ao losango;
+
+  * Cardinalidade de Relacionamentos
+    * Define quantos registros de uma entidade se associam à outra;
+    * Tipos:
+      * 1:1 => Um para um
+        * Exemplo: O sistema não permite que uma pessoa tenha mais de um endereço associado a ela;
+      * 1:N => Um para muitos
+        * Exemplo: O sistema permite que uma pessoa tenha nenhum, um ou vários endereços associados a ela;
+      * N:N => Muitos para muitos
+        * Geralmente para esses casos busca se criar uma nova entidade, em vez de ter um relacionamento, e este vai relacionar as duas entidades
+          * Tomando exemplo abaixo:
+          
+            ![Cardinalidade N:N](./assets/relacionamento_n_x_n_diagrama_ER.png)
+
+            * Várias pessoas podem estar matriculadas em vários cursos ou vários cursos podem ter várias pessoas matriculadas neles
+
+## Chaves Primárias e estrangeiras
+
+* Chaves Primárias
+  * Compreender o papel da chave primária no banco de dados;
+  * Identificar boas práticas na definição de chaves;
+  * Diferencias chave natural e chave substituta;
+  * Aplicar conceitos em exemplos práticos;
+
+* O que é uma Chave Primária?
+  * Um atributo (ou conjunto de atributos) que identifica unicamente cada tupla (linha) em uma tabela;
+  * Não pode conter valores nulos;
+  * Deve ser única em todos os registros;
+  * Exemplo:
+    * CPF, matrícula, ID_cliente
+
+* Por que é importante?
+  * Garante a integridadedos dados;
+  * Permite buscas eficientes e atualizações seguras;
+  * Base para relacionamentos entre tabelas (referência em chaves estrangeiras)
+  * É usada para indexação automática em muitos SGBDs
+
+* Critérios para uma Boa Chave Primária
+  * Unicidade: Não se repete
+  * Imutabilidade: Não deve mudar com o tempo;
+  * Não nula: obrigatório para cada registro;
+  * Estabilidade: Valor confiável ao longo do tempo;
+  * Simplicidade: Idealmente curto e fácil de indexar;
+  * Naturalidade ou substituição consciente
+
+* Diagrama ER completo (curso_pessoa_endereco)
+    ![DIAGRAMA ER COMPLETO](./assets/diagrama_completo_curso_pessoa_endereco.png)
+
+### Chave Natural vs Chave Substituta
+
+* Chave Natural
+  * Já existe nos dados reais;
+  * Exemplo: CPF, email, matrícula escolar;;
+  * Vantagens: significativa, fácil de entender;
+  * Desvantagens: Pode mudar, nem sempre é única universalmente;
+
+* Chave Substituta
+    * Criada artificialmente pelo sistema (ex.: ID);
+    * Exemplo:
+      * id_aluno = 1,2,3...
+    * Vantagens: Estabilidade, simplicidade, controle;
+    * Desvantagens: Não tem significado para o usuário;
+
+* Quando usar cada uma?
+  * Chave Natural
+    * Se for estável, curta e garantir unicidade;
+  * Chave Substituta
+    * Quando os dados naturais forem longos, instáveis ou sensíveis
+    * Boa prática em sistemas complexos e integrados;
