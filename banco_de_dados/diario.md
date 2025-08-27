@@ -663,7 +663,7 @@
 
             * Várias pessoas podem estar matriculadas em vários cursos ou vários cursos podem ter várias pessoas matriculadas neles
 
-## Chaves Primárias e estrangeiras
+### Chaves Primárias e estrangeiras
 
 * Chaves Primárias
   * Compreender o papel da chave primária no banco de dados;
@@ -716,3 +716,39 @@
   * Chave Substituta
     * Quando os dados naturais forem longos, instáveis ou sensíveis
     * Boa prática em sistemas complexos e integrados;
+
+### Chaves Estrangeiras
+* Um campo (ou conjunto de campos) que faz referência à chave primária de outra tabela;
+* Estabelece relacionamentos entre tabelas;
+* Garante a consistência dos dados;
+* Exemplo: matricula_aluno na tabela Matricula faz referência à tabela Aluno
+
+### Papel da Integridade Referencial
+* Integridade referencial garante que não existam registros orfãos;
+* Exemplo: Não é possível registrar uma matrícula de um aluno inexistente
+* Banco de dados impede automaticamente inserções ou exclusões inválidas
+* Fundamental para manter os dados coerentes e confiáveis
+
+### Exemplo Prático
+
+* Tabela: Aluno
+  | id_aluno (PK) | nome |
+  | :------------ | :--- |
+  | 1 | Ana Souza |
+
+* Tabela: Matricula
+  | id_matricula | id_aluno (FK) | id_curso |
+  | :----------- | :------------ | :------- |
+  | 1001 | 1 | 202 |
+
+### Restrições ON DELETE E ON UPDATE
+* Permitem definir comportamentos automáticos quando o dado referenciado for alterado ou excluído;
+
+* ON DELETE
+  * RESTRICT - Impede a exclusão se houver dependência;
+  * CASCADE - Apaga também os registros filhos;
+  * SET NULL - Define valor nulo na FK;
+  * NO ACTION - Comportamento padrão (erro se houver dependência);
+
+* ON UPDATE
+  * Mesmo raciocínio, mas para mudanças de chave primária;
