@@ -752,3 +752,49 @@
 
 * ON UPDATE
   * Mesmo raciocínio, mas para mudanças de chave primária;
+
+## Normalização: Princípios Básicos
+* Introdução à normalização
+
+  ### Fluxo típico de projeto
+  * Modelo conceitual
+    * O quê o sistema precisa guardar, em termos de entidades, atributos e relacionamentos;
+    * Geralmente representado por Diagramas de Entidade-Relacionamento (ER);
+    * Serve para alinhar requisitos com Stalkeholders antes de pensar em tabelas ou tipos de dados;
+    * Diagrama ER puro, sem pensar em tabelas, tipos de dados ou SGBD;
+
+  * Modelo Lógico (Relacional)
+    * Como organizar aquilo em relações (tabelas), definindo:
+      * Tabelas e colunas
+      * Chaves primárias e estrangeiras
+      * Dependências funcionais e formas normais
+
+    * aqui você já faz a normalização (1FN, 2FN, 3FN, ...) e obtém o Esquema Relacional.
+
+  * Modelo Físico
+    * Detalhamento de implementação no SGBD escolhido:
+      * Tipos de dados específicos (VARCHAR, INT, DATE,...)
+      * Índices, partições, tablespaces
+      * Restrições avançadas (checks, triggers) e parâmetros de performance
+
+    * Geração do DDL (CREATE TABLE, CREATE INDEX...)
+
+  * Mapeamento do Modelo Conceitual para o Modelo Relacional
+    * Nesta etapa é feita a transformação das entidades e relacionamentos do modelo ER para o modelo relacional, no qual os dados são representados por tabelas;
+    * Estas regras garantem que o modelo relacional estará adequado alinhado com o modelo conceitual e sem inconsistências;
+    * O resultado desta etapa é um diagrama de tabelas, contendo as tabelas, chaves primárias, chaves estrangeiras e restrições de integridade, formando assim o modelo lógico que servirá de base para o projeto físico do Bando de Dados;
+
+## Modelagem Relacional
+* Regras de Integridade - Integridade de Identidade
+  * A chave primária não pode conter valores nulos;
+  * Como toda informação em um banco de dados relacional precisa ter uma identidade exclusiva, a chave primária deve ser obrigatoriamente preenchida;
+  * Além disso, a chave primária não deve ter valores repetidos em uma tabela, de forma a garantir que exista apenas uma linha para cada valor definido para a chave primária;
+
+* Regra de Integridade - Integridade Referencial
+  * Se uma determianda tabela A possui uma chave estrangeira que estabelece relacionamento com uma tabela B, então o valor da chave estrangeira da tabela A deve ser igual ao valor da chave primária na tabela B;
+  * Esta regra garante que as referências de uma tabela para outra tabela sejam válidas, de forma que os relacionamentos sejam consistentes e não ocorra a inconsistência nos dados;
+
+* Regras de Integridade - Integridade de Domínio
+  * Restringe o conjunto de valores que podem ser gravados em uma coluna de uma tabela;
+  * Desta forma, somente os valores que pertencem ao domínio podem ser gravados na coluna da tabela;
+  * Outros valores não são permitidos e a atualização é desfeita pelo gerenciador de banco de dados;
