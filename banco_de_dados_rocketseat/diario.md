@@ -784,6 +784,40 @@
     * Estas regras garantem que o modelo relacional estará adequado alinhado com o modelo conceitual e sem inconsistências;
     * O resultado desta etapa é um diagrama de tabelas, contendo as tabelas, chaves primárias, chaves estrangeiras e restrições de integridade, formando assim o modelo lógico que servirá de base para o projeto físico do Bando de Dados;
 
+  ### Formas Normais
+  * Normalização
+    * A normalização foi introduzida por E. F. Codd em 1970, baseado em um processo matemático formal fundamentado na teoria dos conjuntos;
+    * Foi motivado em função de anomalias graves com relação à atualização, inclusão e deleção de elementos do modelo;
+    * Com isso surgem as formas normais;
+    * São tratamentos de decomposição de novas relações de forma a não se perder conteúdo e evitar os problemas nos tratamentos de informações nas tabelas;
+
+      ![Ilustração normalização](./assets/normalizacao_ilustracao.png)
+
+    * O objetivo desse método é purificar gradativamente um conjunto de entidades e relacionamentos por outro, eliminando assim problemas que podem surgir, como:
+      * grupos repetitivos de dados;
+      * dependências parciais em relação a uma chave concatenada;
+      * redundância de dados desnecessários;
+      * perdas de informação, dificuldade na representação de fatos da realidade observada;
+      * dependências transitivas entre atributos;
+
+  * Dependênci Funcional
+    * Uma dependência funcional é um relacionamento entre dois ou mais atributos de forma que o valor de um atributo identifique o valor para cada um dos outros atributos, ou seja, um atributo está relacionado a outro;
+    * A -> B 
+      * Atributo B é dependente (funcionalmente) do atributo A;
+      * Isso significa que para descobrirmos o valor de B, preciso saber o valor de A;
+
+  * Dependência Funcional Parcial
+    * Ocorre quando os atributos não chave não dependem funcionalmente de toda a chave primária quando esta for composta;
+    * Assim, nas tabelas onde a chave primária for composta, todos os atributos devem depender de toda a chave primária;
+    * Caso a dependência seja de parte da chave, verificamos a existência de dependência funcional parcial;
+
+  * Dependência Funcional Transitiva
+    * Na definição dos campos de uma entidade podem ocorrer casos em que um campo não seja dependente diretamente da chave primária ou de parte dela, mas dependente de outro campo não chave da tabela e isto caracteriza a dependência funcional transitiva;
+
+  * Dependência Funcional Multivalorada
+    * Ocorre quando, para cada valor de um atributo A, há um conjunto de valores para os outros atributos B e C que estão associados a ele, mas são independentes entre si;
+
+
 ## Modelagem Relacional
 * Regras de Integridade - Integridade de Identidade
   * A chave primária não pode conter valores nulos;
@@ -798,3 +832,43 @@
   * Restringe o conjunto de valores que podem ser gravados em uma coluna de uma tabela;
   * Desta forma, somente os valores que pertencem ao domínio podem ser gravados na coluna da tabela;
   * Outros valores não são permitidos e a atualização é desfeita pelo gerenciador de banco de dados;
+
+## Mapeamento do Modelo Conceitual para o Modelo Relacional
+
+### Mapeamento das Entidades
+  * Toda entidade torna-se uma tabela levando todos os atributos definidos na entidade que tornan-se colunas na tabela criada;
+  * O identificador da entidade torna-se a chave primária da tabela que não permitirá repetição de valores e nem de valores nulos;
+
+### Mapeamento de Atributos
+  * Os atributos das entidades e dos relacionamentos devem ser gerados de forma que minimizem o consumo de espaço de armazenamento e torne mais eficiente a consulta de dados;
+  * Devem ser escolhidos o tipo de dado e tamanho adequados para cada coluna criada na tabela;
+
+### Regras  Gerais
+  * Toda entidade vira uma relação;
+  * Atributo identificador se torna chave primária na relação;
+  * Atributros simples se tornam colunas (campos)
+  * Atributos compostos tornam-se atributos simples, mapeados em colunas, uma coluna para cada atributo;
+  * Atributos derivados não são mapeados;
+  * Atributos multi-valorados podem ser mapeados de duas formas:
+    * Como n colunas, onde n é o número máximo de valores do atributo;
+    * Criando-se uma nova relação;
+
+
+### Mapeamento de Relacionamentos
+  * Relacionamentos que possuem atributos;
+  * Estes relacionamentos se tornam tabelas no caso de relacionamentos n:n;
+  * No caso de relacionamentos 1:n, os atributos do relacionamento são transferidos para a tabela que possui cardinalidade n;
+
+  * Relacionamentos 1 para Muitos (1:N);
+  * A entidade cuja cardinalidade é N recebe o atributo identificador da entidade com cardinalidade 1 que será mapeado como uma chave estrangeira na tabela criada para a entidade com cardinalidade N;
+
+  * Relacionamentos 1 para 1 (1:1);
+  * Uma das entidades envolvidas no relacionamento carrega o atributo identificador que deve ser definido como chave estrangeira na tabela criada para a entidade fazendo referencia à chjave primária da tabela criada para a outra entidade;
+
+  * Relacionamento Muitos para Muitos (N:N);
+  * Deve ser criada uma tabela que recebe os atributos identificadores das entidades que participam do relacionamento, sendo criada a chave primária composta pelas colunas derivadas dos atributos identificadores;
+
+  * Relacionamentos Múltiplos;
+  * Deve ser criada uma tabela que recebe tantos atributos identificadores quantas foram as entidades que participam do relacionamento. A chave primária desta tabela é composta por todos os atributos identificadores.
+  
+    ![Diagrama relacionamentos multiplos](./assets/relacionamentos_multiplos.png)
