@@ -70,10 +70,10 @@
   </h3>
 </div>
 
-| id | nome  | email   |
-| :------- | :----: | ----------: |
-| 1        | João   | joao@email.com |
-| 2        | Maria  | maria@email.com |
+| id   | nome  |           email |
+| :--- | :---: | --------------: |
+| 1    | João  |  joao@email.com |
+| 2    | Maria | maria@email.com |
 
 ---
 
@@ -83,11 +83,11 @@
   </h3>
 </div>
 
-| id | id_usuario | valor |
-| :-------- | :----: | ----------: |
-| 1 | 1 | 50,00 |
-| 2 | 1 | 80,00 |
-| 3 | 2 | 120,00 |
+| id   | id_usuario |  valor |
+| :--- | :--------: | -----: |
+| 1    |     1      |  50,00 |
+| 2    |     1      |  80,00 |
+| 3    |     2      | 120,00 |
 
 ---
 
@@ -235,11 +235,11 @@
 
 * Inteiros:
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------ | :-------- |
-  | SMALLINT | idade SMALLINT | Para valores pequenos, até 32.767. Ex.: Idades |
-  | INTEGER ou INT | quantidade INT | Valor padrão para inteiros. Ex.: quantidade de produtos |
-  | BIGINT | POPULAÇÃO BIGINT | Pelos números muito grande. Ex.: População de países |
+  | Tipo           | Exemplo de Uso   | Descrição                                               |
+  | :------------- | :--------------- | :------------------------------------------------------ |
+  | SMALLINT       | idade SMALLINT   | Para valores pequenos, até 32.767. Ex.: Idades          |
+  | INTEGER ou INT | quantidade INT   | Valor padrão para inteiros. Ex.: quantidade de produtos |
+  | BIGINT         | POPULAÇÃO BIGINT | Pelos números muito grande. Ex.: População de países    |
 
 
   * Exemplo (inteiros):
@@ -254,12 +254,12 @@
 
 * Float (ponto flutuante)
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------ | :-------- |
-  | NUMERIC(1, 2) | salario NUMERIC(10, 2) | Para valores monetários (10 digítos, 2 casas decimais) |
-  | DECIMAL(5, 3) | percentual DECIMAL(5, 3) | Ex.: Porcentagem com alta precisão |
-  | REAL | temperatura REAL | Para medições menos críticas (32 bits) |
-  | DOUBLE PRECISION | distancia DOUBLE PRECISION | Para medições de alta escala (64 bits) |
+  | Tipo             | Exemplo de Uso             | Descrição                                              |
+  | :--------------- | :------------------------- | :----------------------------------------------------- |
+  | NUMERIC(1, 2)    | salario NUMERIC(10, 2)     | Para valores monetários (10 digítos, 2 casas decimais) |
+  | DECIMAL(5, 3)    | percentual DECIMAL(5, 3)   | Ex.: Porcentagem com alta precisão                     |
+  | REAL             | temperatura REAL           | Para medições menos críticas (32 bits)                 |
+  | DOUBLE PRECISION | distancia DOUBLE PRECISION | Para medições de alta escala (64 bits)                 |
 
   * Exemplo (ponto flutuante)
     ```
@@ -279,11 +279,11 @@
     * VARCHAR(n): texto com tamanho variável com limite
     * TEXT: Texto com tamanho ilimitado
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
-  | CHAR(n) | sigla CHAR(3) | Tamanho fixo. Sempre ocupa exatamente n caracteres, preenchendo espaços se necessário. Ex.: siglas como "Br", "USA". |
-  | VARCHAR(n) | nome VARCHAR(100) | Tamanho variável, até um limite n. Ex.: Nomes de pessoas |
-  | TEXT | descricao TEXT | Sem limite prático de tamanho. Ex.: Descrições longas, artigos, postagens de blog. |
+  | Tipo       | Exemplo de Uso    | Descrição                                                                                                            |
+  | :--------- | :---------------- | :------------------------------------------------------------------------------------------------------------------- |
+  | CHAR(n)    | sigla CHAR(3)     | Tamanho fixo. Sempre ocupa exatamente n caracteres, preenchendo espaços se necessário. Ex.: siglas como "Br", "USA". |
+  | VARCHAR(n) | nome VARCHAR(100) | Tamanho variável, até um limite n. Ex.: Nomes de pessoas                                                             |
+  | TEXT       | descricao TEXT    | Sem limite prático de tamanho. Ex.: Descrições longas, artigos, postagens de blog.                                   |
 
   ```
     CREATE TABLE exemplo_textos (
@@ -300,9 +300,9 @@
   * Armazena valores lógicos: TRUE, FALSE or NULL.
   * Ideal para status, flags de ativação, verificações binárias.
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
-  | BOOLEAN | ativo BOOLEAN | Representa verdadeiro ou falso. Ex.: usuário ativo, visível, etc. |
+  | Tipo    | Exemplo de Uso | Descrição                                                         |
+  | :------ | :------------- | :---------------------------------------------------------------- |
+  | BOOLEAN | ativo BOOLEAN  | Representa verdadeiro ou falso. Ex.: usuário ativo, visível, etc. |
 
   ```
     CREATE TABLE exemplo_boolean (
@@ -316,11 +316,11 @@
 - DATA e HORA
   * Usados para registrar momentos no tempo, muito comuns para logs, eventos e cadastros.
   
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
-  | DATE | nascimento DATE | Apenas a data (ano, mês, dia) |
-  | TIME | hora_abertura TIME | Apenas o horário (hora, minuto, segundo) |
-  | TIMESTAMP | criado_em TIMESTAMP | Data e hora (sem fuso horário) |
+  | Tipo        | Exemplo de Uso            | Descrição                                                  |
+  | :---------- | :------------------------ | :--------------------------------------------------------- |
+  | DATE        | nascimento DATE           | Apenas a data (ano, mês, dia)                              |
+  | TIME        | hora_abertura TIME        | Apenas o horário (hora, minuto, segundo)                   |
+  | TIMESTAMP   | criado_em TIMESTAMP       | Data e hora (sem fuso horário)                             |
   | TIMESTAMPTZ | evento_inicio TIMESTAMPTZ | Data e hora com fuso horário. Ideal para sistemas globais. |
 
   ```
@@ -344,8 +344,8 @@
 * Gera automaticamente um valor sequencial para a coluna
 * Muito usado para IDs únicos
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
+  | Tipo   | Exemplo de Uso        | Descrição                                                    |
+  | :----- | :-------------------- | :----------------------------------------------------------- |
   | SERIAL | id SERIAL PRIMARY KEY | Valor auto-incrementado automaticamente a cada novo registro |
 
   ```
@@ -361,9 +361,9 @@
   * um identificador único de 128 bits
   * Útil para gerar IDs globais únicos, mesmo entre diferentes bancos
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
-  | UUID | id UUID PRIMARY KEY | Identificador único global. Precisa ser gerado via função ou aplicação  |
+  | Tipo | Exemplo de Uso      | Descrição                                                              |
+  | :--- | :------------------ | :--------------------------------------------------------------------- |
+  | UUID | id UUID PRIMARY KEY | Identificador único global. Precisa ser gerado via função ou aplicação |
 
   ```
     CREATE TABLE exemplo_uuid (
@@ -375,10 +375,10 @@
 ## Tipo de Dados - ARRAY
   * Armazena listas de valores no mesmo campo (ex.: vários telefones, tags, notas).
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
+  | Tipo      | Exemplo de Uso  | Descrição         |
+  | :-------- | :-------------- | :---------------- |
   | INTEGER[] | notas INTEGER[] | Lista de inteiros |
-  | TEXT[] | tags TEXT[] | Lista de textos |
+  | TEXT[]    | tags TEXT[]     | Lista de textos   |
 
   ```
     CREATE TABLE exemplo_array (
@@ -393,10 +393,10 @@
   * JSON: Armazena como texto simples (mais leve)
   * JSONB: Armazena como binário otimizado (mais rápido para busca e filtragem)
 
-  | Tipo | Exemplo de Uso | Descrição |
-  | :--- | :------------- | :-------- |
-  | JSON | dados JSON | Armazena dados estruturados como texto. Preserva a ordem |
-  | JSONB | dados JSONB | Armazena como binário otimizado. Mais eficiente para consultas. |
+  | Tipo  | Exemplo de Uso | Descrição                                                       |
+  | :---- | :------------- | :-------------------------------------------------------------- |
+  | JSON  | dados JSON     | Armazena dados estruturados como texto. Preserva a ordem        |
+  | JSONB | dados JSONB    | Armazena como binário otimizado. Mais eficiente para consultas. |
 
   ```
     CREATE TABLE EXEMPLO_JSON (
@@ -732,14 +732,14 @@
 ### Exemplo Prático
 
 * Tabela: Aluno
-  | id_aluno (PK) | nome |
-  | :------------ | :--- |
-  | 1 | Ana Souza |
+  | id_aluno (PK) | nome      |
+  | :------------ | :-------- |
+  | 1             | Ana Souza |
 
 * Tabela: Matricula
   | id_matricula | id_aluno (FK) | id_curso |
   | :----------- | :------------ | :------- |
-  | 1001 | 1 | 202 |
+  | 1001         | 1             | 202      |
 
 ### Restrições ON DELETE E ON UPDATE
 * Permitem definir comportamentos automáticos quando o dado referenciado for alterado ou excluído;
@@ -816,6 +816,31 @@
 
   * Dependência Funcional Multivalorada
     * Ocorre quando, para cada valor de um atributo A, há um conjunto de valores para os outros atributos B e C que estão associados a ele, mas são independentes entre si;
+
+  ### 1FN - Primeira Forma Normal
+  - Todos os atributos de uma tabela devem ser atômicos, ou seja, a tabela não deve conter grupos repetidos e nem atributos com mais de um valor;
+  - Para deixar nesta forma normal, é preciso identificar a chave primária da tabela, identificar a(s) coluna(s) que tem dados repetidos e removê-la(s), criar uma nova tabela com a chave primária para armazenar o dado repetido e, por fim, criar uma relação entre a tabela principal e a tabela secundária;
+
+    ![Exemplo 1º Forma Normalização](./assets/exemplo_1FN.png)
+
+  ### 2FN - Segunda Forma Normal
+  - A primeira coisa a ser observada é que para transformar uma tabela na segunda forma normal, ela já deve estar na primeira forma;
+  - Todos os atributos não chaves da tabela devem depender unicamente da chave primária (não podendo depender apenas de parte dela);
+    - Retiramos a possível chave (**CODIGO_DISCIPLINA**) a ser chave primária de uma tabela que já tinha chave primária (**tabela pessoa**)
+    - Retirado o atributo (**DESCRIÇÃO_DISCIPLINA**) que estava ligado diretamente a chave **CODIGO_DISCIPLINA** e que não tinha realação diretamente com os atributos da tabela ao qual ela se encontrava
+    - Chegando assim na 2º Forma Normal
+
+      ![Exemplo 2º Forma Normalização](./assets/exemplo_2FN.png)
+
+  ### 3FN - Terceira Forma Normal
+  - A primeira coisa a ser observada é que para transformar uma tabela na terceira forma normal, ela já deve estar na segunda forma;
+  - Além disso, os atributos não chave de uma tabela devem ser mutuamente independentes e dependentes unicamente e exclusivamente da chave primária (um atributo B é funcionalmente dependente de A se, para cada valor de A só existe um valor de B);
+  - Para atingir essa forma normal, é preciso identificar as colunas que são funcionalmente dependentes das outas colunas não chave e extraí-las para outra tabela;
+
+  - Ao fim destaas 3 etapas, chegamos ao seguinte consenso:
+    - Todos os atributos são atômicos (1FN);
+    - Todos os atributos não-chave dependem totalmente da chave primária (2FN);
+    - Não existe transitividade em relação à chave primária(3FN);
 
 
 ## Modelagem Relacional
