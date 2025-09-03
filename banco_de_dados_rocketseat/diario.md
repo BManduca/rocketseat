@@ -842,6 +842,22 @@
     - Todos os atributos não-chave dependem totalmente da chave primária (2FN);
     - Não existe transitividade em relação à chave primária(3FN);
 
+  ### Forma Normal de Boyce-Codd (FNBC)
+  - Forma normal que é um pouco mais 'forte' que a terceira forma normal;
+  - Não é um requisito ncessário para atingir a quarta forma normal;
+  - Destinada a lidar com situações em que se verifique a existência de mais do que uma chave candidata e que duas chaves candidatas possuam elementos comuns;
+  - Uma relação está na BCFN quando todos os atributos estão dependentes da chave, de toda a chave e de nada mais do que a chave;
+  - A 3Fn e a FNBC são muito próximas e normalmente, analisamos essas duas etapas de uma só vez;
+  
+    ![](./assets/exemplo_FNBC.png)
+
+  ### 4FN - Quarta Forma Normal
+  - Concerne em anomalias existentes na relação entre diferentes colunas da chave primária e só se aplica em tabelas com chaves primárias compostas por três colunas ou mais;
+  - Para uma tabela estar na quarta forma normal, ela tem que primeiramente estar também na terceira forma normal;
+  - A forma normal de Boyce-Codd não é necessária;
+
+    ![Ilustração para 3 4 forma normal](./assets/exemplo_4FN.png)
+
 
 ## Modelagem Relacional
 * Regras de Integridade - Integridade de Identidade
