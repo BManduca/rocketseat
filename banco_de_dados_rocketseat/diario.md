@@ -856,7 +856,11 @@
   - Para uma tabela estar na quarta forma normal, ela tem que primeiramente estar também na terceira forma normal;
   - A forma normal de Boyce-Codd não é necessária;
 
-    ![Ilustração para 3 4 forma normal](./assets/exemplo_4FN.png)
+    ![Ilustração para 4 forma normal](./assets/exemplo_4FN.png)
+
+  ### 5FN - Quinta Forma Normal
+  - Em termos mais simples, a 5FN garante que, ao unir as tabelas você não poderá obter informações adicionais que ainda não estejam disponíveis nas tabelas separadas.
+  - É menos provável que ocorram dependências de união quando as tabelas já estão normalizadas (em 3FN OU 4FN), dai a dificuldade de criar um exemplo claro e direto para 5FN.
 
 
 ## Modelagem Relacional
@@ -913,3 +917,216 @@
   * Deve ser criada uma tabela que recebe tantos atributos identificadores quantas foram as entidades que participam do relacionamento. A chave primária desta tabela é composta por todos os atributos identificadores.
   
     ![Diagrama relacionamentos multiplos](./assets/relacionamentos_multiplos.png)
+
+## Diagrama ER: Do papel ao banco de dados
+* Criação de Diagramas ER
+* Por que usar Diagramas ER?
+  * Visualização clara da estrutura de dados
+  * Comunicação entre analistasm desenvolvedores e stakeholders
+  * Base para normalização e implementação no SGBD
+
+* Ferramentas recomendadas
+  * Draw.io (diagrams.net)
+    * Gratuito, plugins para Confluence/GitLab.
+    * Biblioteca ER e UML incorporada.
+  * diagram.io
+    * Foco em texto(DSL) que gera automaticamente
+    * Exportação DDL para diversos SGBD's
+  * Lucidchart
+    * Colaboração em tempo real
+    * Templates avançados e integração corporativas
+
+* Outras opções
+  * MySQL Workbench (reverse-engineering a partir do banco)
+  * Microsoft Visio (empresa)
+  * ERDPlus (academia/ensino)
+
+### Convenções de Notação - Estilo Chen
+* Retângulo: Entidade
+* Retângulo com uma borda de linha dupla: Entidade fraca
+* Retângulo com um losango dentro: Entidade associativa
+* Oval: Atributo
+* Oval com borda de linha dupla: Atributo multivalorado
+* Oval com borda de linha pontilhada: Atributo derivado
+
+* Losango: Relacionamento
+* Losango com borda de linha dupla: Relacionamento fraco
+* Linha reta: Relacionamento obrigatório
+* Linha pontilhada: Relacionamento opcional
+* Caracteres 1, N, M: Cardinalidade de relacionamentos um-para-um, um-para-muitos e muitos-para-muitos.
+
+### Convenções de Notação - Pé de Galinha/Martin
+* Semelhante à notação de Chen, o estilo pé de galinha representa entidades e relacionamentos como caixas e linhas;
+* Ele se diferencia pela adição de formas diferentes no final das linhas para a cardinalidade do relacionamento;
+* As formas são o anel(que significa zero), o traço(um) e o pé de galinha (muitos)
+* Os usuários combinam essas formas para expressar a cardinalidade do realcionamento.
+
+### Convenções de Notação - UML Simplificada
+* Entidades como classes (caixas com três seções);
+* Atributos e chaves na seção superior;
+* Relacionamentos como linhas com multiplicidades (1,0...,1...);
+* Uso de agregação/composição para relacionamentos fortes/fracos;
+
+### Critérios de Escolha de Notação
+* Nível de familiaridade da equipe;
+* Complexidade do domínio;
+* Necessidade de detalhamento (atributos vs. somente tabelas/colunas);
+* Integração com outras metodologias (UML, DDD, BPMN);
+
+### Boas Práticas der Representação
+* Manter diagramas legíveis e organizados;
+* Agrupar entidades relacionadas;
+* Nomear entidades e relacionamentos de forma consistente;
+* Indicar chaves primárias (PK) e estrangeiras (FK) claramente;
+* Documentar pressupostos e regras de negócio;
+
+## Exercícios - Criando o DER
+* Um funcionário é alocado em um departamento e um departamento pode alocar um ou muitos funcionários.
+![DER funcionario vs. departamento](./assets/diagrama_funcionario_depto.png)
+
+* Um pedido é composto por itens de pedido e cada item compõe apenas um pedido.
+![DER itens vs. pedidos](./assets/diagrama_itens_pedido.png)
+
+* Um projeto aloca muitos funcionários e muitos funcionários são alocados em um projeto em uma data.
+![DER projetos vs. funcionários](./assets/diagrama_projeto_funcionario.png)
+
+* DER
+  * Um cliente tem um nome, cpf e endereço
+  * Uma categoria possui um nome e código
+  * Um produto possui um código, nome e preço.
+  * Um pedido possui um número, data do pedido, status e endereço de entrega.
+  * Por fim, um item do pedido possui a quantidade e um identificador.
+  * Um cliente pode fazer no mínimo e no máximo um pedido, enquanto um pedido pode ser feito por muitos clientes ou nenhum cliente.
+  * Uma categoria pode ser classificada em no mínimo e no máximo um produto, enquanto um produto pode ser classificado de diversas formas ou nenhuma vez.
+  * Um produto referencia no mínimo e no máximo um item do pedido, enquanto um item do pedido pode ser ou não referenciado muitas vezes.
+  * Um pedido é composto por no mínimo e no máximo um item de pedido, enquanto um item de pedido compõe um ou mais pedidos.
+  ![DER cliente vs. pedido vs. item_pedido vs. produto vs. categoria](./assets/diagrama_cliente_categoria_produto_pedido_item.png)
+
+## Mapeamento ER para Modelo Relacional
+![Mapeamento ER para Modelo Relacional](./assets/mapeamento_ER_modelo_relacional.jpg)
+
+## Criando uma tabela
+* Estrutura geral
+```
+CREATE TABLE esquema.tabela(
+  coluna1 TIPO [CONSTRAINT ...],
+  coluna2 TIPO [CONSTRAINT ...],
+  ...
+  [CONSTRAINT nome_constraint] PRIMARY KEY (coluna1, coluna2),
+  [CONSTRAINT nome_constraint] FOREIGN KEY (colunaX) REFERENCES outra_tabela(colunaY)
+)
+```
+
+## Tipos de Dados Comuns no PostgreSQL
+* Númericos: SMALLINT, INTEGER, BIGINT, NUMERIC(precision, scale);
+* Textuais: VARCHAR(n), TEXT, CHAR(n);
+* Data e Hora: DATE, TIMESTAMP [WITHOUT|WITH] TIMEZONE;
+* Identificadores: UUID, SERIAL / BIGSERIAL / GENERATED AS IDENTIFY;
+* Outros: BOOLEAN, JSONB, BYTEA, ARRAY[...]
+
+## Contraints de Coluna
+* NOT NULL - garante o valor obrigatório;
+* UNIQUE - valores distintos em toda a coluna;
+* CHECK - condições customizadas;
+* DEFAULT - valor padrão;
+* COMMENT ON COLUMN - documentação inline;
+
+## Chave Primária (PRIMARY KEY)
+* Define unicidade e não nulidade
+```
+CONSTRAINT pk_tabela PRIMARY KEY(coluna1, coluna2)
+```
+
+## Chave Estrangeira (FOREIGN KEY)
+* Integridade referencial
+* Ações de ON DELETE / ON UPDATE: CASCADE, SET NULL, RESTRICT, NO ACTION
+```
+CREATE TABLE aluno_disciplina (
+  aluno_id INTEGER,
+  disciplina_id INTEGER,
+  PRIMARY KEY(aluno_id, disciplina_id),
+  FOREIGN KEY(aluno_id) REFERENCES aluno(id),
+  FOREIGN KEY(disciplina_id) REFERENCES disciplina(id)
+);
+```
+
+## Cardinalidades
+* 1:1 (Um-para-Um)
+* 1:N (Um-para-Muitos)
+* N:N (Muitos-para-Muitos)
+
+## Relacionamento 1:1
+* Caracaterísticas e usos (ex.: Tabela auxiliar de perfil de usuário);
+```
+CREATE TABLE usuario (
+  id BIGSERIAL PRIMARY KEY,
+  nome TEXT NOT NULL
+);
+
+CREATE TABLE endereco (
+  id BIGSERIAL PRIMARY KEY,
+  usuario_id BIGINT UNIQUE,
+  rua TEXT,
+  CONSTRAINT fk_endereco_usuario
+    FOREIGN KEY(usuario_id) REFERENCES usuario(id)
+);
+```
+
+## Relacionamento 1:N
+* Cenários típicos (ex.: cliente-pedidos)
+```
+CREATE TABLE cliente (
+  id UUID PRIMARY KEY,
+  nome TEXT NOT NULL
+);
+
+CREATE TABLE pedido (
+  id BIGSERIAL PRIMARY KEY,
+  cliente_id UUID NOT NULL,
+  data DATE NOT NULL,
+  CONSTRAINT fk_pedido_cliente
+    FOREIGN KEY(cliente_id) REFERENCES cliente(id)
+    ON DELETE SET NULL
+)
+```
+
+## Relacionamento N:N
+* Quando usar (ex.: alunos -disciplinas)
+```
+CREATE TABLE aluno (
+  id BIGSERIAL PRIMARY KEY,
+  nome TEXT NOT NULL
+);
+
+CREATE TABLE disciplina (
+  id BIGSERIAL PRIMARY KEY,
+  nome TEXT NOT NULL
+)
+
+CREATE TABLE aluno_disiplina (
+  aluno_id BITINT NOT NULL,
+  disciplina_id BIGINT NOT NULL,
+  PRIMARY KEY(aluno_id, disciplina_id),
+  FOREIGN KEY(aluno_id) REFERENCES aluno(id),
+  FOREIGN KEY(disciplina_id) REFERENCES disciplina(id)
+);
+```
+
+## Integridade e Performance
+* Índices em chaves estrangeiras;
+* Uso de ON DELETE CASCADExRESTRICT;
+* Verificação de integridade via CHECK e NOT NULL;
+* Impacto em JOINs e normalização;
+
+## Padrões e Boas Práticas
+* Nomeação consistente de constraints (fk_<tabela>_<referencia>);
+* Documentação de relacionamentos no DDL (COMMENT ON CONSTRAINT ...);
+* Evitar relacionamentos circulares;
+* Monitorar cardinalidades reais e ajustar modelagem;
+
+## Outras Features e Otimizações
+* Índices: CREATE INDEX idx_nome ON tabela(coluna);
+* EXCLUDE constraints para restrições geométricas ou customizadas;
+* Schemas e tablespaces;
+* Herança de tabelas (Postgres-specific);
+* Partitioning (range, list, hash);
