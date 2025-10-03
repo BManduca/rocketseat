@@ -1,0 +1,65 @@
+-- inserindo dados na tabela escola
+INSERT INTO escola (cnpj, nome, telefone_com, rua, cep, cidade, estado)
+VALUES
+  ('67836345000150', 'Escola Alfa', '(48) 3781-6384', 'Rua dos Tubarões', '88058-690', 'Florianópolis', 'SC'),
+  ('06143360000129', 'Escola Beta', '(48) 3526-4333', 'Servidão Araújo', '88066-072', 'Florianópolis', 'SC');
+
+SELECT * FROM escola;
+
+
+-- inserindo dados na tabela professor
+INSERT INTO professor (telefone_cel, cpf, rua, cep, cidade, estado, cnpj_escola)
+VALUES
+  ('(48) 97937-1114', '36279554988', 'Travessa Pedro Dutra da Silveira', '88045-370', 'Florianópolis', 'SC', '67836345000150'),
+  ('(48) 96960-0480', '31258005956', 'Avenida Rio Branco', '88015-205', 'Florianópolis', 'SC', '06143360000129')
+
+SELECT * FROM professor;
+
+-- inserindo dados na tabela turma
+INSERT INTO turma (sala, turno, cnpj_escola)
+VALUES
+  ('A101', 'Matutino', '67836345000150'),
+  ('B202', 'Vespertino', '06143360000129')
+
+SELECT * FROM turma;
+
+-- inserindo dados na tabela alunos
+INSERT INTO aluno (nome, cnpj_escola, codigo_turma)
+VALUES
+  ('Maria Souza', '67836345000150', '1'),
+  ('José Silva', '06143360000129', '2');
+
+SELECT * FROM aluno;
+
+-- inserindo dados na tabela disciplina
+INSERT INTO disciplina (nome, ementa, carga_horaria, matricula_professor)
+VALUES
+  ('Matemática Básica', 'Aritmética, Álgebra Linear', 60, 1),
+  ('História do Brasil', 'Colonização até Contemporaneidade', 45, 2);
+
+SELECT * FROM disciplina;
+
+-- inserindo dados na tabela turma_disciplina
+INSERT INTO turma_disciplina (codigo_turma, codigo_disciplina, dt_inicio, dt_termino)
+VALUES
+  (1, 1, '2025-10-02', '2025-10-31'),
+  (2, 2, '2025-10-08', '2025-11-08');
+
+SELECT * FROM turma_disciplina;
+
+-- inserindo dados na tabela endereco
+INSERT INTO endereco (rua, cep, cidade, estado, matricula)
+VALUES
+  ('Servidão Capitão Carlos Lamarca', '88066-025', 'Florianópolis', 'SC', 1),
+  ('Rua Orlando Carioni', '88062-035', 'Florianópolis', 'SC', 2);
+
+SELECT * FROM endereco;
+
+
+-- inserindo dados na tabela telefone
+INSERT INTO telefone (tel_cel, tel_res, matricula)
+VALUES
+  ('(48) 98524-6865', NULL, 1),
+  ('(48) 99732-2733', '(48) 3158-2015', 2);
+
+SELECT * FROM telefone;
