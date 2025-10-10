@@ -268,3 +268,13 @@ SELECT
     COUNT(*) AS total_clientes
   FROM customers
 GROUP BY city;
+
+-- ##############################################
+-- USO DO HAVING
+-- ##############################################
+
+-- FILTRANDO POR GRUPOS COM MAIS DE 5 PRODUTOS
+SELECT category_id, COUNT(*) AS qtde_produtos
+    FROM product
+    GROUP BY category_id
+HAVING COUNT(*) > 5;
