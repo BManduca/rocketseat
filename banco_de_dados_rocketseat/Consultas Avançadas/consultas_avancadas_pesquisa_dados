@@ -275,6 +275,145 @@ GROUP BY city;
 
 -- FILTRANDO POR GRUPOS COM MAIS DE 5 PRODUTOS
 SELECT category_id, COUNT(*) AS qtde_produtos
-    FROM product
+    FROM products
     GROUP BY category_id
 HAVING COUNT(*) > 5;
+
+-- ##############################################
+-- USO DO AGREGAÇÕES E LIMIT
+-- ##############################################
+
+-- ORDENAR RESULTADOS DE UM GROUP BY: TOP 10 PRODUTOS POR QUANTIDADE VENDIDA
+SELECT oi.product_id,
+    SUM(oi.quantity) AS qtd_total
+  FROM order_items oi
+GROUP BY oi.product_id
+ORDER BY SUM(oi.quantity) DESC
+LIMIT 10;
+
+-- BUSCAR TOP 5 CLIENTES POR FATURAMENTO (soma total_amount)
+SELECT o.customer_id,
+  SUM(o.total_amount) AS faturamento_total
+  FROM orders o
+GROUP BY o.customer_id
+ORDER BY faturamento_total DESC -- utiliza alias em ORDER BY
+LIMIT 5; -- top 5 clientes por faturamento
+
+
+-- ##############################################
+-- MANIPULAÇÃO DE STRINGS
+-- ##############################################
+
+-- CONCAT E operador || para concatenar nome e sobrenome de clientes
+SELECT customer_id,
+    CONCAT(first_name, ' ', last_name) AS nome_concatenador1,
+    first_name || ' ' || last_name AS nome_concatenado2
+  FROM customers
+LIMIT 5;
+
+-- LENGTH / CHAR_LENGTH para obter tamanho da string (usando last_name)
+SELECT customer_id,
+       last_name,
+       CHAR_LENGTH(last_name) AS tamanho_sobrenome
+  FROM customers
+LIMIT 5;
+
+-- UPPER e LOWER para padronização de caixa
+SELECT customer_id,
+       UPPER(first_name) AS nome_maiusculo,
+       LOWER(last_name) AS sobrenome_minusculo
+  FROM customers
+LIMIT 5;
+
+-- TRIM, LTRIM, RTRIM para remover espaços indesejados
+SELECT '  Carlos  ' AS texto_original,
+    TRIM('  Carlos  ') AS texto_trim,
+    LTRIM('  Carlos  ') AS texto_ltrim,
+    RTRIM('Carlos  ') AS texto_rtrim
+
+-- SUBSTRING para extrair parte do texto (extrair 3 primeiros caracateres do product_name)
+SELECT product_id,
+       product_name,
+       SUBSTRING(product_name FROM 1 FOR 3) AS primeiros_3_caracteres
+  FROM products
+LIMIT 5;
+
+-- POSITION para localizar substrings (posição de "Silva" em last_name)
+SELECT customer_id,
+       last_name,
+       POSITION('Silva' IN last_name) AS posicao_silva
+  FROM customers
+WHERE last_name LIKE '%Silva%';
+
+-- REPLACE para substituição de trechos (trocar "Silva" por "S.")
+SELECT customer_id,
+       last_name,
+       REPLACE(last_name, 'Silva', 'S.') AS sobrenome_abreviado
+  FROM customers
+WHERE last_name LIKE '%Silva%';
+
+
+-- ###################################################
+-- MANIPULAÇÃO DE NÚMEROS E CONVERSÕES COM CAST
+-- ###################################################
+
+-- ROUND para arredondar preços (duas casas decimais)
+SELECT product_id,
+        price,
+        ROUND(price, 0) AS price_arredondado_inteiro,
+        ROUND(price, 1) AS price_arredondado_1_casa,
+        ROUND(price, 2) AS price_arredondado_2_casa
+  FROM products
+LIMIT 5;
+
+-- TRUNCATE (PostgreSQL usa TRUNC) para truncar valores
+SELECT product_id,
+        price,
+        TRUNC(price, 0) AS price_truncado_inteiro,
+        TRUNC(price, 1) AS price_truncado_1_casa
+  FROM products
+LIMIT 5;
+
+-- CEIL E FLOOR para teto e piso númerico
+SELECT product_id,
+        price,
+        CEIl(price) AS price_ceil, -- maior inteiro >= price
+        FLOOR(price) AS price_floor -- menor inteiro <= price
+  FROM products
+LIMIT 5;
+
+-- ABS, POWER, SQRT para operações matemáticas
+SELECT product_id,
+        price,
+        ABS(price * -1) AS valor_absoluto,
+        POWER(price, 2) AS price_ao_quadrado,
+        SQRT(price) AS raiz_quadrada_price
+  FROM products
+LIMIT 5;
+
+-- MOD para pegar o resto da divisão
+SELECT product_id,
+        price,
+        MOD(CAST(price AS INT), 7) AS resto_divisao_por_7 -- resto de price/7 (price convertido para INT)
+  FROM products
+LIMIT 5;
+
+-- CAST / CONVERT
+
+-- CAST(coluna AS tipo): converter price para inteiro
+SELECT product_id,
+        price,
+        CAST(price AS INT) AS price_inteiro
+  FROM products
+LIMIT 5;
+
+-- CAST para converter uma data em texto
+SELECT customer_id,
+        created_at,
+        CAST(created_at AS VARCHAR(20)) AS created_at_text
+  FROM customers
+LIMIT 5;
+
+-- Converter texto em número (exemplo fictício: converter string '123' em inteiro)
+SELECT '123' as texto_original,
+    CAST('123' AS INT) + 10 AS soma_exemplo;
