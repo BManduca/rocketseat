@@ -250,3 +250,54 @@
 
     * Pontos importantes
       * Conhecer cada categoria de comandos SQL - DDL, DML, DQL, DCL e TCL - é fundamental para projetar, manipular, consultar, proteger e manter a integridade dos dados de forma robusta.
+
+### Subconsultas no WHERE
+* Consulta interna que retorna um conjunto de valores utilizado como critério de filtro na cláusula WHERE
+  ```
+    SELECT ...
+    FROM tabela_principal
+    WHERE coluna_principal IN (
+      SELECT coluna_secundaria
+      FROM tabela_secundaria
+      WHERE condicao
+    );
+  ```
+
+### Uso de EXISTS e NOT EXISTS
+* Testa a existência (ou não) de linhas retornadas por uma subconsulta correlacionada.
+  ```
+    SELECT ...
+    FROM tabela_principal tp
+    WHERE EXISTS (
+      SELECT 1
+      FROM tabela_secundaria ts
+      WHERE ts.chave = tp.chave
+    );
+  ```
+
+### Diferença entre IN e EXISTS
+* IN: Compara a coluna com um conjunto de valores estáticos retornados por uma subconsulta não correlacionada (bom para listas pequenas)
+* EXISTS: Percorre a consulta correlacionada linha a linha e retorna TRUE/FALSE na primeira ocorrência, geralmente eficiente em grandes volumes de dados.
+
+### Quando usar cada um?
+* EXISTS: É ideal quando queremos saber se há pelo menos um registro relacionado (sem precisar comparar valores exatos).
+* IN: É mais intuitivo quando filtramos contra valores literais ou o conjunto retornado é pequeno e estático.
+
+
+## Relacionamento e Junções (Sintaxe básica de INNER JOIN)
+* A sintaxe padrão para conectar duas tabelas em que se deseja apenas as linhas que tenha correspondência em ambas é:
+  ```
+    SELECT a.*, b.*
+    FROM tabela_a AS a
+    INNER JOIN tabela_b AS b
+      ON a.chave = b.chave;
+  ```
+
+### Uso de aliases (a, b)
+* Aliases (apelidos) simplificam a escrita e a leitura quando as tabelas tem nomes longos:
+  ```
+    SELECT c.first_name, o.order_date,
+      FROM customers AS c
+      INNER JOIN orders AS o
+        ON c.customer_id = o.customer_id;
+  ```

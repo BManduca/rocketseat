@@ -112,3 +112,82 @@ SELECT order_date,
 WHERE order_date BETWEEN '2024-06-01' AND '2024-06-15'
 GROUP BY order_date
 ORDER BY order_date;
+
+
+-- ##############################
+-- Subconsultas e EXISTS IN
+-- ##############################
+
+-- Buscar mostrar todos os pedidos feitos por clientes que moram em 'São Paulo'
+SELECT
+    o.order_id,
+    o.customer_id,
+    o.order_date,
+    o.total_amount
+  FROM orders AS o
+  WHERE o.customer_id IN (
+    SELECT c.customer_id
+    FROM customers AS c
+    WHERE c.city = 'Sao Paulo'
+  )
+  ORDER BY o.order_date;
+
+
+select * from orders;
+select * from customers WHERE city = 'Sao Paulo';
+
+
+-- Buscar todos os clientes que tem ao menos um pedido com status = 'DELIVERED'
+SELECT
+    c.customer_id,
+    c.first_name,
+    c.last_name
+  FROM customers c
+  WHERE EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+      AND o.status = 'DELIVERED'
+  )
+ORDER BY c.customer_id;
+
+-- Buscar os produtos que ainda nunca foram vendidos (não aparecem em nenhum order_items)
+SELECT
+    p.product_id,
+    p.product_name,
+    p.price
+  FROM products p
+  WHERE NOT EXISTS (
+    SELECT 1
+    FROM order_items oi
+    WHERE oi.product_id = p.product_id
+  )
+ORDER BY p.product_name;
+
+SELECT * FROM products;
+
+
+-- ##############################
+-- Case e Filter
+-- ##############################
+
+-- Buscar o total faturado por status (usando CASE)
+
+SELECT 
+    o.status,
+    SUM(CASE WHEN o.status = 'DELIVERED' THEN o.total_amount ELSE 0 END) AS total_entregue,
+    SUM(CASE WHEN o.status = 'PENDING' THEN o.total_amount ELSE 0 END) AS total_pendente,
+    SUM(o.total_amount) AS total_geral
+FROM orders o
+GROUP BY o.status;
+
+
+-- Buscar total de faturamento pago e pendente por mês (usando FILTER)
+SELECT
+    DATE_TRUNC('month', o.order_date) AS mes,
+    SUM(o.total_amount) AS total_geral,
+    SUM(o.total_amount) FILTER (WHERE o.status = 'DELIVERED') AS total_entregue,
+    SUM(o.total_amount) FILTER (WHERE o.status = 'PENDING') AS total_pendente
+FROM orders o
+GROUP BY DATE_TRUNC('month', o.order_date)
+ORDER BY mes;

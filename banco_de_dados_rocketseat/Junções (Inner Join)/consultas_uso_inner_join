@@ -1,0 +1,48 @@
+-- ##############################
+-- Case e Filter
+-- ##############################
+
+-- Listar produto e nome da categoria correspondente
+SELECT
+    p.product_id,
+    p.product_name,
+    c.category_id,
+    c.category_name
+  FROM products AS p
+  INNER JOIN categories AS c
+    ON p.category_id = c.category_id
+ORDER BY p.product_id;
+
+-- Usando aliases curtos para simplificar colunas em ORDER BY
+SELECT
+    p.product_id AS pid,
+    p.product_name AS nome_produto,
+    c.category_id,
+    c.category_name
+FROM products AS p
+INNER JOIN categories AS c
+  ON p.category_id = c.category_id
+WHERE p.price > 200
+ORDER BY pid;
+
+
+SELECT
+    o.order_id,
+    o.customer_id,
+    c.first_name || ' ' || c.last_name as cliente,
+    o.order_date,
+    o.status,
+    o.total_amount
+FROM orders AS o
+INNER JOIN customers AS c
+  ON o.customer_id = c.customer_id      -- coluna 1: vincula pedido => cliente
+  AND o.order_date >= c.created_at      -- coluna 2: garante que o pedido veio após a criação do cliente
+ORDER BY o.order_date DESC
+limit 20;
+
+
+
+
+
+
+
