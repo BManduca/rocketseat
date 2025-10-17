@@ -1,0 +1,23 @@
+select
+  cli.customer_id,
+  concat(cli.first_name, ' ', cli.last_name) as nome_cliente,
+  pd.order_id,
+  to_char(pd.order_date, 'DD/MM/YYYY') as data_pedido,
+  pr.product_id,
+  pr.product_name,
+  ip.quantity,
+  ip.unit_price,
+  (ip.quantity * ip.unit_price) as subtotal
+from customers as cli
+  -- 1) CLiente => pedido
+inner join orders as pd on cli.customer_id = pd.customer_id
+  -- 2) Pedido -> Itens do pedido
+
+
+
+
+
+
+
+
+

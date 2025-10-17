@@ -301,3 +301,112 @@
       INNER JOIN orders AS o
         ON c.customer_id = o.customer_id;
   ```
+
+## JOIN
+
+### INNER JOIN
+* É um tipo de junção em SQL que retorna apenas as linhas que possuem correspondência em ambas as tabelas envolvidas na consulta, ou seja, busca combinar registros de duas (ou mais) tabelas com base em uma condição de igualdade (geralmente entre chaves relacionadas)
+* Se não houver correspondência, a linha não aparece no resultado.
+
+### LEFT JOIN (Também chamado de LEFT OUTER JOIN)
+* É um tipo de junção SQL que retorna todas as alinhas da tabela esquerda e as linhas correspondentes da tabela da direita(quando há correspondência)
+* Se não houver correspondência, os valores da tabela da direita vêm como **NULL**
+  ```
+  SELECT ...
+    FROM tabela_a AS a
+    LEFT JOIN tabela_b AS b
+      ON a.chave = b.chave;
+  ```
+
+### RIGHT JOIN (Também chamado de RIGHT OUTER JOIN)
+* Retorna todas as alinhas da tabela da direita e apenas as linhas correspondentes da tabela da esquerda.
+* Se não houver correspondênica, os valores da tabela da esquerda aparecem como **NULL**
+  ```
+  SELECT ...
+    FROM tabela_a AS a
+    RIGHT JOIN tabela_b AS b
+      ON a.chave = b.chave;
+  ```
+
+### FULL JOIN (Também chamado de FULL OUTER JOIN)
+* Combina o comportamento do **LEFT JOIN** e do **RIGHT JOIN**
+* Retorna as correspondências entre eles quando existirem
+* Preenche com **NULL** quando não há correspondência em uma das tabelas
+  ```
+  SELECT ...
+    FROM tabela_a AS a
+    FULL JOIN tabela_b as b
+      ON a.chave = b.chave;
+  ```
+
+### Coalesce
+* É uma função SQL usada para tratar valores NULL
+* Ele retorna o primeiro valor não nulo em uma lista de argumentos
+
+### Filtros Pós-Junção e Precedência
+* É preciso ter cuidado ao usar algumas claúsulas, pois, isso pode acabar limitando o uso, por exemplo, de um LEFT JOIN, resultando em um join somente, como um INNER JOIN, saindo totalmente do próposito de toda a consulta criada.
+  ```
+  SELECT *
+  FROM products AS p
+  LEFT JOIN order_items AS oi
+    ON p.product_id = oi.product_id
+  WHERE oi.quantity > 10;
+  ```
+
+* Para corrigir essa questão podemos fazer da seguinte forma:
+  ```
+  SELECT *
+  FROM products AS p
+  LEFT JOIN order_items AS oi
+    ON p.product_id = oi.product_id
+  AND oi.quantity > 10;
+  ```
+
+## Subconsultas Correlacionadas vs. Não Correlacionadas
+
+### Subconsulta Não Correlacionada
+* Executa a subconsulta somente uma vez, retornando um conjunto de valores fixo para uso WHERE ou outra cláusula:
+  ```
+  SELECT product_id, product_name
+    FROM products
+  WHERE price > (
+    SELECT AVG(price) FROM products
+  );
+  ```
+
+### Subconsulta Correlacionada
+* A subconsulta faz referência a colunas da consulta externa e é reexecutada para cada linha resultante:
+  ```
+  SELECT
+    c.customer_id,
+    c.first_name,
+    c.last_name
+    (
+      SELECT COUNT(*)
+        FROM orders o
+        WHERE o.customer_id = c.customer_id
+    ) AS total_pedidos
+  FROM customers AS c;
+  ```
+
+### Diferenças de performance
+* Subconsulta não correlacionada pode ser materializada uma vez; Geralmente é mais rápida.
+* Subconsulta correlacionada costuma ser lenta em grandes volumes, pois executa N vezes (onde N = número de linhas da consulta externa).
+
+
+## Consultas com múltiplas tabelas (juinções em Três ou Mais Tabelas com condição adicional)
+### Exemplo envolvendo 4 tabelas
+* Tabelas
+  * clientes => armazena dados do cliente
+  * pedidos => contém o cabeçalho do pedido (inclui cliente_id)
+  * itens_pedido => contém cada produto dentro de um pedido (inclui pedido_id e produto_id)
+  * produtos => lista de produtos disponíveis
+
+### Exemplo complexo envolvendo 4 tabelas
+* Estratégia de junções encadeadas
+  * Primeiro, conectar clientes a pedidos via cliente_id
+  * Depois, conectar pedido a itens_pedido via pedido_id
+  * Finalmente, conectar itens_pedido a produtos via produto_id
+  * Aplicar filtro em umda das tabelas intermediárias
+  * Se quisermos apenas pedidos com status = 'ENTREGUE' podemos colocar a condição na cláusula WHERE (após a junção), pois estamos usando INNER JOIN em todas:
+  ```where pd.status = 'DELIVERED'```
