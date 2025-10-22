@@ -410,3 +410,84 @@
   * Aplicar filtro em umda das tabelas intermediárias
   * Se quisermos apenas pedidos com status = 'ENTREGUE' podemos colocar a condição na cláusula WHERE (após a junção), pois estamos usando INNER JOIN em todas:
   ```where pd.status = 'DELIVERED'```
+
+## Subqueries
+* É uma consulta SQL inserida dentro de outra consulta principal(query externa), geralmente utilizada para fornecer um valor ou conjunto de valores que serão usados como critério de filtragem, comparação ou agregação.
+
+### Quando usar subqueries?
+  * Filtrar dados com base em critérios dinâmicos
+  * Realizar comparações com valores calculados
+  * Executar agregações intermediárias
+  * Reutilizar lógica de consulta
+  * Reduzir a complexidade da lógica com CTEs ou JOINs alternativos
+
+  <br>
+
+  | Tipo | Descrição | Retorno | Exemplo de uso |
+  |------|-----------|---------|----------------|
+  | Scalar | Retorna um único valor (linha e coluna) | 1 linha x 1 coluna | Comparações (=, <, >, etc.) |
+  | Column | Retorna uma coluna com vários valores | N linhas x 1 coluna | IN, NOT IN |
+  | Row | Retorna uma linha com várias colunas | 1 linha x N colunas | Comparações com tuplas |
+  | Table | Retorna múltiplas linhas e colunas (tabela virtual) | N linhas x N colunas | Utilizada em EXISTS, IN, JOIN |
+
+
+## Conceitos básicos de CTEs
+
+  ### Introdução as CTEs
+  * CTE (Common Table Expressions) é uma subconsulta nomeada temporária que pode ser referenciada dentro da query principal.
+  ```
+    WITH nome_cte AS (
+      SELECT ...
+    )
+    SELECT * FROM nome_cte;
+  ```
+
+  ### Vantagens
+  * Legibilidade: facilita a leitura de consultas longas;
+  * Reuso: Reutiliza resultados intermediários se duplicar lógica;
+  * Modularização: Divide uma consulta complexa em blocos;
+  * Recursividade: Permite percorrer hierarquias (em WITH RECURSIVE)
+
+  ### Quando usar
+  * Consultas com múltiplos passos
+  * Agregações intermediárias reutilziadas
+  * Consutlas recursivas (ex.: estrutura de gerência, encadeamento de categorias, etc.)
+
+## CTE Não-Recursiva vs. Recursiva
+| Tipo de CTE | Descrição |
+|-------------|-----------|
+| Não-Recursiva | Executada apenas uma vez, como uma subconsulta nomeada |
+| Recursiva | Executada repetidamente, chamando a si mesma até uma condição de parada |
+
+* Não-recursiva é útil para modularizar as etapas da consulta, especialmente em análises mais agregadas, com várias tabelas e junções
+* Recursiva é mais indicada quando temos relações hierarquicas ou sequenciais, como árvores de categorias, uma estrutura organizacional ou um cálculo de somas progressivas
+
+## Operações de Conjunto em SQL
+
+  ### O que são?
+  * As operações de conjunto em SQL servem para combinar os resultados de duas ou mais consultas com a mesma estrutura de colunas.
+
+  ### Resumo de Operações
+  | Operador | Descrição |
+  |----------|-----------|
+  | UNION | Une os resultados de duas consultas eliminando duplicatas |
+  | UNION ALL | Une os resultados de duas consultas mantendo as duplicatas |
+  | INTERSECT | Retorna apenas os registros comuns entre as consultas |
+  | EXCEPT | Retorna registros na primeira consulta que não aparecem na segunda |
+
+  ![Operações](../assets/operacoes.png)
+
+  <br>
+
+  | Operador | Combina dados? | Remove duplicatas? | Traz intersecção? | Traz diferença? |
+  |----------|----------------|--------------------|-------------------|-----------------|
+  | UNION | Sim | Sim | Não | Não |
+  | UNION ALL | Sim | Não | Não | Não |
+  | INTERSECT | Não | Sim | Sim | Não |
+  | EXCEPT | Não | Sim | Não | Sim |
+
+## UNION - Une eliminando as duplicatas
+* o UNION combina os resultados de duas ou mais consultas e remove os registros duplicados do resultado final.
+* Os conjuntos devem ter o mesmo número de colunas.
+* Os tipos de dados devem ser compatíveis (por posição)
+* A ordenação final deve ser feita fora do UNION
