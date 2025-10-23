@@ -487,7 +487,77 @@
   | EXCEPT | Não | Sim | Não | Sim |
 
 ## UNION - Une eliminando as duplicatas
-* o UNION combina os resultados de duas ou mais consultas e remove os registros duplicados do resultado final.
-* Os conjuntos devem ter o mesmo número de colunas.
-* Os tipos de dados devem ser compatíveis (por posição)
-* A ordenação final deve ser feita fora do UNION
+* o UNION combina os resultados de duas ou mais consultas e remove os registros duplicados do resultado final;
+* Os conjuntos devem ter o mesmo número de colunas;
+* Os tipos de dados devem ser compatíveis (por posição);
+* A ordenação final deve ser feita fora do UNION;
+
+## INTERSECT - Interseção entre os conjuntos
+- O INTERSECT retorna apenas os registros que estão presentes em ambas as consultas;
+- Remove duplicatas do resultado;
+- Pode ser usado para verificar a coincidência de dados;
+
+## Window function (Conceito de função de Janela)
+* São funções que calculam valores sobre um conjunto de linhas relacionadas, mantendo o detalhe de cada linha;
+* Diferente de GROU BY, não colapsam os dados: os detalhes individuais permanecem, e os cálculos são feitos "por cima";
+
+  ### Vantagens
+  * Permitem calcular médias, totais, rankings e contagens sem perder o contexto da linha;
+  * Muito úteis para rankings, comparações, cumulativos, percentuais, etc;
+  * Utilizam a cláusula OVER(...) para definir a janela de cálculo;
+  
+  ```
+    FUNCAO_DE_JANELA() OVER(
+      [PARTITION BY coluna_de_divisão]
+      [ORDER BY coluna_de_ordenação]
+    )
+  ```
+
+  ### ROW_NUMBER
+
+  * Atribui um número sequencial único para cada linha dentro de uma partição;
+  * Sempre sequencial: 1, 2, 3, ...;
+  * Ignora empates nos valores ordenados;
+
+  ### RANK()
+  * Atribui um número de ranking, com buracos em empates;
+  * Se duas linhas estão empatadas em 1º, a proxíma será de 3º(pula o 2º);
+  * Ideal para ranking com posições visuais reais;
+
+  ### DENSE_RANK()
+  * Semelhante ao RANK(), mas sem buracos nos empates;
+  * Se duas linhas estão empatadas em 1º, a próxima será 2º(sem pular);
+  * Ideal para ranking contínuo com pontuações iguais;
+
+
+  ### Comparação Visual
+  * Suponha os pedidos abaixo de um cliente:
+
+    | order_id | total_amount | ROW_NUMBER() | RANK() | DENSE_RANK() |
+    |:---:|:---:|:---:|:---:|:---:|
+    | 1 | 1000.00 | 1 | 1 | 1 |
+    | 2 | 1000.00 | 2 | 1 | 1 |
+    | 3 | 800.00 | 3 | 3 | 2 |
+    | 4 | 500.00 | 4 | 4 | 3 |
+  
+  ### Funções de Deslocamento (LAG E LEAD)
+  * O que são?
+    * Funções de janela que permite acessar valores de outras linhas relativas à linha atual, sem perder o detalher linha a linha.
+
+  * Para que servem?
+    * Comparações sequenciais
+    * Análises de tendência (ex.: vendas por mês)
+    * Identificação de variações, evolução ou regressão
+
+    ### Sintaxe
+    ```
+      LAG(coluna, deslocamento, valor_padrão) OVER (
+        PARTITION BY ...
+        ORDER BY ...
+      )
+
+      LEAD(coluna, deslocamento, valor_padrão) OVER (
+        PARTITION BY ...
+        ORDER BY ...
+      )
+    ```
