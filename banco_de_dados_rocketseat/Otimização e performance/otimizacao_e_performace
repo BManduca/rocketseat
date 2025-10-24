@@ -1,0 +1,87 @@
+-- percorrer e trazer detalhes da consulta onde estaremos buscanso preço na tabela products
+-- que estão entre 100 e 200
+explain analyse
+select *
+from products
+where price between 100 and 200;
+
+create index idx_product_price
+  on products(price);
+
+explain analyse
+select *
+from products
+where price between 100 and 200;
+
+-- USO DO HASH | Suporta apenas =, não BETWEEN
+create index idx_products_price_hash
+  on products using HASH(price)
+
+explain analyze
+select *
+from products
+where price = 189.10
+
+alter table products
+  add column tags TEXT[];
+update products
+  set tags = array['promo', 'novo']
+  where product_id % 5 = 0;
+
+
+-- criando index em products para coluna tags, usando GIN
+create index idx_products_tags_gin
+  on products using GIN(tags);
+
+-- BUSCA PRODUTOS COM TAG 'PROMO'
+explain analyse
+select *
+from products
+where tags @> array['promo'];
+
+
+create index idx_products_category
+  ON products(category_id)
+
+create unique index idx_department_name_unq
+  ON departments(department_name);
+
+-- índice parcial aonde o status será PENDING
+create index idx_orders_pending
+  ON orders(order_date)
+  where status = 'PENDING';
+
+-- Busca case-sensitive em email
+create index idx_customers_lower_email
+  on customers (LOWER(email));
+
+
+-- DEMAIS RECURSOS DE ÍNDICES
+
+-- ÍNDICES CONCORRENTES
+create index concurrently index_name on table_name using btree (column)
+
+-- ÍNDICES COM VÁRIAS COLUNAS
+create index index_name on table_name (column1, column2);
+
+create index idx_product_name_price on products (product_name, price)
+
+select count(*) from products where product_name like '%P%' and price > 100;
+
+-- Reconstruir ou reindexar | Reconstruir index corrompidos ou fragmentados
+reindex index idx_product_price;
+
+-- Atualizar estatisticas e limpar espaços mortos
+vacuum (analyse) products;
+
+
+-- EXPLAIN E ANÁLISE DE PLANOS DE EXECUÇÃO
+explain analyse select * from customers where customer_id = 101;
+
+-- Apenas mostra o plano estimado (sem executar)]
+explain
+select * from products where price > 300;
+
+-- Executa a consulta e exibe em tempo real + plano
+explain analyse
+select * from products where price > 300;

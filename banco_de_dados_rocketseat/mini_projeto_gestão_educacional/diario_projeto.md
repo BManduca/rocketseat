@@ -561,3 +561,127 @@
         ORDER BY ...
       )
     ```
+
+## Otimização e Perfomance
+
+  ### Índices: quando e como usar
+
+  ### O que são?
+  * Estrutura auxiliar que acelera buscas, ordenações e junções, montada a partir de uma ou mais colunas de uma tabela
+
+  ### Benefícios
+  * Reduz custo de varredura completa (seq scan) para buscas pontuais ou intervalos
+  * Melhora performance de consultas WHERE, JOIN, ORDER BY E GROUP BY
+
+  ### Custos
+  * Uso de espaço em disco/memória
+  * Sobrecarga em INSERT/UPDATE/DELETE (cada operação de escrita também atualiza índices)
+  
+  ### Sintaxe de criação
+  * CREATE INDEX
+    ```
+      CREATE INDEX [CONCURRENTLY] nome_de_indice
+        ON tabela [USING método] (coluna1 [ASC|DESC], coluna2, ...)
+    ```
+
+  * CREATE UNIQUE INDEX:
+    ```
+      CREATE UNIQUE INDEX nome_indice_unico
+        ON tabela(coluna);
+    ```
+
+  ### Árvores B-Tree vs. Hash vs. GiST vs. GIN
+
+    ### B-Tree (padrão)
+    * Equilíbrio ótimo para busca de igualdade e intervalo (BETWEEN, >, <)
+    
+    ### Hash
+    * Otimizado apenas para igualdade (=)
+    * Não suporta buscas por intervalo
+
+    ### GiST (Generalized Search Tree)
+    * Permite índices sobre tipos geométricos, arrays, texto completo
+    * Suporta operações "aproximadas" (p.ex. índice de similaridade)
+    
+    ### GIN (Generalized Inverted Index)
+    * Ideal para colunas com múltiplos valores (arrays, JSONB)
+    * Mantém um "inverted list" de valores => rápido para existência de elemento
+
+  ### Como o PostgreSQL armazena e pesquisa em um índice
+  * Armazenamento
+    * Cada índice é uma tabela interna (pg_class) com páginas de dados organizadas em nós folha e não-folha (no B-Tree)
+
+  * Pesquisa
+    * PostgreSQL usa o planner para escolher entre seq scan e index scan
+    * Em index scan, busca-se nas páginas raiz => páginas folhas => retorna tupplas correspondentes
+
+  ### Escolha e criação de índices / Monitoramento e manutenção de índices
+
+    ### Custo de leitura vs. custo de escrita
+    * Leitura: índices diminuem I/O de leitura para buscas seletivas
+    * Escrita: todo INSERT/UPDATE/DELETE que afete a coluna indexada gera manutenção extra no índice, impactando throughput
+    * Trade-off: Quanto maior o número de índices, maior a penalidade em escritas
+
+    ### Índices únicos vs. não-únicos
+    * Não-único(default): CREATE INDEX idx_products_price ON products(price)
+    * Único: garantia de unicidade em coluna(s):
+
+      ```
+        CREATE UNIQUE INDEX idx_customers_email
+          ON customers(email);
+
+        create unique index idx_department_name_unq
+          in departments(department_name)
+      ```
+
+    * Não-único(preço, repetido em muitos produtos):
+      ```
+        CREATE INDEX idx_produtos_category
+          ON products(category_id);
+      ```
+
+
+
+  ### Índices parciais e expressões indexadas
+    * Parciais: Indexa apenas subset de linhas, reduzindo tamanho e custo de manutenção
+      * So indexar pedidos pendentes, reduzindo tamanho:
+    ```
+      CREATE INDEX idx_orders_pending
+        ON orders(order_date)
+        WHERE status = 'PENDING'
+    ```
+
+    * Expressão: Indexa o resultado de uma expressão qualquer.
+    ```
+      -- Busca case-sensitive em email
+      CREATE INDEX idx_customers_lower_email
+        ON customers (LOWER(email));
+    ```
+
+    * Lower-case search em e-mail:
+      ```
+        CREATE INDEX idx_customers_lower_email
+          ON customers (LOWER(email))
+
+        EXPLAIN ANALYZE
+        select *
+        from customers
+        where lower(email) LIKE '%@example.com'
+      ```
+
+  ### EXPLAIN E ANÁLISE DE PLANOS DE EXECUÇÃO
+    * O que é?
+      * A ferramenta EXPLAIN ANALYSE desempenha um papel crucial na otimização e eficiência das consultas SQL;
+      * É um comando SQL usado para analisar o plano de execução de consultas SQL;
+
+    * Quando usar?
+      * Análise de Desempenho de Consultas
+      * Otimização de Consultas
+      * Indexação Eficaz
+      * Depuração
+
+    ### Sintaxe
+    ```
+      explain analyse select * from customers
+      where customer_id = 101;
+    ```
