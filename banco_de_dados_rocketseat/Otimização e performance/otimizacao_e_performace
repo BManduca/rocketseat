@@ -85,3 +85,162 @@ select * from products where price > 300;
 -- Executa a consulta e exibe em tempo real + plano
 explain analyse
 select * from products where price > 300;
+
+-- criando índice para products(price)
+create index idx_price on products(price);
+
+explain analyse
+select * from products where price > 300;
+
+
+-- desativando o seqscan temporariamente
+set enable_seqscan = off;
+
+explain analyse
+select * from products where price > 300;
+
+-- depois reativar o seqscan
+set enable_seqscan = on;
+
+-- buscando por produtos com status SHIPPED
+explain analyse
+select o.order_id, concat(c.first_name, ' ', c.last_name) as full_name_customer
+from orders o
+join customers c on o.customer_id = c.customer_id
+where o.status = 'SHIPPED';
+
+-- retornar total de itens juntamente com o seu devido id, somente se o status for delivered
+-- porém nessa consulta, cada linha a subquerie será executada, ou seja, se tiver cerca de 10000 arequisições, 
+-- o postgres vai fazer 10000 subconsultas na tabela order_items
+
+select
+  o.order_id,
+  (select count(*)
+  from order_items oi
+  where oi.order_id = o.order_id) as items
+from orders o
+where o.status = 'DELIVERED';
+
+-- aqui realizamos praticamente a mesma busca, porém, sem uma subquerie e sim realizando join através de orders e order_items
+select
+o.order_id,
+count(oi.order_id)as items
+from orders o
+left join order_items oi on o.order_id = oi.order_id
+where o.status = 'DELIVERED'
+group by o.order_id;
+
+-- otimização com pré-agregação
+
+-- somando os valores dos itens antres do join com a tabela orders
+with soma_items as (
+  select order_id, sum(quantity * unit_price) as subtotal
+  from order_items
+  group by order_id
+)
+-- mostrar a quantidade vs. preço unitário para os pedidos com status 'DELIVERED'
+select 
+  o.order_id, o.total_amount, si.subtotal
+from orders o
+join soma_items si on si.order_id = o.order_id
+where o.status = 'DELIVERED';
+
+
+-- criando uma nova tabela com parte da tabela orders através do RANGE
+create table orders_part (
+    order_id       int not null,
+    customer_id    int,
+    order_date     date not null,
+    status         varchar(20),
+    total_amount   numeric(12,2),
+    primary key (order_date, order_id)
+) partition by range (order_date);
+
+-- criando pedidos
+create table order_2024_01 partition of orders_part
+  for values from ('2024-01-01') to ('2024-02-01');
+
+create table orders_2024_02 partition of orders_part
+  for values from ('2024-02-01') to ('2024-03-01');
+
+insert into orders_part (
+  order_id,
+  customer_id,
+  order_date,
+  status,
+  total_amount
+) values (
+  280,
+  123,
+  '2024-02-22',
+  'SHIPPED',
+  250.00
+);
+
+select * from orders_part
+where order_date between '2024-02-01' and '2024-02-28';
+
+
+-- criando uma nova tabela com parte da tabela orders através do LIST
+create table orders_part (
+    order_id       int generated always as identity,
+    customer_id    int,
+    status         varchar(20),
+    order_date     date,
+    total_amount   numeric(12,2)
+) partition by list (status);
+
+create table orders_shipped partition of orders_part
+  for values in ('SHIPPED');
+
+create table orders_delivered partition of orders_part
+  for values in ('DELIVERED');
+
+insert into orders_part (customer_id, status, order_date, total_amount)
+values (123, 'SHIPPED', '2024-06-10', 150.00)
+
+select * from orders_part where status = 'SHIPPED'
+
+
+-- criando uma nova tabela com parte da tabela orders através do HASH
+-- Hash realiza um balanceamento uniforme de carga, quando não se tem um agrupamento lógico, se baseando em alguma PK
+
+create table customers_part (
+  customer_id    int primary key,
+  name           text
+) partition by hash (customer_id);
+
+-- id => hash % 4 = 0 -> vai para customers_part_0
+-- MODULUS -> NÚMERO TOTAL DE PARTIÇÕES
+-- REMAINDER -> IDENTIFICADOR DA PARTIÇÃO
+create table customers_part_0 partition of customers_part for values with (MODULUS 4, REMAINDER 0);
+create table customers_part_1 partition of customers_part for values with (MODULUS 4, REMAINDER 1);
+create table customers_part_2 partition of customers_part for values with (MODULUS 4, REMAINDER 2);
+create table customers_part_3 partition of customers_part for values with (MODULUS 4, REMAINDER 3);
+
+insert into customers_part (customer_id, name)
+values (101, 'Alice');
+
+select * from customers_part;
+
+
+
+-- criando uma nova tabela com parte da tabela orders através do DEFAULT
+create table orders_part (
+  order_id        int generated always as identity,
+  status          varchar(20),
+  customer_id     int
+) partition by list (status);
+
+create table orders_pending partition of orders_part for values in ('PENDING');
+create table orders_failed partition of orders_part for values in ('FAILED');
+
+
+-- capturando qualquer valor não mapeado
+create table orders_default partition of orders_part DEFAULT;
+
+
+insert into orders_part (status, customer_id)
+values ('CANCELLED', 321);
+
+select * from orders_part;

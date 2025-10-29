@@ -685,3 +685,128 @@
       explain analyse select * from customers
       where customer_id = 101;
     ```
+
+  ### Explain - Leituras Avançadas de Planos
+  * Index Scan
+    * Utilizado para quando se é trabalhado em cima de um índice
+    * Muitas vezes quando trabalhamos com tabelas que tem poucos registros e não tem a necessidade de utilizar index no momento da execução do comando, o próprio Postgres entende que não é necessário, desta forma, é ativado o Seq Scan, que seria uma consulta normal, sem estar trabalhando com índice no momento e acaba não retornando o índice para nós 
+    * Para forçar o resultado do explain analyse 'em cima' de um index scan, é preciso desabilitar temporariamente o seq scan:
+    
+      ```
+        set enable_seqscan = off;
+
+        explain analyse
+        select * from products where price > 300;
+
+        -- Depois reativa o seqscan
+        set enable_seqscan = on;
+      ```
+
+  ### Otimizando com pré-agregação
+
+  * Técnica para melhorar a performance de consultas que envolvem joins com grandes volumes de dados
+  
+
+  ### Particionamento de Tabelas e Dados no PostgreSQL
+
+  * ### Particionamento de dados
+  
+    * Particionamento de dados é o recurso no qual o adminsitrador de banco de dados poderá ter o domínio dos locais onde seus dados são armazendos.
+    * Resulta em gerenciamento melhor dos dados, em uma melhor performance, ter um melhor acompanhamento de como está ocorrendo a participação do file group e como que esses registros estão alocados.
+    
+
+    ### Partition By Range
+    * Divide dados em faixar contínuas de valores (datas, númericos,...;)
+    * Quando usar: séries temporais, logs, ordens por data.
+
+
+    ### Demais tipos de particionamento de tabelas
+    * Range
+    * List
+      * Baseado em conjuntos discretos de valores
+      * Ideal para categorização
+        * Coluna do tipo status, aonde a pessoa pode ser gerente, administrador, funcionário, fornecedor...
+        * Coluna do tipo estado/região (Ex.:São Paulo, Rio de Janeiro, Curitiba, Florianópolis ou ainda Região Sul, Sudeste, Norte, Nordeste...)
+    * Hash
+      * Valor hash da chave, ou seja, quando não há um agrupamento lógico natural, usamos um hash (um valor de uma chave) para ser como base e fazer o agrupamento baseado nessa escolha
+      * 
+    * Default
+      * Default é mais genérico, pega os valores que não se encaixam em valor algum.
+      * Caso não tenha conseguido categorizar as tabelas, 'pega' faz o default adiciona todos os dados, para deixar uma participação separada assim, sem muita organização.
+
+    ### Normalização vs. denormalização: Equilibrando Performance
+
+      * Princípios de normalização
+
+      ### Formas Normais
+      * 1FN: cada coluna armazena valor atômico
+      * 2FN: além da 1FN, todas as colunas não-chave dependem da chave completa (sem dependências parciais)
+      * 3FN: afém da 2FN, não existem dependências transitivas entre colunas não-chave
+
+      ### Benefícios da normalização
+      * Integridade referencial garantida por chaves estrangeiras
+      * Eliminação da redundância: evita dados duplicados e inconsistentes
+      * Facilidade de manutenção: alterações em um único lugar
+
+      ### Desvantagens em cenários análiticos
+      * Múltiplos JOINs: consultores OLAP que agregam dados em grandes volumes sofrem com o custo de junções
+      * Latência: Leitura de várias tabelas pode ser mais lenta que leitura de uma única tabela ampla
+    
+      ### Casos de uso de denormalizacao
+      * Mostrar quando e como sacrificar parte da normalização para ganhar rapidez de leitura
+      
+      ### Colunas calculadas e agregados pré-computados
+      * Coluna calculada (computed/generated column) no próprio registro:
+      
+        ```
+          alter table pedidos
+            add column valor_total numeric(12, 2)
+          generated always as (
+            (
+              select sum(quantidade * preco_unit)
+              from itens_pedido i where i.pedido = pedidos.pedido_id
+            )
+          ) STORED;
+        ```
+        * Acima estamos alterando a tabela pedidos, adicionando uma nova coluna esta será gerada através do comando generated, definindo assim a mesma como uma coluna computada, aonde os seus valores serão gerados apartir de um select e assim colocados na coluna.
+        * Vantagem: Leitura direta, não é necessário realizar nenhum JOIN
+        * Desvantagem: Custo extra na hora da escrita, no momento da escrita, ela sempre fará o select.
+      
+      ### Tabelas de resumo (summary tables)
+      * Tabela dedicada que armazena agregados:
+        ```
+          create table resumo_vendas_mensal (
+            ano         int,
+            mes         int,
+            valor_venda numeric(14, 2),
+            primary key (ano, mes)
+          );
+
+          -- Popula a tabela inicialmente
+          insert into resumo_vendas_mensal(ano, mes, valor_venda)
+          select
+            extract(year from p.data_pedido)::int as ano,
+            extract(month from p.data_pedido)::int as mesm
+            sum(i.quantidade * i.preco_unit)
+          from pedidos p
+          join itens_pedido i on i.pedido_id = p.pedido_id
+          group by 1, 2
+        ```
+
+      ### Estratégias híbridas e boas práticas
+      * Definir critérios para combinar normalização e denormalização sem perder controle de integridade.
+      * Quando normalizar vs. quando denormalizar
+      
+        | Cenário | Normalização | Denormalização |
+        | :---: | :---: | :---: |
+        | Alto volume de transações (OLTP) | Prioritário | Evitar |
+        | Consultas análiticas frequentes | Aceitável (JOINs) | Recomendo |
+        | Atualização em tempo real | Melhor (menos redundância) | Cuidado com inconsistências |
+        | Tolerância a leve latência nas escritas | Sim | Não |
+  
+
+      ### Ferramentas de sincronização
+
+      * Triggers: para updates/inserts/deletes em tabelas fonte;
+      * Jobs periódicos (cron, pg_cron, ferramentas de ETL): para refresh de materialized views ou rebuild de summary tables durante as janelas de baixa carga;
+      * Streaming/CDC (Logical Replication, Debezium): manter réplicas análiticas quase em tempo real;
