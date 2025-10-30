@@ -810,3 +810,143 @@
       * Triggers: para updates/inserts/deletes em tabelas fonte;
       * Jobs periódicos (cron, pg_cron, ferramentas de ETL): para refresh de materialized views ou rebuild de summary tables durante as janelas de baixa carga;
       * Streaming/CDC (Logical Replication, Debezium): manter réplicas análiticas quase em tempo real;
+
+## Recursos Avançados do Postgres
+* Views e tabelas temporárias
+  
+  ### View
+  * A view pode ser definida como uma tabela virtual composta por linhas e colunas de dados vindos de tabelas relacionadas em uma query (um agrupamento de SELECT's, por exemplo)
+  * Simplificação de consultas complexas
+  * Encapsulamento de lógica de negócio
+  * Segurança: export apenas colunas permitidas
+
+    #### Tipos de views
+    * Simples (não atualizáveis)
+      * Normalmente envolve Joins ou agregações
+      * Não pode ser atualizada diretamente
+      * views basicamente criadas para consultas
+
+    * Atualizáveis (quando atendem às regras de atualizabilidade)
+      * Se baseia em apenas uma tabela
+      * Não contém o uso do:
+        * distinct, do group by, do having, do limit
+        * Funções de agragação como: count, sum, etc.
+        * Junções, Joins, subqueries no select
+      * Todas as colunas da view são diretamente mapeàveis à tabela base, ou seja, é basicamente um select simples que pegamos naquela tabela e então, cosnegue fazer atualização
+
+      * Exemplo prático - Criando uma View simples
+        ```
+          -- View que lista produtos com categorias e preço acima de R$200
+          create view vw_produtos_caros as
+          select
+            p.produto_id,
+            p.product_name,
+            c.category_name,
+            p.price
+          from produtos p
+          join categories c on p.category_id = c.category_id
+          where p.price > 200;
+        ```
+
+  ### Views e tabelas temporárias - Materialized Views e Performance
+
+    #### O que é uma Materialized View?
+    * Uma materialized View é uma view que armazena dados fisicamente no banco, ou seja, ela salva o resultado da sua consulta em disco.
+    
+    #### Vantagens e Desvantagens
+    |  |  |
+    | --- | --- |
+    | **Vantagem** | **Explicação** |
+    | ⚡ Performance | Muito mais rápida para consultas pesadas e repetidas |
+    | 🔄 Ideal para relatórios | Quando os dados não mudam a todo momento |
+    | ✅ Indexável | Você pode **criar índices** sobre materialized views |
+
+    |  |  |
+    | --- | --- |
+    | **Desvantagem** | **Explicação** |
+    | 🚫 Dados desatualizados | A view **não reflete automaticamente** alterações nas tabelas base |
+    | 🔄 Requer manutenção | É preciso usar REFRESH MATERIALIZED VIEW para atualizar os dados |
+
+    #### Criando um Materialized View
+    * Exemplo: Resumo mensal de vendas (como feito na aula anterior)
+      ```
+        create materialized view
+        mv_resumo_vendas_mensal as
+        select
+          date_trunc('month', o.order_date) as mes,
+          count(o.order_id) as total_pedidos,
+          sum(o.total_amount) as valor_total
+        from orders o
+        group by 1;
+      ```
+
+    #### Conceitos fundamentais - Tabelas temporárias
+    * O que são?
+      * São tabelas criadas para uso temporário, ou seja, existem apenas durante a sssão ou transição atual e são automaticamente descartadas ao final.
+    
+    #### Tipos de Tabelas Temporárias
+    |  |  |  |  |
+    | --- | --- | --- | --- |
+    | **Tipo** | **Duração** | **Persistência** | **Usos recomendados** |
+    | TEMP ou TEMPORARY | Até o fim da sessão | 🚫 Não persiste | Cálculos temporários, ETL |
+    | UNLOGGED | Persistente (Até reinício do servidor) | ✅ Mas **não registrada no WAL** | Melhor performance, mas sem recuperação em falhas |
+
+    #### Vantagens das tabelas temporárias
+    * Evita repetição de subconsultas ou joins pesado;
+    * Exita a criação de tabelas permanentes desnecessárias;
+    * Auxilia em ETL, relatórios parciais, comparações entre períodos, etc;
+    * Pode melhorar a performance de pipelines analíticos complexos;
+
+
+    #### Criar e Popular uma Tabela temporária
+      ```
+        -- Cria tabela temporária de vendas do mês de junho/2024
+
+        create temporary table tmp_pedidos_junho
+        as
+        select *
+        from orders
+        where order_date between '2024-06-01' and '2024-06-30';
+      ```
+
+  ### Views e tabelas temporárias - Casos de uso combinados e boas práticas
+
+    #### O que é ETL?
+    * ETL = Extract, Tranform, Load
+
+    |  |  |  |
+    | --- | --- | --- |
+    | **Etapa** | **Descrição** | **Exemplo no PostgreSQL** |
+    | Extract | Extrair dados das tabelas principais | select * from orders |
+    | Transform | Limpar, filtrar ou agregar dados | create temp table, join, group by |
+    | Load | Armazenar em uma estrutura de destino (relatório, tabela final, etc.) | insert into, create view, exportação |
+
+    #### Fluxo combinado: Views + Tabelas temporárias
+    * 🔄 Situação: Você precisa gerar relatórios trimestrais de um grande volume de dados de 2024
+    
+      ```
+        create temporary table tmp_vendas_2024 as
+        select *
+        from orders
+        where order_date >='2024-01-01';
+      ```
+
+    #### Boas práticas ao combinar Views e Tabelas Temporárias
+
+    |  |  |
+    | --- | --- |
+    | **Boas práticas** | **Por que fazer?** |
+    | 🧪 Use temp table para filtros pesados | Evita escanear a tabela original várias vezes |
+    | 🧠 Encapsule lógica em views nomeadas | Evita escanear a tabela original várias vezes |
+    | 🔎 Use explain analyse nas consultas finais | Verifica se índices estão sendo usados corretamente |
+    | 🧹 Lembre-se: views não armazenam dados | O select ainda consulta a origem a cada execução |
+    | ⚡ use materialized view para dados que mudam pouco | Aumenta a performance com cache físico |
+
+
+    #### Resumo final
+    |  |  |  |
+    | --- | --- | --- |
+    | **Recurso** | **Ideal para** | **Características** |
+    | temp table | Cálculos intermediários | Só existe durante a sessão |
+    | view | Encapsular lógica fixa | Executa o select a cada uso |
+    | materialized view | Relatórios pesados com dados estáticos | Armazena os dados fisicamente |
