@@ -950,3 +950,75 @@
     | temp table | Cálculos intermediários | Só existe durante a sessão |
     | view | Encapsular lógica fixa | Executa o select a cada uso |
     | materialized view | Relatórios pesados com dados estáticos | Armazena os dados fisicamente |
+
+
+## Introdução a funções em PL/pgSQL
+
+  ### O que é PL/pgSQL?
+  * PL/pgSQL (PL => Procedural Language | PostgreSQL => Structured Query Language) é a lingugagem procedural nativa do PostgreSQL usada para escrever funções, procedures, triggers e blocos anônimos com controle de fluxo, variáveis, loops e tratamento de exceções.
+
+  * O que ela permite fazer (que o SQL padrão não faz):
+    * Variáveis locais (DECLARE);
+    * Condições (IF, CASE);
+    * Loops (FOR, WHILE, LOOP);
+    * Tratamento de exceções (EXCEPTION);
+    * Execução de blocos de código (BEGIN... END);
+    * Reuso de lógica com maior legibilidade;
+
+  ### Estrutura básica de um bloco PL/pgSQL
+  ```
+    DO $$
+    DECLARE
+      contador INT := 1
+    BEGIN
+      WHILE contador <= 5 LOOP
+        RAISE NOTICE 'Valor: %', contador;
+        contador := contador + 1;
+      END LOOP;
+    END;
+    \$$ language plpgsql;
+  ```
+
+  ### Porque usar PL/pgSQL?
+  * Automatizar tarefas repetitivas no banco de dados;
+  * Criar regras de negócio diretamente no banco;
+  * Melhor performance ao evitar múltiplas idas e voltas entre app e banco;
+  * Criar triggers com lógica condicional;
+
+
+  ### O que é uma função (Function) em PL/pgSQL?
+  * Uma função é um bloco de código que pode ser executado no banco de dados com parâmetros de entrada e um valor de retorno.
+  
+
+  ### Vantagens
+
+  |  |  |
+  | --- | --- |
+  | **Vantagem** | **Benefício** |
+  | 🔄 Reutilização de código | Criar lógica uma vez e reutiliza em vários lugares |
+  | 🔐 Segurança | Pode restringir acesso direto às tabelas |
+  | ⚡ Performance | Executada diretamente no servidor PostgreSQL, com menos tráfego de rede |
+  | 🧱 Encapsulamento | Centraliza regras de negócio, facilitando manutenção e testes |
+
+
+  ### Sintaxe Básica de uma função
+  ```
+    CREATE [OR REPLACE] FUNCTION nome_funcao(arg1 tipo, arg2 tipo, ...)
+    RETURN tipo_retorno AS $$
+    DECLARE
+      -- variáveis locais
+    BEGIN
+      -- lógica da função
+      RETURN valor;
+    END;
+    ,$$ LANGUAGE plpgsql;
+  ```
+
+  |  |  |
+  | --- | --- |
+  | **Seção** | **Explicação** |
+  | CREATE OR REPLACE FUNCTION | Cria ou substitui a função existente |
+  | RETURNS | Define o tipo de retorno da função |
+  | DECLARE | Declara variáveis internas (opcional) |
+  | BEGINS ... END | Bloco principal da lógica da função |
+  | LANGUAGE plpgsql | Indica que o código usa a linguagem procedural do PostgreSQL |

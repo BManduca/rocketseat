@@ -1,0 +1,83 @@
+create or replace function fn_fullname(c_id int)
+returns text as $$
+DECLARE
+  v_first varchar;
+  v_last varchar;
+begin
+  select first_name, last_name
+    into v_first, v_last
+  from customers
+  where customer_id = c_id;
+
+  return v_first || ' ' || v_last;
+end;
+$$ language plpgsql;
+
+select fn_fullname(42) as nome_completo;
+
+
+-- função para retornar o total do valor do pedido
+create or replace function fn_order_total(o_id int)
+returns numeric as $$
+declare
+  v_total numeric;
+begin
+  select sum(quantity * unit_price)
+    into v_total
+  from order_items
+  where order_id = o_id;
+
+  return coalesce(v_total, 0); -- se não houver itens, retorna 0
+end;
+$$ language plpgsql;
+
+
+select fn_order_total(497) as total_pedido;
+
+
+-- RETORNO COMPOSTO => retornando múltiplas colunas com a estrutura do returns table
+-- Permitindo que a função se comporte como uma tabela virtual.
+create or replace function fn_order_items(o_id int)
+returns table(
+  product_name varchar,
+  qty int,
+  subtotal numeric
+) as $$
+begin
+  return query
+  select
+    p.product_name,
+    oi.quantity,
+    oi.quantity * oi.unit_price as subtotal
+  from order_items oi
+  join products p on p.product_id = oi.product_id
+  where oi.order_id = o_id;
+end;
+$$ language plpgsql;
+
+select * from fn_order_items(497);
+
+
+-- função para tratativa de erros no email do cliente
+create or replace function fn_get_customer_email(c_id int)
+returns text as $$
+declare
+  v_email text;
+begin
+  select email into v_email
+  from customers
+  where customer_id = c_id;
+
+  if v_email is null then
+    raise exception 'Cliente % não foi encontrado ou está sem email', c_id;
+  end if;
+
+  return v_email;
+  
+exception
+  when others then
+    return 'no-reply@example.com';
+end;
+$$ language plpgsql security definer;
+
+select fn_get_customer_email(333) as email_customer;
