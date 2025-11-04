@@ -1022,3 +1022,44 @@
   | DECLARE | Declara variáveis internas (opcional) |
   | BEGINS ... END | Bloco principal da lógica da função |
   | LANGUAGE plpgsql | Indica que o código usa a linguagem procedural do PostgreSQL |
+
+## Insert, update e delete em funções
+* Funções que modificam Dados e Controle de Transações
+
+  ### O que são funções de Manipulação de Dados?
+  * São funções que executam comandos como INSERT, UPDATE e DELETE dentro do corpo da função;
+  * Isso permite encapsular lógicas como:
+    * Cadastrar entidades relacionadas;
+    * Atualizar registros em cascata;
+    * Validar e aplicar regras de negócio antes de gravar no banco;
+
+## Introdução a Triggers (gatilhos)
+* Aprender a usar e aplicar, buscando automatizar ações em resposta a eventos de modificações de dados.
+
+  ### Trigger
+  * É um procedimento que é automaticamente executado pelo postgreSQL quando ocorre um evento específico em uma tabela: insert, update e delete.
+  
+  |  |  |
+  | ---  | --- |
+  | **Aplicação** | **Exemplo** |
+  | Auditoria de alterações | Registrar histórico de mudanças |
+  | Cálculos automáticos | Atualizar totais ou agregados |
+  | Validações adicionais | Impedir certos updates com lógica personalizada |
+  | Integrações | Acionar processos externos via tabelas intermediárias |
+
+  ### Tipos de Triggers
+
+  |  |  |
+  | --- | --- |
+  | **Tipo** | **Explicação** |
+  | BEFORE | Executa antes do comando (INSERT, UPDATE, etc.) - Pode modificar ou cancelar a operação |
+  | AFTER | Executa após o comando - usado geralmente para **auditoria ou efeitos colaterais** |
+
+  ### Sintaxe básica
+  ```
+    create trigger nome_trigger
+    {before | after}{insert | update | delete}
+    on nome_tabela
+    [for each {row | statement}]
+    execute function nome_funcao_trigger();
+  ```

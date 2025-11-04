@@ -1,0 +1,128 @@
+-- comando para mostrar o nome da sequência, o valor atual da sequência e o maior customer_id da tabela
+select
+  pg_get_serial_sequence('customers', 'customer_id') as seq_name,
+  currval(pg_get_serial_sequence('customers', 'customer_id')) as curr_value,
+  nextval(pg_get_serial_sequence('customers', 'customer_id')) as next_value,
+  max(customer_id) as max_id
+from customers;
+
+--comando para ajustar a sequência de ID e começar após o último ID existente
+select setval(pg_get_serial_sequence('customers', 'customer_id'), (select max(customer_id) from customers));
+
+
+-- FUNÇÃO PARA CADASTRAR UM NOVO CLIENTE
+create or replace function fn_add_customer(
+  p_first varchar,
+  p_last varchar,
+  p_email varchar,
+  p_city varchar
+)
+returns int as $$
+declare
+  v_id int;
+begin
+  insert into customers (first_name, last_name, email, city, created_at)
+  values (p_first, p_last, p_email, p_city, NOW())
+  returning customer_id into v_id;
+  
+  return v_id;
+end;
+$$ language plpgsql;
+
+select * from customers;
+
+select fn_add_customer('Lorena', 'trindade', 'lorenatrindade@mail.com', 'Curitiba');
+select fn_add_customer('Maicon', 'Rodrigues', 'maiconrodrigues@mail.com', 'Porto Alegre');
+
+
+-- função para atualizar o email de um customer(cliente)
+create or replace function fn_update_email(c_id int, novo_email text)
+returns boolean as $$
+begin
+  update customers
+  set email = novo_email
+  where customer_id = c_id;
+
+  if found then
+    return true; -- atualizou com sucesso
+  else
+    return false; -- nenhum cliente com o id em questão
+  end if;
+end;
+$$ language plpgsql;
+
+select fn_update_email(202, 'maicon.rodrigues@mail.com') as result;
+
+-- função para realizar a exclusão de um cliente
+create or replace function fn_delete_customer(c_id int)
+returns text as $$
+begin
+  if exists(
+    select 1 from orders where customer_id = c_id
+  ) then
+    return 'Erro: cliente possui pedidos.';
+  else
+    delete from customers where customer_id = c_id;
+    return 'Cliente excluído com sucesso!';
+  end if;
+end;
+$$ language plpgsql;
+
+select fn_delete_customer(202) as result;
+
+
+-- função para criação de pedido
+create or replace function fn_create_order(
+  p_customer_id int,
+  p_items json
+)
+returns text as $$
+declare
+  v_order_id int;
+  v_item json;
+begin
+  -- criando produto
+  insert into orders (customer_id, order_date, status, total_amount)
+  values (p_customer_id, NOW(), 'PENDING', 0)
+  returning order_id into v_order_id;
+
+  -- insere os itens
+  for v_item in select * from json_array_elements(p_items)
+  loop
+    insert into order_items (order_id, product_id, quantity, unit_price)
+    values (
+      v_order_id,
+      (v_item->>'product_id')::int,
+      (v_item->>'quantity')::int,
+      (v_item->>'unit_price')::numeric
+    );
+  end loop;
+
+  return format('Pedido %s criado com sucesso!', v_order_id);
+
+exception
+  when others then
+    raise notice 'Erro ao criar pedido. Revertendo...';
+    raise;
+end;
+$$ language plpgsql;
+
+-- comando para mostrar o nome da sequência, o valor atual da sequência e o maior id da tabela
+select
+  pg_get_serial_sequence('order_items', 'order_item_id') as seq_name,
+  currval(pg_get_serial_sequence('order_items', 'order_item_id')) as curr_value,
+  nextval(pg_get_serial_sequence('order_items', 'order_item_id')) as next_value,
+  max(order_item_id) as max_id
+from order_items;
+
+--comando para ajustar a sequência de ID e começar após o último ID existente
+select setval(pg_get_serial_sequence('order_items', 'order_item_id'), (select max(order_item_id) from order_items));
+
+select fn_create_order(
+  21,
+  '[
+    {"product_id": 94, "quantity": 2, "unit_price": 178.60},
+    {"product_id": 96, "quantity": 1, "unit_price": 146.90},
+    {"product_id": 99, "quantity": 4, "unit_price": 127.80}
+  ]'::json
+) as resultado;

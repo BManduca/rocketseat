@@ -1,0 +1,98 @@
+
+-- criando uma tabela de auditoria de pedidos
+
+create table orders_audit (
+  audit_id     serial primary key,
+  order_id     int,
+  action       varchar(10),
+  action_time  timestamp
+);
+
+-- criando a função da trigger
+create or replace function tg_audit_order()
+returns trigger as $$
+begin
+  insert into orders_audit(order_id, action, action_time)
+  values (
+    coalesce(new.order_id, old.order_id),
+    tg_op,
+    now()
+  );
+  return new;
+end;
+$$ language plpgsql;
+
+
+-- criando a trigger
+create trigger trg_order_audit
+after insert or update or delete
+on orders
+for each row
+execute function tg_audit_order();
+
+-- realizando uma alteração para teste
+update orders
+set status = 'SHIPPED'
+where order_id = 6;
+
+-- verificando o log da auditoria
+select * from orders_audit where order_id = 6;
+
+
+-- trigger para evitar que dados inválidos sejam inseridos
+create or replace function tg_validate_product_price()
+returns trigger as $$
+begin
+  if new.price < 0 then
+    raise exception 'Preço não pode ser negativo. Valor informado: %', new.price;
+  end if;
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger trg_validate_price
+before insert or update on products
+for each row
+execute function tg_validate_product_price();
+
+insert into products (product_name, category_id, price) values ('Novo teste trigger', 10, -20);
+
+
+-- gerando uma trigger que vai chamar duas funções => 1º para auditar a modificação na tabela products
+-- e a 2º vai enviar uma notificação avisando que teve uma alteração
+create table products_audit (
+  product_audit_id     serial primary key,
+  product_id           integer,
+  action               varchar(10),
+  action_time          timestamp
+)
+
+create or replace function fn_log_product_change(p_id int, action text) returns void as $$
+begin
+  insert into products_audit(product_id, action, action_time)
+  values (p_id, action, now());
+end;
+$$ language plpgsql;
+
+create or replace function fn_notify_change() returns void as $$
+begin
+  raise notice 'Notificação: produto alterado.';
+end;
+$$ language plpgsql;
+
+create or replace function tg_product_chain()
+returns trigger as $$
+begin
+  perform fn_log_product_change(new.product_id, tg_op);
+  perform fn_notify_change();
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger trg_product_chain
+after update on products
+for each row
+execute function tg_product_chain();
+  
+update products set product_name = 'teste trigger 123' where product_id = 102;
+
