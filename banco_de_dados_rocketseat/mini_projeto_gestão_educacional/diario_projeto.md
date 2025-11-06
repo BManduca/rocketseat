@@ -1063,3 +1063,355 @@
     [for each {row | statement}]
     execute function nome_funcao_trigger();
   ```
+
+## Stored procedures
+* Uma stored procedure (ou procedimento armazenado) é um bloco de código executável no banco de dados que não precisa retornar valor e pode executar múltiplas instruções com controle interno de transações (COMMIT, ROLLBACK).
+
+|  |  |  |
+| --- | --- | ---- |
+| **Aspecto** | **Function** | **Procedure** |
+| Chamada | Select nome_funcao(...) | CALL nome_procedure(...) |
+| Retorno | Retorna valor obrigatório | Não retorna valor diretamente (usa OUT) |
+| Controle de transação | Não pode fazer commit ou rollback interno | Pode usar commit, rollback dentro do corpo |
+| Finalidade | Cálculos, consultas, lógica isolada | Rotinas administrativas, ETL, scripts |
+
+  ### Sintaxe básica
+
+  ```
+    create [or replace] procedure nome_procedure(
+      arg1 tipo,
+      out saida1 tipo,
+      ...
+    )
+    language plpgsql as $$
+    begin
+      -- logica aqui
+    end;
+    $$;
+  ```
+
+  ### Tipos de parâmetros na Stored Procedure
+  * Parâmetros IN, OUT, INOUT
+
+  |  |  |
+  | --- | --- |
+  | **Tipo** | **Descrição** |
+  | IN | Padrão. Valor de entrada, não pode ser alterado pela procedure. |
+  | OUT | Valor de saída. A variável é preenchida dentro da procedure. |
+  | INOUT | Valor de entrada e de saída. Pode ser lido e modificado internamente. |
+
+
+  ### Fundamentos de Transações em Bando de Dados (PostgreSQL)
+  * Uma transação é um conjunto de operações SQL que devem ser tratadas como uma unidade atômica:
+    * Ou todas as operações são aplicadas com sucesso, ou nenhuma é aplicada (caso ocorra erro).
+  
+  <br>
+
+  |  |  |
+  | --- | --- |
+  | **Propriedade** | **Descrição** |
+  | Atomicidade | Tudo ou nada: nenhuma operação parcial |
+  | Consistência | Mantém as regras do banco (FKs, constrains, etc.) |
+  | Isolamento | Transações não interferem entre si |
+  | Durabilidade | Dados persistem mesmo após falhas |
+
+  ### Fluxo de uma transação
+  ```
+    begin
+      -- Operações SQL
+      -- INSERT, UPDATE, DELETE, etc.
+
+    commit; -- aplica tudo
+
+    -- ou
+
+    rollback; -- desfaz tudo
+  ```
+
+  ### Porque usar transações?
+  * Integridade dos dados: impede que parte de uma operação seja salva se algo der errado;
+  * Concorrência segura: evita inconsistências em sistemas múltiplos usuários;
+  * Controle de erro: permite desfazer alterações automaticamente em caso de exceção;
+  
+## Propriedades ACID: Atomidade e Consistência
+
+|  |  |  |
+| :---: | :---: | :---: |
+| **Letra** | **Nome** | **Significado resumido** |
+| A | Atomicidade | Tudo ou nada |
+| C | Consistência | Respeito as regras e restrições do banco |
+| I | Isolamento | Cada transação é isolada das outras |
+| D | Durabilidade | Dados persistem mesmo após falhas |
+
+
+  ### Atomicidade (A)
+  * Uma transação deve ser âtomica, ou seja, todas as operações são aplicadas com sucesso ou nenhuma delas é aplicada.
+
+  ### Consistência (C)
+  * Toda transação deve manter o banco em estado consistente, respeitando todas as regras de integridade, como:
+
+  |  |  |
+  | --- | --- |
+  | **Restrição** | **Exemplo** |
+  | PRIMARY KEY | IDs únicos e não nulos |
+  | FOREIGN KEY | Referências válidas entre tabelas |
+  | CHECK | Valores válidos dentro de um intervalo |
+
+  * #### Exemplo prático: violação de consistência
+    ```
+      begin;
+
+      -- tentando inserir item pedido inexistente (order_id 9999)
+      insert into order_items(order_id, product_id, quantity, unit_price)
+      values(9999, 1, 2, 100.00);
+
+      commit;
+    ```
+
+  ### Durabilidade (D)
+  * Uma vez que uma transação é confirmada com commit, suas alterações são permanentes, mesmo se ocorrer uma falha de energia ou travamento do sistema.
+
+
+  ### Boas práticas em transações
+  |  |  |
+  | --- | --- |
+  | **Prática** | **Explicação** |
+  | Transações curtas | Evitam bloqueios prolongados em tabelas |
+  | Evitar interação com usuário entre **begin** e **commit** | Pode travar a transação por muito tempo |
+  | Isolar lógica em procedures | Reduz código duplicado e facilita rollback |
+  | Monitorar locks com pg_locks | Detecta conflitos e gargalos |
+  | Dividir grandes cargas em batches | Reduz contenção, melhora a durabilidade e uso de memória |
+
+  ### Exemplo prático: Transação eficiente
+  ```
+  -- alteração em lote para produtos com id => 2
+    begin;
+      update products
+      set price = price * 1.05
+      where category_id = 2;
+    commit;
+  ```
+
+  ### Analisando locks
+  * Você pode verificar o estado dos bloqueios ativos com:
+  
+    ```
+      -- mostra os processos que estão esperando por um recurso bloqueado
+      -- útil para identificar deadlocks ou transações travadas
+      select * from pg_locks where not granted;
+    ```
+
+  ### Desafio final
+  * Situação:
+    * Você tem uma rotina que insere mais de 100 mil registros em uma tabela.
+    * Atualmente, a carga é feita com uma única transação.
+
+  * Problemas
+    * Ocupa memória excessiva.
+    * Pode travar tabelas por muito tempo.
+    * Em caso de falha, tudo é perdido.
+
+  * Solução
+    * Dividir a carga em batches de 10.000 registros
+
+
+## Propriedades de Isolamento e Níveis de Isolamento
+
+  ### O que é isolamento (isolation)?
+  * Isolamento define como e quando os efeitos de uma transação são visíveis para outras transações concorrentes.
+
+  ### Níveis de isolamento (ANSI SQL)
+
+  |  |  |  |
+  | --- | --- | --- |
+  | Nível | Suporte no PostgreSQL | Comportamento |
+  | READ UNCOMMITED | 🚫 (mapeado para READ COMMITED) | Permite dirty read (não suportado em PG) |
+  | READ COMMITED | ✅ (padrão) | Cada select vê apenas dados confirmados **antes da consulta** |
+  | REPEATABLE READ | ✅ (comportamento similar a SERIALIZABLE) | Garante que as mesmas linhas serão retornadas |
+  | SERIALIZABLE | ✅ | Simula execução **completamente serial**, sem anomalias |
+
+  ### Fenômenos de Concorrência
+  |  |  |  |
+  | --- | --- | --- |
+  | Fenômeno | Explicação | Evitado por ... |
+  | Dirty read | Ler dados que ainda não foram 'commitados' | Todos os níveis em PostgreSQL |
+  | Non-repeatable Read | Reconsultar uma linha e ver valor diferente | Evitado por REPEATABLE READ e SERIALIZABLE |
+  | Phantom Read | Reconsultar um conjunto e obter linhas novas | Evitado apenas por serializable |
+
+
+  ### Exemplo prático: Phantom Read Evitado
+  * Sessão A
+    ```
+      begin isolation level serializable;
+
+      -- consulta inicial
+      select count(*) from orders where status = 'PENDING';
+      -- retorna: 10
+    ```
+
+  * Sessão B (concorrente, executada lado-a-lado):
+    ```
+      begin;
+
+      insert into orders(customer_od, order_date, status, total_amount)
+      values(1, '2024-12-01', 'PENDING', 100);
+
+      commit;
+    ```
+
+  ### Exemplo prático: Non-repeatable read
+  * Etapa 1 - Sessão A (READ COMMITED)
+    ```
+      begin;
+
+      select price from products where product_id = 1;
+      -- retorna: 100
+
+      -- Aguarde...
+    ```
+
+  * Etapa 2 - Sessão B
+    ```
+      begin;
+
+      update products set price = 200 where product_id = 1;
+
+      commit;
+    ```
+
+  * Sessão A (continuação)
+    ```
+      select price from products where product_id = 1;
+      -- Retorna 200 (valor mudou dentro da mesma transação)
+
+      commit;
+    ```
+  <br>
+
+   ---
+
+  <br>
+
+  * Repetindo com SERIALIZABLE - Sessão A
+    ```
+      begin isolation level serializable;
+
+      select price from products where product_id = 1;
+
+      -- Retorna 100
+
+      -- Aguarde...
+    ```
+
+  * Repetindo com SERIALIZABLE - Sessão B
+    ```
+      begin;
+
+      update products set price = 200 where product_id = 1;
+
+      commit;
+    ```
+
+  * Repetindo com SERIALIZABLE - Sessão A (Continuação)
+    ```
+      select price from products where product_id = 1;
+      -- Retorna 100 (valor permanece igual)
+
+      commit;
+    ```
+
+    |  |  |  |  |
+    | --- | :---: | :---: | --- |
+    | Isolamento | Evita dirty read? | Evita non-repeatable? | Evita phantom? |
+    | READ COMMITED | ✅ | 🚫 | 🚫 |
+    | REPEATABLE READ | ✅ | ✅ | ⚠️ Parcial |
+    | SERIALIZABLE | ✅ | ✅ | ✅ |
+
+
+## Transações em ambientes concorrentes: Deadlocks, lock timeout e estratégias de retentativa
+
+  ### O que é um deadlock?
+  * Um deadlock ocorre quando duas ou mais transações esperam indefinidamente por recursos que estão mutuamente bloqueando entre si.
+
+    ![](../assets/exemplo_tipico_deadlock.png)
+
+    * O Conta 1 foi 'aberto' na sessão A
+    * Logo em seguida na sessão B o conta 2 também foi 'aberto'
+    * Mas ele tenta usar o conta 2 na sessão A, porém, o mesmo está bloqueado
+    * E na sessão B, tem a tentativa de utilizar a conta 1 que também está bloqueada porque foi aberta na A, se tornando assim um loop infinto, ou seja, um deadlock.
+
+  ### Detecção e Prevenção de Deadlocks
+  |  |  |
+  | --- | --- |
+  | **Estratégia** | **Descrição** |
+  | Sempre acesse os registros na **mesma ordem** | Ex.: Sempre UPDATE primeiro conta1, depois conta2 |
+  | Mantenha **transações curtas** | Reduz templo de bloqueio |
+  | Trate falhas de deadlock com **RETRY** | Reenvie a transação caso ela seja cancelada |
+
+
+## Fundamentos de Segurança e Papéis em PostgreSQL
+
+  ### O que são Papéis (Roles)?
+  * **Em PostrgreSQL, um papel(role) pode representar**:
+    * Um usuário individual
+    * Um grupo de permissões (como leitor, editor, etc...)
+    * A partir do PostgreSQL 8.1, usuários e grupos foram unificados em roles.
+
+
+  ### Tipos de Roles
+
+  |  |  |
+  | --- | --- |
+  | **Tipo** | **Característica** |
+  | LOGIN | Pode se conectar ao banco |
+  | NOLOGIN | Papel técnico, para **herança de permissões** |
+  | Com senha | Controlado via método de autenticação |
+
+## GRANT, REVOKE E Privilégios Avançados
+
+  ### Comandos básicos
+  * Sintaxe geral
+    ```
+      GRANT privilege_list on object_type object_name to role_name;
+      REVOKE privilege_list on object_type object_name from role_name;
+    ```
+
+  ### Tipos de privilégios
+  * Em tabelas:
+
+    |  |  |
+    | --- | --- |
+    | **Privilégio** | **Descrição** |
+    | select | Ler registros |
+    | insert | Inserir novos registros |
+    | update | Atualizar registros existentes |
+    | delete | Excluir registros |
+    | truncate | Limpar todos os registros da tabela |
+    | references | Criar FOREIGN KEY apontando para essa tabela |
+    | trigger | criar ou executar triggers na tabela |
+
+  * Em esquemas
+
+    |  |  |
+    | --- | --- |
+    | **Privilégio** | **Descrição** |
+    | usage | Acessar objetos dentro do schema |
+    | create | Criar novos objetos (tabelas, funções...) |
+
+  * Em funções
+    ```
+      grant execute on function nome(...) to role;
+    ```
+
+  * Em sequências
+  |  |  |
+  | --- | --- |
+  | **Privilégio** | **Descrição** |
+  | usage | Permite usar a sequência |
+  | select | Permite ler o valor atual |
+  | update | Permite modificar o valor |
+
+    ```
+      grant usage, select on sequence
+      products_products_id_seq to data_reader;
+    ```

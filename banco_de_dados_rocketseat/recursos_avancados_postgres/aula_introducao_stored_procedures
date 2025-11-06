@@ -1,0 +1,84 @@
+create or replace procedure sp_update_product_price(
+  p_product_id   int,
+  p_new_price    numeric
+)
+language plpgsql as $$
+begin
+  update products
+    set price = p_new_price
+  where product_id = p_product_id;
+
+  if not found then
+    raise exception 'Produto % não existe', p_product_id;
+  end if;
+end;
+$$;
+
+-- ao usar uma SP usamos o call e não o select como anteriormente
+call sp_update_product_price(3, 199.90);
+
+
+
+-- store procedure para cancelamento de pedido
+create or replace procedure sp_cancel_order(
+  p_order_id   int
+)
+language plpgsql as $$
+begin
+  -- garante que tudo ocorra como uma transação atômica
+  delete from order_items where order_id = p_order_id;
+  delete from orders where order_id = p_order_id;
+
+  if not found then
+    raise notice 'Pedido % não encontrado', p_order_id;
+  else
+    raise notice 'Pedido % e itens removidos', p_order_id;
+  end if;
+end;
+$$;
+
+
+call sp_cancel_order(499);
+
+
+-- procedure para retornar dados de um pedido
+create or replace procedure sp_order_summary(
+  in p_order_id   int,
+  out p_customer_id  int,
+  out p_total_amount  numeric
+)
+language plpgsql as $$
+begin
+  select customer_id, total_amount
+    into p_customer_id, p_total_amount
+  from orders
+  where order_id = p_order_id;
+end;
+$$;
+
+-- bloco de execução
+do $$
+declare
+  cust_id  int;
+  tot      numeric;
+begin
+  call sp_order_summary(5, cust_id, tot);
+  raise notice 'Cliente: %, Total: %', cust_id, tot;
+end;
+$$;
+
+create or replace procedure sp_increment_counter(inout ct int)
+language plpgsql as $$
+begin
+  ct := ct + 1;
+end;
+$$;
+
+do $$
+declare
+  c int := 10;
+begin
+  call sp_increment_counter(c);
+  raise notice 'Novo valor: %', c;
+end;
+$$;

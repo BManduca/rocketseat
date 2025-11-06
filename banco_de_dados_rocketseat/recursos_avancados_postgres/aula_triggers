@@ -74,6 +74,13 @@ begin
 end;
 $$ language plpgsql;
 
+create or replace function fn_log_order_change(ord_id int, action text) returns void as $$
+begin
+  insert into orders_audit(order_id, action, action_time)
+  values (ord_id, action, now());
+end;
+$$ language plpgsql;
+
 create or replace function fn_notify_change() returns void as $$
 begin
   raise notice 'Notificação: produto alterado.';
@@ -89,10 +96,23 @@ begin
 end;
 $$ language plpgsql;
 
+create or replace function tg_order_chain()
+returns trigger as $$
+begin
+  perform fn_log_order_change(new.order_id, tg_op);
+  return new;
+end;
+$$ language plpgsql;
+
 create trigger trg_product_chain
 after update on products
 for each row
 execute function tg_product_chain();
+
+create trigger trg_order_chain
+after update on orders
+for each row
+execute function tg_order_chain();
   
 update products set product_name = 'teste trigger 123' where product_id = 102;
 

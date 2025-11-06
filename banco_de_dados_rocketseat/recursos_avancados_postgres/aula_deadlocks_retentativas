@@ -1,0 +1,50 @@
+
+-- verificando internamente no PG se temos locks ativos
+select pid, relation::regclass, mode, granted
+from pg_locks
+where not granted;
+
+-- verificando as transações que estão em aberto
+select pid, xact_start, query
+from pg_stat_activity
+where state = 'active';
+
+begin;
+-- travando a escrita de outras seções até o commit
+lock table orders in share row exclusive mode;
+commit;
+
+DO $$
+declare
+  tentativa int := 0;
+begin
+  loop
+    begin
+      tentativa := tentativa + 1;
+
+      -- inicio da transação
+      begin
+
+        -- Operações criticas
+        update products
+        set stock = stock - 1
+        where product_id = 1;
+
+        commit;
+        exit; -- sucesso
+  
+      exception
+        when serialization_failure or deadlock_detected then
+          raise notice 'Tentativa % falhou, tentando novamente...', tentativa;
+          rollback;
+          perform pg_sleep(0.5); -- espera antes de tentar novamente
+
+          if tentativa > 5 then
+            raise exception 'Limite de tentativas excedido!';
+          end if;
+      end;
+    end;
+  end loop;
+end;
+$$;
+

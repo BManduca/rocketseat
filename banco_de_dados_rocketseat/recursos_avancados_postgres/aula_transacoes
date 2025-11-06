@@ -1,0 +1,62 @@
+begin;
+  
+-- 1. Aplicar desconto em produtos da categoria 3
+update products
+set price = price * 0.7
+where category_id = 4;
+
+-- 2. Atualizar valor total de um pedido
+update orders
+set total_amount = total_amount + 35
+where order_id = 497;
+
+commit;
+
+select * from products where category_id = 4 order by product_id;
+
+
+-- utilizando o rollback e o savepoint
+begin;
+insert into orders(customer_id, order_date, status, total_amount)
+  values(2, current_date, 'PENDING', 200.00);
+savepoint my_savepoint;
+insert into orders(customer_id, order_date, status, total_amount)
+  values(3, current_date, 'PENDING', 200.00);
+rollback to my_savepoint;
+-- copie o ID retornado e use manualmente no próximo insert
+insert into orders(customer_id, order_date, status, total_amount)
+  values(4, current_date, 'PENDING', 200.00);
+commit;
+
+
+-- atomicidade e consistência
+do $$
+declare
+  v_order_id integer;
+begin
+  -- bloco aninhado: se qualquer insert aqui falhar, tudo dentro dele será desfeito
+  begin
+    -- 1º insert
+    insert into orders(customer_id, order_date, status, total_amount)
+      values (2, current_date, 'PENDING', 200.00)
+      returning order_id into v_order_id;
+    raise notice 'Pedido 1 inserido com ID %', v_order_id;
+
+    -- 2º insert
+    insert into orders(customer_id, order_date, status, total_amount)
+      values(3, current_date, 'PENDING', 200.00);
+
+    -- 3º insert
+    insert into orders(customer_id, order_date, status, total_amount)
+      values(4, current_date, 'PENDING', 200.00);
+
+    raise notice 'Todos os pedidos foram inseridos com sucesso!';
+  exception when others then
+    -- qualquer erro aqui faz rollback só deste bloco aninhado
+    raise warning 'Erro ao inserir pedidos: %, revertendo todos os inserts', sqlerrm;
+    return;  -- sai do DO e evita que o restante (se houvesse) seja executado
+  end;
+end;
+$$ language plpgsql;
+    
+

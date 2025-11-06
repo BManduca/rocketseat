@@ -1,0 +1,38 @@
+-- criando um papel de leitura (grupo)
+create role reader nologin;
+
+-- criando papel de escrita
+create role writer nologin;
+
+-- criando usuário com senha
+create role app_user login password 'senha@123';
+
+
+-- garantindo papéis(roles) ao usuário
+grant reader to app_user;
+grant writer to app_user;
+
+
+-- criando 2 usuários novos 
+create role reporting login password 'relat0r10!';
+create role ingestion login password 'ingest2024!';
+
+-- criando permissões
+create role data_reader nologin;
+create role data_writer nologin;
+
+-- concedendo permissão para as tabelas do meu schema
+grant select on all tables in schema public to data_reader;
+grant insert, update, delete on all tables in schema public to data_writer;
+
+
+grant data_reader to reporting;
+grant data_writer to ingestion;
+
+
+
+
+aula_recursos_avançados_postgres
+
+
+
