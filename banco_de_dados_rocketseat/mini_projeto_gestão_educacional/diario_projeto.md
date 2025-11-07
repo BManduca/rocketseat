@@ -450,7 +450,7 @@
 
   ### Quando usar
   * Consultas com múltiplos passos
-  * Agregações intermediárias reutilziadas
+  * Agregações intermediárias reutilizadas
   * Consutlas recursivas (ex.: estrutura de gerência, encadeamento de categorias, etc.)
 
 ## CTE Não-Recursiva vs. Recursiva
@@ -499,7 +499,7 @@
 
 ## Window function (Conceito de função de Janela)
 * São funções que calculam valores sobre um conjunto de linhas relacionadas, mantendo o detalhe de cada linha;
-* Diferente de GROU BY, não colapsam os dados: os detalhes individuais permanecem, e os cálculos são feitos "por cima";
+* Diferente de GROUP BY, não colapsam os dados: os detalhes individuais permanecem, e os cálculos são feitos "por cima";
 
   ### Vantagens
   * Permitem calcular médias, totais, rankings e contagens sem perder o contexto da linha;
@@ -830,7 +830,7 @@
       * Se baseia em apenas uma tabela
       * Não contém o uso do:
         * distinct, do group by, do having, do limit
-        * Funções de agragação como: count, sum, etc.
+        * Funções de agregação como: count, sum, etc.
         * Junções, Joins, subqueries no select
       * Todas as colunas da view são diretamente mapeàveis à tabela base, ou seja, é basicamente um select simples que pegamos naquela tabela e então, cosnegue fazer atualização
 
@@ -882,7 +882,7 @@
 
     #### Conceitos fundamentais - Tabelas temporárias
     * O que são?
-      * São tabelas criadas para uso temporário, ou seja, existem apenas durante a sssão ou transição atual e são automaticamente descartadas ao final.
+      * São tabelas criadas para uso temporário, ou seja, existem apenas durante a sessão ou transição atual e são automaticamente descartadas ao final.
     
     #### Tipos de Tabelas Temporárias
     |  |  |  |  |
@@ -1415,3 +1415,81 @@
       grant usage, select on sequence
       products_products_id_seq to data_reader;
     ```
+
+  <!-- aula_recursos_avançados_postgres -->
+
+  <!-- relat0r10! -->
+
+  <!-- ingestion -->
+  <!-- ingest2024! -->
+
+  ### Privilégios Padrão (ALTER DEFAULT PRIVILEGES)
+  * Permite definir regras automáticas para objetos que ainda serão criados.
+
+    ```
+      alter default privileges in schema public
+        grant select on tables to data_reader;
+
+      alter default privileges in schema public
+        grant insert, update, delete on tables to data_writer;
+    ```
+
+  ### Exemplo prático
+  * Permitir execução de função fn_resumo_vendas_mensal para data_reader:
+    ```
+       grant execute on function
+       fn_resumo_vendas_mensal() to data_reader;
+    ```
+
+  * Revogar permissão de atualização na tabela customers:
+    ```
+      revoke update on customers from ingestion;
+    ```
+
+  ### Boas práticas com Permissões
+
+  |  |  |
+  | --- | --- |
+  | **Prática** | **Justificativa** |
+  | ✅ Use nologin parap papéis de permissão | Reutilizável e seguro |
+  | ✅ Revise permissões com \z ou information_schmea.role_table_grants | Auditoria clara |
+  | ✅ Prefira alter default privileges para equipes de desenvolvimento | Reduz erros futuros |
+  | 🚫 Evite grant all em produção | Excesso de permissões causa riscos |
+
+  
+## Backup e Restauração
+
+  ### Backup Lógico vs. Físico
+
+  |  |  |
+  | --- | --- |
+  | **Tipo** | **Características** |
+  | Lógico | **Exporta esquema e/ou dados** em SQL ou formatos próprios (.dump, .tar, etc.) |
+  | Físico | Cópia binária dos arquivos do banco (usado com pg_basebackup, rsync, etc.) |
+
+
+  ### Criando backup
+  * verificando instalação do PostgreSQL: ```psql --version``` ou ```pg_dump --version```
+  * localizando o comando pg_dump: ```which pg_dump```
+  * realizando backup:
+        ```
+          -- Exemplo
+          pg_dump -U postgres -h localhost -Fc -f "backup.dump" nome_do_banco
+        ```
+      * -U => Usuário do PostgreSQL
+      * -h => Host(servidor)
+      * -p => Porta (padrão 5432)
+      * -d => Nome do banco (alternativo ao final do comando)
+      * -F => formato do backup (p, c, d)
+        * c => custom, ou seja, formato binário que depois você restaura com **pg_restore**
+        * p => formato texto sql (padrão, legível)
+        * d => formato diretório (gera uma pasta com arquivos separados)
+      * -f => nome do arquivo de saída
+  
+  ### Realizar a restauração em um banco vazio
+  * No terminal:
+    * createdb -U nome_usuario nome_banco
+    * vai solicitar a senha
+    * dentro da pasta de backup criada anteriormente e aonde esta o arquivo de backup
+      ```pg_restore -U nome_usuario -h localhost -p 5432 -d nome_banco arquivo_backup```
+    * Exemplo: ```pg_restore -U postgres -h localhost -p 5432 -d aula_recursos_avançados_postgres backup_full_aula_recursos_avançados_postgres.dump```
