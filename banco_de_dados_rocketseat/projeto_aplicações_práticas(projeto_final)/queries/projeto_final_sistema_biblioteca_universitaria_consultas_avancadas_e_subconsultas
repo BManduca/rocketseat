@@ -1,0 +1,124 @@
+-- 1. selecionar livros que já foram emprestados mais de 10 vezes
+select *
+from books b
+where (
+  select count(*)
+  from loans l
+  join book_copies bc on l.copy_id = bc.copy_id
+  where bc.book_id = b.book_id
+) > 10;
+
+
+-- 2. Listar membros que nunca fizeram empréstimo
+select *
+from members m
+where not exists (
+  select 1
+  from loans l
+  where l.member_id = m.member_id
+);
+
+
+-- 3. Mostrar cópias cuja última movimentação (empréstimo ou reserva) foi há mais de 60 dias
+select *
+from book_copies bc
+where greatest(
+  coalesce((select max(loan_date) from loans where copy_id = bc.copy_id), '1900-01-01'),
+  coalesce((select max(reservation_date) from reservations where copy_id = bc.copy_id), '1900-01-01')
+) < current_date - interval '60 days';
+
+
+-- CTE aninhada: primeiro filtra reservas ativas, depois conta por membro
+with active_res as (
+  select member_id
+  from reservations
+  where status = 'active'
+),
+res_counts as (
+  select member_id, count(*) as cnt
+  from active_res
+  group by member_id
+)
+select m.full_name, rc.cnt
+from res_counts rc
+join members m on m.member_id = rc.member_id
+order by rc.cnt desc;
+
+
+-- ================================
+-- UNION, INTERSECT E EXCEPT
+-- ================================
+
+
+-- 1. UNION: todos os membros que têm empréstimos ou reservas
+select member_id, full_name, 'loan' as activity
+from members where member_id in (select distinct member_id from loans)
+union
+select member_id, full_name, 'reservation' as activity
+from members where member_id in (select distinct member_id from reservations);
+
+
+-- 2. INTERSECT: membros que fizeram empréstimo e também reserva
+select member_id
+from loans
+intersect
+select member_id
+from reservations;
+
+-- 3. EXCEPT: membros que reservaram mas não buscaram(emprestaram)
+select member_id
+from reservations
+except
+select member_id
+from loans;
+
+
+
+-- =======================================
+-- Window functions (ROW_NUMBER, RANK)
+-- =======================================
+
+-- 1. Numeração dos empréstimos por membro (ordem cronológica) => o row_number faz toda a ordenção
+select
+  l.loan_id,
+  l.member_id,
+  l.loan_date,
+  row_number() over (partition by l.member_id order by l.loan_date) as rn
+from loans l;
+
+
+-- 2. Ranking de livros por total de empréstimos
+select
+  b.book_id,
+  b.title,
+  count(*) as total_loans,
+  rank() over (order by count(*) desc) as loan_rank
+from loans l
+join book_copies bc on l.copy_id = bc.copy_id
+join books b on bc.book_id = b.book_id
+group by b.book_id, b.title;
+
+
+
+-- ===========================================
+-- LAG e LEAD: analisando dados sequenciais
+-- ===========================================
+
+-- 1. Para cada empréstimo, mostrar data do empréstimo anterior do mesmo membro
+select
+  loan_id,
+  member_id,
+  loan_date,
+  lag(loan_date) over (partition by member_id order by loan_date) as prev_loan_date
+from loans;
+
+
+-- 2. Para cada livro emprestado, mostrar qual será a próxima data de devolução prevista
+select
+  l.loan_id,
+  bc.book_id,
+  l.loan_date,
+  l.due_date,
+  lead(due_date) over (partition by bc.book_id order by l.loan_date) as next_due_date
+from loans l
+join book_copies bc on l.copy_id = bc.copy_id;

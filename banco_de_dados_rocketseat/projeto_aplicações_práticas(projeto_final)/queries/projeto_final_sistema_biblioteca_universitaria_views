@@ -1,0 +1,40 @@
+-- 1. View: Livros disponíveis por filial
+-- retorna todos(contagem) os livros que temos por filial e com status de available
+create view available_copies_per_branch as
+select
+  lb.name as branch,
+  b.title,
+  count(*) as available_count
+from book_copies bc
+join books b using(book_id)
+join library_branches lb using(branch_id)
+where bc.status = 'available'
+group by lb.name, b.title;
+
+-- Uso da view;
+select * from available_copies_per_branch
+where available_count > 2
+order by branch, available_count desc;
+
+
+-- 2. Tabela temporária: estatísticas de empréstimos do dia
+create temp table today_loan_stats as
+select
+  count(*) as total_loans,
+  count(distinct member_id) as distinct_members,
+  min(loan_date) as first_loan_day,
+  max(loan_date) as last_loan_day
+from loans
+where loan_date::date = current_date - interval '60 days';
+
+-- uso da temp table;
+select * from today_loan_stats;
+  
+
+
+
+
+
+
+
+

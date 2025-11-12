@@ -1,0 +1,43 @@
+-- criando índice para acelerar buscas por data de empréstimo
+create index idx_loans_loan_date on loans(loan_date);
+
+-- criando índice composto para filtrar por status e filial rapidamente
+create index idx_copies_status_branch on book_copies(status, branch_id);
+
+-- criando índice para buscas por gênero e ordenação por título
+create index idx_books_genre_title on books(genre_id, title);
+
+-- criando índice para consultas em members(email) - busca de login ou notificação
+create index idx_members_email on members(email);
+
+
+-- 1. Plano para a query de top 5 livros mais emprestados
+explain analyse
+select b.title, count(*) as times_loaned
+from loans l
+join book_copies bc on l.copy_id = bc.copy_id
+join books b on bc.book_id = b.book_id
+group by b.title
+order by times_loaned desc
+limit 5;
+
+
+-- 2. otimizando e diminuindo custo depois de verificar o explain analyse através CTE
+with loan_counts as (
+  select bc.book_id, count(*) as cnt
+  from loans l
+  join book_copies bc on l.copy_id = bc.copy_id
+  group by bc.book_id
+)
+select b.title, lc.cnt
+from loan_counts lc
+join books b on b.book_id = lc.book_id
+where lc.cnt > 10
+order by lc.cnt desc;
+
+
+
+
+
+
+
