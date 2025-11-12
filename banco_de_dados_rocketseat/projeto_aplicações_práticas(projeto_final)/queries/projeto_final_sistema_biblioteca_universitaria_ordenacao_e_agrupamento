@@ -1,0 +1,30 @@
+-- 1. top 5 livros mais emprestados
+select b.title, count(*) as times_loaned
+from loans l
+join book_copies bc using(copy_id)
+join books b using(book_id)
+group by b.title
+order by times_loaned desc
+limit 5;
+
+-- 2. Número de reservas por membro, em order decrescente
+select m.full_name, count(r.*) as reservations_count
+from members m
+left join reservations r using(member_id)
+group by m.full_name
+order by reservations_count desc;
+
+-- 3. Filiais com mais cópias disponíveis
+select lb.name, count(*) as available_copies
+from book_copies bc
+join library_branches lb using(branch_id)
+where bc.status = 'available'
+group by lb.name
+order by available_copies desc;
+
+
+
+
+
+
+

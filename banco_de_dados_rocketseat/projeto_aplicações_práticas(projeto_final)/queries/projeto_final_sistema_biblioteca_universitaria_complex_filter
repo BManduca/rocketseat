@@ -1,0 +1,123 @@
+-- 1. Empréstimos atrasados: sem data de devolução e data de vencimento passada
+select *
+from loans
+where return_date is null and due_date < current_date;
+
+-- 2. Livros de gêneros específicos (Sci-Fi, Fantasy, Mistery = IDs 3, 4, 5)
+select b.title, g.name as genre
+from books b
+join genres g using(genre_id)
+where b.genre_id in (3, 4, 5);
+
+-- 3. Reservas em novembro de 2025 ou ainda ativas
+select *
+from reservations
+where reservation_date between '2025-11-01' and '2025-11-30'
+  or status = 'active';
+
+-- 4. Membros cujo nome contenha "Ana" ou email termine em "@uni.edu", mas que tenham telefone cadastrado
+select *
+from members
+where (full_name ilike '%Ana%' or email ilike '%@uni.edu')
+  and phone is not null;
+
+-- 5. Livros que não são de Fiction (genre_id != 1) e foram publicados entre 1990 e 2000
+select b.title, g.name, b.genre_id, b.pub_year
+from books b
+join genres g using(genre_id)
+where b.genre_id <> 1 and b.pub_year between 1990 and 2000;
+
+
+-- 6. Autores cujo sobrenome começa com "Pe" (case-insensitive) e com data de nascimento conhecida
+select *
+from authors
+where last_name ilike 'Pe%'
+  and birth_date is not null;
+
+-- 7. Membros com assinatura ativa (membership_end no futuro) ou sem data de término definida
+select *
+from members
+where membership_end > current_date
+  or membership_end is null;
+
+-- 8. Cópias que estão em determinadas filiais (branch_id em 1 ou 3) e que não estão disponíveis
+select *
+from book_copies
+where branch_id in (1,3)
+  and status <> 'available'
+order by branch_id;
+
+-- 8. Empréstimos sem devolução ('return_date' => nulo) que venceram há mais de 7 dias
+select *
+from loans
+where return_date is null and due_date < current_date - interval '7 days';
+
+-- 9. Livros cujo título contém "Data" ou "Science" (qualquer capitalização)
+select *
+from books
+where title ilike '%data%' or title ilike '%science%';
+
+-- 10. Reservas cujo status não esta em ('fulfilled, 'cancelled'') - usando 'not in'
+select *
+from reservations
+where status not in ('fulfilled', 'cancelled');
+
+-- 11. Livros que possuem ao menos 1 cópia perdida - usando 'exists'
+select b.*
+from books b
+where exists (
+  select 1
+  from book_copies bc
+  where bc.book_id = b.book_id
+      and bc.status = 'lost'
+);
+
+
+-- 12. Membros que já pegaram emprestados todos os livros de um autor específico (author_id = 5)
+select m.*
+from members m
+where not exists (
+  select 1
+  from books b
+  where b.author_id = 5
+    and not exists (
+      select 1
+      from loans l
+      join book_copies bc on bc.copy_id = l.copy_id
+      where bc.book_id = b.book_id
+        and l.member_id = m.member_id
+    )
+);
+
+-- 13. Bibliotecários alocados em qualquer uma das filiais 2, 3 ou 4 (exemplo de 'any')
+select *
+from librarians
+where branch_id = any(array[2,3,4]);
+
+-- 14. Livros cujo ISBN começa com '9780' e publicados depois de 2010
+select *
+from books
+where isbn like '9780%' and pub_year > 2010;
+
+-- 15. Publicadoras cujo endereço contenha 'Av.' mas que não tenham sido deletados logicamente (supondo campo 'is_active')
+select *
+from publishers
+where address like '%Av.%' and (is_active is true or is_active is null);
+
+-- 16. Empréstimos realizados em fins de semana (sábado ou domingo)
+-- extract => função do PG usada para extrair partes específicas de uma data, por exemplo ano, mês, dia, hora, etc.
+-- dow => 'day of week'
+select *
+from loans
+where extract(dow from loan_date) in (0,6);
+
+-- 17. Reservas feitas no último mês, mas apenas de membros cujo email termina em '.edu'
+select r.*, m.full_name
+from reservations r
+join members m using(member_id)
+where r.reservation_date >= (current_date - interval '1 month') and m.email like '%.edu';
+
+-- 18. Livros cujo título não contenha espaços (títulos 'one-word') - usando 'not like'
+select *
+from books
+where title not like '% %';

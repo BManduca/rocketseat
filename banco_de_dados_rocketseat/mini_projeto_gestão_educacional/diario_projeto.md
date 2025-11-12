@@ -1475,6 +1475,14 @@
         ```
           -- Exemplo
           pg_dump -U postgres -h localhost -Fc -f "backup.dump" nome_do_banco
+
+          -- ou
+          PGPASSWORD="sua_senha" pg_dump -U seu_usuario -h localhost -Fc -f "nome_do_backup.dump" nome_do_banco
+
+          --ou backup de um banco especifico
+          PGPASSWORD="sua_senha" pg_dump -U seu_usuario -h localhost -d nome_do_banco > backup.sql
+
+
         ```
       * -U => Usuário do PostgreSQL
       * -h => Host(servidor)

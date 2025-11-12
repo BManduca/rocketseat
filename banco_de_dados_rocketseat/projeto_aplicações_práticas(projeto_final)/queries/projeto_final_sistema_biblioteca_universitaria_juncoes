@@ -1,0 +1,141 @@
+-- Aprofundando o conceito de junções em SQL, focando em inner join, left join, right join e full join.
+
+-- ===========================================================
+-- Grupo 02 - INNER JOIN: conectando tabelas relacionadas
+-- ===========================================================
+
+-- 1. Listar cada livro com seu autor e editora
+select
+  b.title,
+  a.first_name || ' ' || a.last_name as author,
+  p.name as publisher
+from books b
+inner join authors a on b.author_id = a.author_id
+inner join publishers p on b.publisher_id = p.publisher_id;
+
+-- 2. Mostrar todas as cópias emprestadas com título do livro e nome do membro
+select
+  bc.copy_id,
+  b.title,
+  m.full_name as member,
+  l.loan_date,
+  l.due_date
+from loans l
+inner join book_copies bc on l.copy_id = bc.copy_id
+inner join books b on bc.book_id = b.book_id
+inner join members m on l.member_id = m.member_id;
+
+-- 3. Exibir reservas ativas com nome do livro, filial e data de reserva
+select
+  r.reservation_id,
+  b.title,
+  lb.name as branch,
+  r.reservation_date
+from reservations r
+inner join book_copies bc on r.copy_id = bc.copy_id
+inner join books b on bc.book_id = b.book_id
+inner join library_branches lb on bc.branch_id = lb.branch_id
+where r.status = 'active';
+  
+
+-- ===========================================================
+-- Grupo 03 - LEFT, RIGHT E FULL JOIN: junções externas
+-- ===========================================================
+
+-- 1. left join: listar todos os membros e, se houver, quantos empréstimos fizeram
+select
+  m.member_id,
+  m.full_name,
+  count(l.loan_id) as total_loans
+from members m
+left join loans l on m.member_id = l.member_id
+group by m.member_id, m.full_name
+order by total_loans desc;
+
+-- 2. Right join: mostrar todas as cópias e, se houver, dados de empréstimo
+select
+  bc.copy_id,
+  b.title,
+  l.loan_id,
+  l.loan_date
+from book_copies bc
+right join loans l on bc.copy_id = l.copy_id
+join books b on bc.book_id = b.book_id
+limit 20;
+
+-- Full join: combinar empréstimos e reservas para ver todos os movimentos
+select
+  coalesce(l.loan_id, r.reservation_id) as movement_id,
+  l.loan_date,
+  r.reservation_date,
+  case
+    when l.loan_id is not null then 'loan'
+    when r.reservation_id is not null then 'reservation'
+    else 'unknown'
+  end as type
+from loans l
+full join reservations r on l.copy_id = r.copy_id and l.member_id = r.member_id
+order by movement_id
+limit 50;
+
+
+
+-- ===========================================================
+-- Grupo 04 - Consultas com múltiplas tabelas
+-- ===========================================================
+
+-- 1. top 5 membros que mais reservaram livros, com título mais rerservado
+with member_reservations as (
+  select
+    m.member_id,
+    m.full_name,
+    count(r.reservation_id) as reservations_count
+  from members m
+  join reservations r using(member_id)
+  group by m.member_id, m.full_name
+)
+select
+  mr.full_name,
+  mr.reservations_count,
+  b.title as most_reserved_title
+from member_reservations mr
+join (
+  select
+    r.member_id,
+    r.copy_id,
+    count(*) as cnt
+  from reservations r
+  group by r.member_id, r.copy_id
+  order by cnt desc
+  limit 5
+) top5 using(member_id)
+join book_copies bc on top5.copy_id = bc.copy_id
+join books b on bc.book_id = b.book_id
+order by mr.reservations_count desc;
+
+
+-- 2. inventário por gênero e filial: quantas cópias disponíveis existem
+select
+  g.name as genre,
+  lb.name as branch,
+  count(bc.*) as available_copies
+from genres g
+join books b using(genre_id)
+join book_copies bc on b.book_id = bc.book_id
+join library_branches lb on bc.branch_id = lb.branch_id
+where bc.status = 'available'
+group by g.name, lb.name
+order by g.name, lb.name;
+
+-- 3. histórico de empréstimos por bibliotecários: quantos empréstimos ocorridos na filial de cada 
+select
+  lib.full_name as librarian,
+  lb.name as branch,
+  count(l.loan_id) as loans_processed
+from librarians lib
+join library_branches lb using(branch_id)
+join book_copies bc on bc.branch_id = lb.branch_id
+join loans l on l.copy_id = bc.copy_id
+group by lib.full_name, lb.name
+order by loans_processed desc
+limit 10;

@@ -1,0 +1,32 @@
+-- Aprofundando conhecimentos sobre comandos SQL, focando em funções como SUM, AVG, MIN, MAX e COUNT
+
+-- 1. Total de empréstimos por livro
+select b.title, count(*) as total_loans
+from loans l
+join book_copies bc using(copy_id)
+join books b using(book_id)
+group by b.title
+order by total_loans desc;
+
+-- 2. Data mais antiga e mais recente de empréstimos
+select min(loan_date) as earliest_date_loan,
+      max(loan_date) as oldest_date_loan
+from loans;
+
+-- 3. Duração média de um empréstimo (em dias)
+select avg((due_date - loan_date)) as avg_loan_duration_days
+from loans
+where return_date is not null; -- para os livros efetivamente devolvidos
+
+-- 4. soma total de reservas 'active'
+select sum(
+  case when status = 'active' then 1 else 0 end
+) as total_active_reservations
+from reservations;
+
+
+
+
+
+
+

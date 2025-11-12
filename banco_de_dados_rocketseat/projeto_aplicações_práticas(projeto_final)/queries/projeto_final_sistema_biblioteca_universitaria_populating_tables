@@ -1,0 +1,106 @@
+-- 1. Populate authors table (~50 random)
+insert into authors (first_name, last_name, birth_date)
+select
+  'AuthorFirst' || i,
+  'AuthorLast'  || i,
+  date '1950-01-01' + (floor(random() * 20000)::int || ' days')::interval
+from generate_series(1,50) as s(i);
+
+-- 2. Populate publishers (~20)
+insert into publishers (name, address)
+select
+  'Publisher ' || i,
+  (i || ' Publisher St, City ' || i)
+from generate_series(1,20) as s(i);
+
+
+-- 3. Popualte genres (~10)
+insert into genres (name)
+values
+  ('Fiction'),
+  ('Non-Fiction'),
+  ('Sci-Fi'),
+  ('Fantasy'),
+  ('Mystery'),
+  ('Romance'),
+  ('Biography'),
+  ('History'),
+  ('Science'),
+  ('Art');
+
+-- 4. Populate books (~300)
+insert into books (title, author_id, publisher_id, genre_id, pub_year, isbn)
+select
+  'Book Title ' || i,
+  (floor(random() * 50) + 1)::int,
+  (floor(random() * 20) + 1)::int,
+  (floor(random() * 10) + 1)::int,
+  (floor(random() * (2025-1950)) + 1950)::int,
+  -- gerando um isbn com 13 caracteres de maneira random
+  lpad((floor(random() * 1e13))::bigint::text, 13, '0')
+from generate_series(1,300) as s(i);
+
+-- 5. Populate Library branches (3)
+insert into library_branches (name, address)
+values
+  ('Central Library', '123 Main St'),
+  ('East Branch', '456 East Ave'),
+  ('West Branch', '789 West Blvd');
+
+
+-- 6. Populate Books Copies (~1000)
+insert into book_copies (book_id, branch_id, status)
+select
+  (floor(random() * 300) + 1)::int,
+  (floor(random() * 3) + 1)::int,
+  (array['available', 'loaned', 'reserved', 'lost'])[ceil(random() * 4)]
+from generate_series(1,1000) as s(i);
+
+-- 7. Populate Members (~200)
+insert into members (full_name, email, phone, membership_start, membership_end)
+select
+  'Member ' || i,
+  'member' || i || '@uni.edu',
+  '555-01' || lpad(i::text, 3, '0'),
+  current_date - ((floor(random() * 365)::int || ' days')::interval),
+  current_date + (((365 - floor(random() * 30))::int || ' days')::interval)
+from generate_series(1,200) as s(i);
+
+
+-- 8. Populate Loans (~1200)
+insert into loans (copy_id, member_id, loan_date, due_date, return_date)
+select
+  (floor(random() * 1000) + 1)::int,
+  (floor(random() * 200) + 1)::int,
+  now() - ((floor(random() * 365)::int || ' days')::interval) as loan_date,
+  (now() - ((floor(random() * 365)::int || ' days')::interval)) + interval '14 days' as due_date,
+  case
+    when random() < 0.8 then
+      (now() - ((floor(random() * 365)::int || ' days')::interval))
+      + ((-5 + floor(random() * 15))::int || ' days')::interval
+    else
+      null
+  end
+from generate_series(1,1200) as s(i);
+
+-- 9. Populate reservations (~400)
+insert into reservations (copy_id, member_id, reservation_date, status)
+select
+  (floor(random() * 1000) + 1)::int,
+  (floor(random() * 200) + 1)::int,
+  now() - ((floor(random() * 365)::int || ' days')::interval),
+  (array['active', 'fulfilled', 'cancelled'])[ceil(random() * 3)]
+from generate_series(1,400) as s(i);
+
+-- 10 Populate librarians (-10)
+insert into librarians (full_name, email, branch_id)
+select
+  'Librarian ' || i,
+  'Librarian' || i || '@uni.edu',
+  (floor(random() * 3) + 1)::int
+from generate_series(1,10) as s(i);
+
+
+
+
+
