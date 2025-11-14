@@ -1,0 +1,42 @@
+-- 1. Função que marca uma cópia como "loaned" após inserir empréstimos
+create function fn_mark_loaned() returns trigger as $$
+begin
+  update book_copies
+  set status = 'loaned'
+  where copy_id = new.copy_id;
+  return new;
+end;
+$$ language plpgsql;
+
+-- 2. Trigger que chama a função após insert em loans
+create trigger trg_after_insert_loan
+  after insert on loans
+  for each row
+  execute function fn_mark_loaned();
+
+-- inserindo para teste
+insert into loans (copy_id, member_id, loan_date, due_date, return_date)
+values (2, 1, now(), current_date + interval '14 days', null);
+
+-- 3. Função que impede reserva se a cópia não estiver "available"
+create function fn_check_reserve() returns trigger as $$
+begin
+  if (select status from book_copies where copy_id = new.copy_id) <> 'available' then
+    raise exception 'Cópia % não está disponível para reserva', new.copy_id;
+  end if;
+  return new;
+end;
+$$ language plpgsql;
+
+drop function fn_check_reserve();
+drop trigger trg_before_insert_reservation on reservations;
+
+create trigger trg_before_insert_reservation
+  before insert on reservations
+  for each row
+  execute function fn_check_reserve();
+
+
+insert into reservations (copy_id, member_id, reservation_date, status)
+values (2, 1, now(), 'active');
+
