@@ -2,21 +2,39 @@
   <!-- <img src="./assets/logo.png" alt="Vue Logo">
   <HelloWorld msg="Bem vindo ao novo Projeto Vue.js App" /> -->
   <div class="container-box">
-    <MyBox aux="1"/>
-    <MyBox aux="2"/>
-    <MyBox aux="3"/>
+    <h2>{{ count }}</h2>
+    <CounterButtons @change-count="handleCountChange" />
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import MyBox from './components/MyBox.vue'
+import CounterButtons from './components/CounterButtons.vue';
+
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
-    MyBox
+    CounterButtons
+  },
+  data() {
+    return {
+      count: 0
+    }
+  },
+  methods: {
+    handleCountChange(action, value = 1) {
+      switch (action) {
+        case 'increment':
+          this.count += value
+          break
+        case 'decrement':
+          this.count -= value
+          break
+        case 'reset':
+          this.count = 0
+          break
+      }
+    }
   }
 }
 </script>

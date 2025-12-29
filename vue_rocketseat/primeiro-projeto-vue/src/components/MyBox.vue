@@ -1,8 +1,11 @@
 <template>
     <div class="box">
         <p>
-            {{aux}}
+            {{name_char}} - {{ age }}
         </p>
+        <span :class="['status', status]">
+             - {{ status }}
+        </span>
     </div>
 </template>
 
@@ -10,7 +13,19 @@
     export default {
         name: 'MyBox',
         props: {
-            aux: String
+            name_char: {
+                type: String,
+                default: "N/A"
+            },
+            age: {
+                type: Number,
+                required: true
+            },
+            status: {
+                type: String,
+                validator: value => ['active', 'inactive'].includes(value),
+                default: 'active'
+            }
         }
     }
 </script>
@@ -19,10 +34,16 @@
 p {
     color: white;   
 }
-.box {
-    width: 30px;
-    height: 30px;
+.active {
+    background-color: green;
+}
+.inactive {
     background-color: red;
+}
+.box {
+    min-width: 30px;
+    min-height: 30px;
+    background-color: purple;
     align-items: center;
     justify-content: center;
     display: flex;
