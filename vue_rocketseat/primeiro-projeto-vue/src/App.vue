@@ -2,8 +2,16 @@
   <!-- <img src="./assets/logo.png" alt="Vue Logo">
   <HelloWorld msg="Bem vindo ao novo Projeto Vue.js App" /> -->
   <div class="container-box">
-    <h2>{{ count }}</h2>
-    <CounterButtons @change-count="handleCountChange" />
+    <h2 :style="{color: changeColorCount}">
+      {{ count }}
+    </h2>
+
+    <CounterButtons :count-value="count" @change-count="handleCountChange" />
+
+    <p :style="{color: changeColorCount}">
+      {{ countState }}
+    </p>
+
   </div>
 </template>
 
@@ -18,7 +26,7 @@ export default {
   },
   data() {
     return {
-      count: 0
+      count: Number(localStorage.getItem('count')) || 0
     }
   },
   methods: {
@@ -34,6 +42,27 @@ export default {
           this.count = 0
           break
       }
+    }
+  },
+  computed: {
+    changeColorCount() {
+      if (this.count === 0) return 'black'
+      if (this.count > 0) return 'green'
+      return 'red'
+    },
+    countState() {
+      if (this.count === 0) return 'É zero'
+      if (this.count < 0) return 'É negativo'
+      return 'É positivo'
+    }
+  },
+  watch: {
+    count(newValue) {
+      // alert(`O contador mudou de ${oldValue} para ${newValue}`)
+      localStorage.setItem('count', newValue)
+    },
+    changeColorCount(newValue) {
+      alert(`Color selecionada é: ${newValue}`)
     }
   }
 }
