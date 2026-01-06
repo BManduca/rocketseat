@@ -64,3 +64,31 @@
     * Pinia (ou Vuex) => Estado global
     * Vite => build rápido
     * Nuxt.js => Vue com SSR (tipo Next.js)
+
+- Fundamentos do Vue.js
+  - Watchers
+    - Monitoram mudanças em propriedades reativas, como dados e computed.
+    - Assim, como o UseEffect no React, eles executam ações sempre que um valor muda.
+
+  - V-ONCE
+    - É uma diretiva usada para renderizar um elemento apenas uma vez.
+    - Depois que o componente é renderizado pela primeira vez, o Vue não atualiza mais aquele trecho do DOM, mesmo que os dados reativos mudem.
+    - Para que serve o V-ONCE?
+      - Ele é usado principalmente para otimização de performance, quando tem conteúdos que:
+        - Nunca vão mudar
+        - Não dependentem de estado reativo
+        - São estáticos depois do primeiro render
+
+
+  - V-MEMO
+    - No Vue.js 3, v-memo é uma diretiva de otimização de performance que diz ao Vue:
+      ```
+        Só re-renderize este bloco se estas dependências mudarem.
+      ```
+    - Ela permite controlar quando o DOM deve ser atualizado, evitando renders desnecessários.
+    - O Vue memoriza o resultado do render.
+    - Se nenhuma dependência mudar, o Vue reutiliza o DOM.
+    - Se alguma dependência mudar, o bloco é re-renderizado.
+        ```
+            v-memo="[dependencias]"
+        ```
