@@ -1130,3 +1130,13 @@ CREATE TABLE aluno_disiplina (
 * Schemas e tablespaces;
 * Herança de tabelas (Postgres-specific);
 * Partitioning (range, list, hash);
+
+
+# Big Data
+- Big Data é o termo usado para descrever conjuntos de dados extremamente grandes, variados e gerados muito rapidamente, que não conseguem ser processados de forma eficiente por ferramentas tradicionais (como bancos de dados relacionais simples ou planilhas)
+- Ele envolve coletar, armazenar, processar e analisar grandes volumes de dados para extrair informações úteis, padrões e insights.
+- ## Características:
+  - Volume: grande quantidade de dados (terabytes, petabytes)
+  - Velocidade: Velocidade de geração/captura e análise
+  - Variedade: Diferença tipos de dados (estruturados, semi, não estruturados)
+  - Veracidade: Qualidade e confiabilidade das informações
