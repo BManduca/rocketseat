@@ -9,7 +9,7 @@ export function App() {
       <Routes>
         <Route element={<LayoutMain />}>
           <Route element={<PageHome />} index />
-          <Route element={<PageComponents />} path="/components" />
+          <Route element={<PageComponents />} path="/componentes" />
         </Route>
       </Routes>
     </BrowserRouter>
