@@ -1,69 +1,62 @@
-# React + TypeScript + Vite
+# Projeto ToDo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação de lista de tarefas (To-Do List) simples e moderna, construída com React, TypeScript e Vite.
 
-Currently, two official plugins are available:
+## ✨ Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Criação e gerenciamento de tarefas.
+-   Persistência de dados utilizando o Local Storage do navegador.
+-   Interface de usuário moderna com componentes reutilizáveis.
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-   **Framework**: [React](https://react.dev/)
+-   **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
+-   **Build Tool**: [Vite](https://vitejs.dev/)
+-   **Estilização**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Lint & Formatação**: [Biome](https://biomejs.dev/) (com o preset `ultracite`)
+-   **Roteamento**: [React Router](https://reactrouter.com/)
+-   **Hooks**: `use-local-storage` para persistência de dados.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📂 Estrutura do Projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+O código-fonte está localizado no diretório `src/`, organizado da seguinte forma:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── assets/         # Arquivos estáticos como ícones e imagens
+├── components/     # Componentes de UI genéricos e reutilizáveis (Button, Card, etc.)
+├── core-components/ # Componentes específicos da aplicação (TaskItem, TasksList)
+├── hooks/          # Hooks customizados do React (ex: useTask)
+├── models/         # Tipos e interfaces do TypeScript (ex: Task)
+├── pages/          # Componentes de nível de página
+├── App.tsx         # Componente principal da aplicação
+├── main.tsx        # Ponto de entrada principal da aplicação
+└── index.css       # Estilos globais
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ▶️ Começando
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Para executar este projeto localmente, siga os passos abaixo:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **Clone o repositório**
+
+2.  **Instale as dependências**
+    ```bash
+    npm install
+    ```
+
+3.  **Execute o servidor de desenvolvimento**
+    ```bash
+    npm run dev
+    ```
+    A aplicação estará disponível em `http://localhost:5173` (ou outra porta, caso a 5173 esteja em uso).
+
+## 🛠️ Scripts Disponíveis
+
+No diretório do projeto, você pode executar:
+
+-   `npm run dev`: Executa a aplicação em modo de desenvolvimento.
+-   `npm run build`: Compila a aplicação para produção.
+-   `npm run lint`: Executa o linter (Biome) no código.
+-   `npm run preview`: Serve a build de produção localmente para visualização.
