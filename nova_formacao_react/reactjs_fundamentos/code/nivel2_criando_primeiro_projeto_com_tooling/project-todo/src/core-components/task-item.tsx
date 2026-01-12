@@ -24,7 +24,13 @@ export default function TaskItem({ task, loading }: TaskItemProps) {
   )
 
   const [taskTitle, setTaskTitle] = React.useState(task.title || '')
-  const { updateTask, updateTaskStatus, deleteTask } = useTask()
+  const {
+    updateTask,
+    updateTaskStatus,
+    deleteTask,
+    isUpdatingTask,
+    isDeletingTask,
+  } = useTask()
 
   function handleEditTask() {
     setIsEditing(true)
@@ -42,9 +48,9 @@ export default function TaskItem({ task, loading }: TaskItemProps) {
     setTaskTitle(e.target.value || '')
   }
 
-  function handleSaveTask(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSaveTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    updateTask(task.id, { title: taskTitle })
+    await updateTask(task.id, { title: taskTitle })
     setIsEditing(false)
   }
 
@@ -54,8 +60,8 @@ export default function TaskItem({ task, loading }: TaskItemProps) {
     updateTaskStatus(task.id, checked)
   }
 
-  function handleDeleteTask() {
-    deleteTask(task.id)
+  async function handleDeleteTask() {
+    await deleteTask(task.id)
   }
 
   return (
@@ -76,7 +82,12 @@ export default function TaskItem({ task, loading }: TaskItemProps) {
               type="button"
               variant={'secondary'}
             />
-            <ButtonIcon icon={CheckIcon} type="submit" variant={'primary'} />
+            <ButtonIcon
+              handling={isUpdatingTask}
+              icon={CheckIcon}
+              type="submit"
+              variant={'primary'}
+            />
           </div>
         </form>
       ) : (
@@ -99,6 +110,7 @@ export default function TaskItem({ task, loading }: TaskItemProps) {
           )}
           <div className="flex gap-1">
             <ButtonIcon
+              handling={isDeletingTask}
               icon={TrashIcon}
               loading={loading}
               onClick={handleDeleteTask}
