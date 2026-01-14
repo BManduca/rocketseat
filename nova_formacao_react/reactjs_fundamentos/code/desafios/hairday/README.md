@@ -2,6 +2,12 @@
 
 Hair Day é uma aplicação de agendamento de horários para salões de beleza, desenvolvida como parte da formação em React da Rocketseat. O projeto permite que os usuários agendem, visualizem e gerenciem seus compromissos.
 
+## Mockup
+![Mockup Futuro da Aplicação](./src/assets/future_mockup_home.png)
+
+## Versão Web
+![Tela principal da Aplicação versão Web](./src/assets/mockup_home_app.png)
+
 ## ✨ Funcionalidades
 
 -   **Agendamento de Horários**: Selecione data, horário e informe o nome do cliente.

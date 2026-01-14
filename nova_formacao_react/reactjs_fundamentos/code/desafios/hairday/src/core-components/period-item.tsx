@@ -1,4 +1,4 @@
-import Trash from '../assets/icons/Trash.svg?react'
+import Trash from "../assets/icons/Trash.svg?react"
 import ButtonIcon from "../components/button-icon"
 import Text from "../components/text"
 import useAppointment from "../hooks/use-appointment"
@@ -23,7 +23,7 @@ export default function PeriodItem({ id, time, client }: Props) {
         {client}
       </Text>
       <ButtonIcon
-        className="shrink-0 fill-yellow"
+        className="shrink-0 fill-yellow-500"
         icon={Trash}
         onClick={() => handleDelete(id)}
       />

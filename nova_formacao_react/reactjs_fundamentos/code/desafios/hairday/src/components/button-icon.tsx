@@ -15,7 +15,7 @@ interface ButtonIconProps
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const buttonIconIconVariants = cva(
-  "size-full fill-yellow transition-colors group-hover:fill-yellow-dark"
+  "size-full fill-yellow-500 transition-colors group-hover:fill-yellow-700"
 )
 
 export default function ButtonIcon({

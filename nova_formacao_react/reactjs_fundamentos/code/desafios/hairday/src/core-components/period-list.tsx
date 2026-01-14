@@ -1,7 +1,7 @@
-import SunHorizon from '../assets/icons/SunHorizon.svg?react'
-import CloudSun from '../assets/icons/CloudSun.svg?react'
-import MoonStars from '../assets/icons/MoonStars.svg?react'
 import type React from "react"
+import CloudSun from "../assets/icons/CloudSun.svg?react"
+import MoonStars from "../assets/icons/MoonStars.svg?react"
+import SunHorizon from "../assets/icons/SunHorizon.svg?react"
 import Icon from "../components/icon"
 import Text from "../components/text"
 
@@ -33,7 +33,7 @@ export default function PeriodList({ period, children }: Props) {
     <section className="rounded-lg border border-gray-600">
       <div className="flex items-center justify-between gap-6 border-gray-600 border-b px-5 py-3">
         <div className="flex items-center gap-2">
-          <Icon className="size-5 fill-yellow" svg={periods[period].icon} />
+          <Icon className="size-5 fill-yellow-500" svg={periods[period].icon} />
           <Text as="h3" className="text-gray-300" variant={"text-sm"}>
             {periods[period].title}
           </Text>
