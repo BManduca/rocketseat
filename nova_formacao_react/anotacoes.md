@@ -760,3 +760,110 @@
 - Extremamente rápido
 - Mais performático do que criar com JavaScript ou TypeScript comum
 - Tem mais performance para realizar recarregamento em tempo real, compilar o projeto em si de maneira mais rápida
+
+
+## [useLocalStorage](https://github.com/nas5w/use-local-storage)
+- Não é um **Hook** oficial do React
+- Hook customizado para facilitar o uso do localStorage junto com o estado do React
+- A idéia é simples: **Funciona como um useState, mas persiste o valor no localStorage do navegador**
+
+
+# Fundamentos avançados
+
+## React Hooks: Referência
+- Uma Referância (chamada também de ref) é uma forma de acessar diretamente um elemento DOM ou um valor mutável fora do fluxo de renderização do React.
+- É como se fosse um 'getElementById', 'querySelector' ou função similar que coleta o DOM do lado do JavaScript.
+- A referência retorna um **current** que é o elemento do HTML do DOM, se existir, você pode fazer manipulações com Vanilla JavaScript.
+
+<details>
+  <summary>Porque não usar o JavaScript direto?</summary>
+
+  ![Image Ref acess DOM](./assets/ref_access_DOM.png)
+  - A referência é a forma 'react-friendly' de trabalhar com o DOM no nível do JavaScript, seguindo a mesma ideia dos eventos.
+  - Ele integra com o ciclo de vida do componente automaticamente, sem necessitar utilizar o 'unmount' para remover qualquer conexão.
+  - É limitado ao componente atual, sem possibilidade de interferências em elementos de forma global.
+  - Respeita a árvore de renderização do React.
+
+</details>
+
+<details>
+  <summary>Exemplos</summary>
+
+  ### Focar um input text ao clicar no botão
+  ```
+    function InputFocus() {
+
+      const inputRef = React.useRef(null);
+
+      function handleClick() {
+        inputRef.current?.focus();
+      }
+
+      return (
+        <div className='space-x-2'>
+          <input ref={inputRef} placeholder='Clique no botão para focar' className='p-2 border' />
+          <button onClick={handleClick} className='p-2 border'>Focar no input</button>
+        </div>
+      );
+    }
+  ```
+
+  ### Progresso de um scroll
+  ```
+    function ScrollTracker() {
+      const scrollContainerRef = React.useRef(null);
+      const [scrollInfo, setScrollInfo] = React.useState({
+        scrollTop: 0,
+        scrollHeight: 0,
+        clientHeight: 0
+      });
+      const [scrollPercentage, setScrollPercentage] = React.useState(0);
+
+      function handleScroll() {
+        if (scrollContainerRef.current) {
+          const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+          setScrollInfo({ scrollTop, scrollHeight, clientHeight });
+          
+          const maxScroll = scrollHeight - clientHeight;
+          const percentage = Math.round((scrollTop / maxScroll) * 100);
+          setScrollPercentage(percentage);
+        }
+      }
+
+      return (
+        <div className="space-y-4">
+          <div className="relative">
+            <div
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
+              className="border border-solid border-blue-500 p-4 h-60 overflow-y-auto"
+            >
+              <div className="space-y-4">
+                {Array.from({ length: 20 }).map((_, index) => (
+                  <p key={index} className="p-2 bg-gray-100 rounded">
+                    Item de conteúdo {index + 1}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <p>Informações de rolagem:</p>
+            <ul className="list-disc pl-5">
+              <li>progresso: {scrollPercentage}%</li>
+              <li>onde está o scroll (scrollTop): {scrollInfo.scrollTop}px</li>
+              <li>tamanho total do scroll (scrollHeight): {scrollInfo.scrollHeight}px</li>
+              <li>tamanho da área visível (clientHeight): {scrollInfo.clientHeight}px</li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+  ```
+
+</details>
+
+## React Hooks: Memoização
+## React Hooks: Callback
+## Requisições de API

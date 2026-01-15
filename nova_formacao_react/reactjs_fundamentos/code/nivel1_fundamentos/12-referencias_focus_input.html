@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJs - Fundamentos</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        function InputFocus() {
+
+            const ref = React.useRef(null);
+
+            function handleClick() {
+                ref?.current?.focus();
+            }
+
+            return (
+                <div className='space-x-2'>
+                    <input ref={ref} placeholder='Clique no botão para focar' className='p-2 border' />
+                    <button onClick={handleClick} className='p-2 border'>Focar no input</button>
+                </div>
+            )
+        }
+
+        function App() {
+            return (
+                <main className='p-3 space-y-6'>
+                    <InputFocus />
+                </main>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+
+    </script>
+</body>
+</html>

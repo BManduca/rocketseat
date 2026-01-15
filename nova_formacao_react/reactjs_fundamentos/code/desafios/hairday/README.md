@@ -78,3 +78,8 @@ O projeto está organizado da seguinte forma:
     ├── models/           # Definições de tipos e modelos
     └── pages/            # Páginas da aplicação
 ```
+
+## Sugestões futuras
+- Deixar como desabilitado horarios de acordo com o horario do dia (ex.: se a pessoa for marcar no dia de hoje a tarde para a noite,
+os horários da manhã já ficariam desabilitados)
+- Colocar um campo de input text para o cliente colocar o que estará realizando
