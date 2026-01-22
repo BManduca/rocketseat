@@ -30,7 +30,13 @@ export default function useUser() {
     try {
       setRequestStatus("saving")
 
-      await api("/users", { method: "POST", body: JSON.stringify(payload) })
+      await api("/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
       toast.success("Usuário criado com sucesso!")
     } catch (e) {
       console.error(e)
