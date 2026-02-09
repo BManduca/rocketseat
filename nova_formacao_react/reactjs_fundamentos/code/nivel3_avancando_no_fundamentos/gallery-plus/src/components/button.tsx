@@ -84,7 +84,7 @@ interface ButtonProps
   handling?: boolean
 }
 
-export default function button({
+export default function Button({
   variant,
   size,
   disabled,
@@ -123,6 +123,7 @@ export default function button({
         <Icon
           animate={handling}
           className={buttonIconVariants({ variant, size, handling })}
+          // biome-ignore lint/style/noNonNullAssertion: manter a verificação de not null
           svg={handling ? SpinnerIcon : icon!}
         />
       )}
