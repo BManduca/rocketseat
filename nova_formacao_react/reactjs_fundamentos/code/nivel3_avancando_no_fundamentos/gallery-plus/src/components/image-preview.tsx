@@ -6,29 +6,29 @@ export const imageFilePreviewVariants = tv({
     `,
 })
 
-export const imageFilePreviewImageVariants = tv({
+export const imagePreviewImageVariants = tv({
   base: `
         w-full h-full object-cover
     `,
 })
 
-interface ImageFilePreviewProps extends React.ComponentProps<"img"> {
+interface ImagePreviewProps extends React.ComponentProps<"img"> {
   imageClassName?: string
   alt: string
 }
 
-export function ImageFilePreview({
+export function ImagePreview({
   className,
   imageClassName,
   alt,
   ...props
-}: ImageFilePreviewProps) {
+}: ImagePreviewProps) {
   return (
     <div className={imageFilePreviewVariants({ className })}>
       {/** biome-ignore lint/correctness/useImageSize: it's not necessary, because passed on as property  */}
       <img
         alt={alt}
-        className={imageFilePreviewImageVariants({ className: imageClassName })}
+        className={imagePreviewImageVariants({ className: imageClassName })}
         {...props}
       />
     </div>

@@ -6,8 +6,9 @@ export function LayoutMain() {
   return (
     <>
       <MainHeader className="mt-9" />
-      <MainContent />
-      <Outlet />
+      <MainContent>
+        <Outlet />
+      </MainContent>
     </>
   )
 }
