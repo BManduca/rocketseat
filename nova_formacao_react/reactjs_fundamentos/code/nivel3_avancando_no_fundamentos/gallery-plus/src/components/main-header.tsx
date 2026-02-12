@@ -3,6 +3,7 @@ import type React from "react"
 import { Link } from "react-router"
 import Logo from "../assets/images/galeria-plus-full-logo.svg?react"
 import Button from "../components/button"
+import { PhotoNewDialog } from "../contexts/photos/components/photo-new-dialog"
 import Container from "./container"
 import Divider from "./divider"
 import { PhotosSearch } from "./photos-search"
@@ -26,7 +27,7 @@ export function MainHeader({ className, ...props }: MainHeaderProps) {
       <Divider className="h-10" orientation="vertical" />
 
       <div className="flex items-center gap-3">
-        <Button>Nova foto</Button>
+        <PhotoNewDialog trigger={<Button>Nova foto</Button>} />
         <Button variant="secondary">Criar álbum</Button>
       </div>
     </Container>

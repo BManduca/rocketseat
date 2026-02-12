@@ -3,6 +3,7 @@ import Container from "../components/container"
 import { ImagePreview } from "../components/image-preview"
 import Skeleton from "../components/skeleton"
 import Text from "../components/text"
+import { AlbumsListSelectable } from "../contexts/albums/components/albums-list-selectable"
 import { PhotosNavigator } from "../contexts/photos/components/photos-navigator"
 import type { Photo } from "../contexts/photos/models/photo"
 
@@ -26,12 +27,14 @@ export function PagePhotoDetails() {
         {isLoadingPhoto ? (
           <Skeleton className="h-8 w-48" />
         ) : (
-          <Text variant="heading-large">{photo?.title}</Text>
+          <Text as="h2" variant="heading-large">
+            {photo?.title}
+          </Text>
         )}
 
         <PhotosNavigator />
       </header>
-      <div className="grid grid-cols-[21rem] gap-24">
+      <div className="grid grid-cols-[21rem_1fr] gap-24">
         <div className="space-y-3">
           {isLoadingPhoto ? (
             <Skeleton className="h-[21rem]" />
@@ -48,6 +51,22 @@ export function PagePhotoDetails() {
           ) : (
             <Button variant="destructive">Excluir</Button>
           )}
+        </div>
+
+        <div className="py-3">
+          <Text as="h3" className="mb-6" variant="heading-medium">
+            Álbuns
+          </Text>
+
+          <AlbumsListSelectable
+            albums={[
+              { id: "32564", title: "Album 1" },
+              { id: "98547", title: "Album 2" },
+              { id: "11425", title: "Album 3" },
+            ]}
+            loading={isLoadingPhoto}
+            photo={photo}
+          />
         </div>
       </div>
     </Container>
