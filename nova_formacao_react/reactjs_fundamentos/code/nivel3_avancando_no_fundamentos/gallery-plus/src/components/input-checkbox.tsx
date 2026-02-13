@@ -23,7 +23,7 @@ export const inputCheckboxVariants = tv({
       `,
     },
     size: {
-      sm: "h-2 w-3 rounded-sm",
+      sm: "h-3 w-3 rounded-sm",
       md: "h-5 w-5 rounded-sm",
     },
     disabled: {
