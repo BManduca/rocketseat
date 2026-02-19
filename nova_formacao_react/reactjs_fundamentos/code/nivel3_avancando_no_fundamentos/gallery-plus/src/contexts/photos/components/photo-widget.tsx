@@ -21,7 +21,7 @@ export function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
         <ImagePreview
           alt={photo.alt}
           imageClassName="w-[10.875rem] h-[10.875rem] rounded-lg"
-          src={`/images/${photo.imageId}`}
+          src={`${import.meta.env.VITE_IMAGES_URL}/${photo.imageId}`}
           title={photo.title}
         />
       )}

@@ -3,6 +3,7 @@ import cx from "classnames"
 import Button from "../../../components/button"
 import Skeleton from "../../../components/skeleton"
 import Text from "../../../components/text"
+import { usePhotos } from "../../photos/hooks/use-photos"
 import type { Album } from "../models/album"
 
 interface AlbumsFilterProps extends React.ComponentProps<"div"> {
@@ -16,6 +17,7 @@ export function AlbumsFilter({
   className,
   ...props
 }: AlbumsFilterProps) {
+  const { filters } = usePhotos()
   return (
     <div
       className={cx("flex items-center gap-3.5 overflow-x-auto", className)}
@@ -32,7 +34,12 @@ export function AlbumsFilter({
           ))
         ) : (
           <>
-            <Button className="cursor-pointer" size="sm" variant="primary">
+            <Button
+              className="cursor-pointer"
+              onClick={() => filters.setAlbumId(null)}
+              size="sm"
+              variant={filters.albumId === null ? "primary" : "ghost"}
+            >
               Todos
             </Button>
             {!loading &&
@@ -40,8 +47,9 @@ export function AlbumsFilter({
                 <Button
                   className="cursor-pointer"
                   key={album.id}
+                  onClick={() => filters.setAlbumId(album.id)}
                   size="sm"
-                  variant="ghost"
+                  variant={filters.albumId === album.id ? "primary" : "ghost"}
                 >
                   {album.title}
                 </Button>
