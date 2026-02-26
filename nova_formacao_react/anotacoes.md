@@ -865,5 +865,76 @@
 </details>
 
 ## React Hooks: Memoização
+
+![Image hook memoizacao](./assets/use-memo.png)
+- É uma técnica aonde buscamos guardar o resultado de uma função/processamento e não é reprocessado para
+evitar que aconteça recalculos ou que seja realizado a chamada da função novamente, a não ser que os parâmetros ali
+envolvidos tenham sido alterados.
+- No React, isso evita que componentes ou valores caros sejam reprocessados desnecessariamente e também podem ser utilizados 
+para geração de valores mais específicos que requerem uso de mais processamento.
+- **Não use por padrão** - pode adicionar complexidade no entendimento do código e nem sempre traz ganho real.
+
+<details>
+  <summary>Hook: useMemo</summary>
+
+  - Retorna o valor memoizado, e só chama a função novamente caso as dependências mudem o seu valor real. Mudanças de
+  alocação de memória não fazem o useMemo executar.
+  - Ideal para cálculos mais complexos, grandes processamentos de dados, entre outros casos.
+
+</details>
+
+<details>
+  <summary>Função: React.memo</summary>
+
+  - Ele tem a mesma idéia do useMemo, mas funciona como um 'wrapper' do componente.
+    - No React, um wrapper é basicamente um componente que “envolve” outros componentes para adicionar estrutura, estilo ou comportamento extra, sem alterar diretamente o componente interno.
+  - Previne re-render do componente se as props não mudarem.
+  - Por padrão o React 19 já faz isso automaticamente onde é possível, mas caso necessite
+  você pode forçar o comportamento.
+
+  <details>
+    <summary>Exemplo</summary>
+
+  ```
+    const MyComponent = React.memo(function MyComponentPure(props) {
+      return <div>{props.name}</div>
+    });
+
+    ...
+
+    <MyComponent />
+  ```
+  </details>
+
+</details>
+
+
 ## React Hooks: Callback
+
+![Image hook useCallback](./assets/use-callback.png)
+- O callback também é um tipo de memoização, mas diferente do memo ele guarda e retorna uma função memoizada
+e não o resultado de algum processamento.
+- Toda vez que o componente renderiza, ele cria novas alocações na memória para aquela função e isso quebra a referência anterior.
+- É interessante memoizar funções que são passadas via **props** ou utilizadas dentro do **useEffect**.
+- Se você colocar uma função direto na lista de dependências, o **useEffect** vai rodar toda vez que ele mudar, ou seja, sempre.
+- Então você memoiza uma função para manter a mesma referência entre renders e evitar re-renders ou efeitos desnecessários.
+
+<details>
+  <summary>Exemplo</summary>
+
+  - ### Atualização de um relógio a cada segundo
+  ```
+  
+  ```
+
+</details>
+
+
 ## Requisições de API
+
+- ### Requisições de API com React Query
+  - TanStack: É um conjunto de bibliotecas, focando no TanStack Query. ]
+  - Essa biblioteca facilita a gestão de requisições, encapsulando estados como carregamento e erro, sem
+  a necessidade de múltiplos useStates. Além disso, ele trabalha com cache e revalidação de dados em segundo
+  plano, melhorando a performance da aplicação.
+  

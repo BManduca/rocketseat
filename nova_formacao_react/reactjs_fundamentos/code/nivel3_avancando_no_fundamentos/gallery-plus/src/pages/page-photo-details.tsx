@@ -1,3 +1,4 @@
+import React from "react"
 import { useParams } from "react-router"
 import Button from "../components/button"
 import Container from "../components/container"
@@ -12,9 +13,17 @@ import type { Photo } from "../contexts/photos/models/photo"
 
 export function PagePhotoDetails() {
   const { photoId } = useParams()
-  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto } =
+  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto, deletePhoto } =
     usePhoto(photoId)
   const { albums, isLoadingAlbums } = useAlbums()
+  const [isDeletingPhoto, setIsDeletingPhoto] = React.useTransition()
+
+  function handleDeletePhoto() {
+    setIsDeletingPhoto(async () => {
+      // biome-ignore lint/style/noNonNullAssertion: nesta parte é certeza que existirá uma foto
+      await deletePhoto(photo!.id)
+    })
+  }
 
   if (!(isLoadingPhoto || photo)) {
     return <div>Foto não encontrada</div>
@@ -52,7 +61,13 @@ export function PagePhotoDetails() {
           {isLoadingPhoto ? (
             <Skeleton className="h-10 w-20" />
           ) : (
-            <Button variant="destructive">Excluir</Button>
+            <Button
+              disabled={isDeletingPhoto}
+              onClick={handleDeletePhoto}
+              variant="destructive"
+            >
+              {isDeletingPhoto ? "Excluindo..." : "Excluir"}
+            </Button>
           )}
         </div>
 
