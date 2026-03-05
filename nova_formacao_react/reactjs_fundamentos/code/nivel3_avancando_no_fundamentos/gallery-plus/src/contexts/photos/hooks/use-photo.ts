@@ -3,7 +3,7 @@ import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { api, fetcher } from "../../../helpers/api"
 import type { Photo } from "../models/photo"
-import type { PhotoNewFormSchema } from "../schemas"
+import type { PhotoNewFormSchema, PhotoUpdateFormSchema } from "../schemas"
 import { usePhotoAlbums } from "./use-photo-albums"
 
 interface PhotoDetailsResponse extends Photo {
@@ -58,6 +58,20 @@ export function usePhoto(id?: string) {
     }
   }
 
+  async function updatePhoto(photoId: string, payload: PhotoUpdateFormSchema) {
+    try {
+      await api.patch(`/photos/${photoId}`, payload)
+
+      queryClient.invalidateQueries({ queryKey: ["photo", photoId] })
+      queryClient.invalidateQueries({ queryKey: ["photos"] })
+
+      toast.success("Foto atualizada com sucesso!")
+    } catch (error) {
+      toast.error("Erro ao atualizar a foto!")
+      throw error
+    }
+  }
+
   async function deletePhoto(photoId: string) {
     try {
       await api.delete(`/photos/${photoId}`)
@@ -77,6 +91,7 @@ export function usePhoto(id?: string) {
     previousPhotoId: data?.previousPhotoId,
     isLoadingPhoto: isLoading,
     createPhoto,
+    updatePhoto,
     deletePhoto,
   }
 }

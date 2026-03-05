@@ -41,6 +41,17 @@ Clone o repositório e instale as dependências com o comando:
 pnpm install
 ```
 
+### ⚙️ Configuração de Ambiente
+
+Após clonar o projeto, é necessário configurar as variáveis de ambiente. Crie um arquivo chamado `.env` na raiz do projeto e adicione as seguintes variáveis:
+
+```env
+VITE_API_URL=http://localhost:5799
+VITE_IMAGES_URL=http://localhost:5799/images
+```
+
+Estas variáveis apontam para o endereço do backend (por padrão na porta 5799) e para o diretório de imagens servido por ele.
+
 ### Desenvolvimento
 
 Para uma experiência de desenvolvimento completa, você precisará de dois terminais:

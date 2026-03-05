@@ -20,18 +20,18 @@ export const textVariants = tv({
 	},
 });
 
-interface TextProps extends VariantProps<typeof textVariants> {
-	as?: keyof React.JSX.IntrinsicElements;
-	className?: string;
-	children?: React.ReactNode;
+interface TextProps
+  extends React.ComponentPropsWithoutRef<"span">,
+    VariantProps<typeof textVariants> {
+  as?: keyof React.JSX.IntrinsicElements
 }
 
 export default function Text({
-	as = "span",
-	variant,
-	className,
-	children,
-	...props
+  as = "span",
+  variant,
+  className,
+  children,
+  ...props
 }: TextProps) {
 	return React.createElement(
 		as,
