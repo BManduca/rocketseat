@@ -1,6 +1,6 @@
-# Dependencies
-/node_modules
-/.pnp
+# Dependências
+node_modules
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -9,29 +9,33 @@
 !.yarn/versions
 
 # Next.js
-/.next/
-/out/
+.next/
+out/
+.turbo
 
-# Production
-/build
+# Produção
+build/
+dist/
 
-# Testing
-/coverage
+# Testes
+coverage/
+.nyc_output
 
-# Environment Files
+# Arquivos de Ambiente (Segurança)
 .env
-.env.local
+.env*.local
 .env.development.local
 .env.test.local
 .env.production.local
-# Manter .env.example rastreado se existir
 !.env.example
 
-# Debug Logs
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+lerna-debug.log*
 
 # Vercel
 .vercel
@@ -40,19 +44,27 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# OS Files
+# Sistema Operacional
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+desktop.ini
 *.pem
 
-# IDEs and Editors
+# IDEs e Editores
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/launch.json
+!.vscode/tasks.json
 .idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Outros caches
+.cache/
+.eslintcache
