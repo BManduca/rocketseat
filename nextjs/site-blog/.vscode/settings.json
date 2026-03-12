@@ -4,11 +4,18 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
   },
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.fontSize": 14,
-  "a-file-icon-vscode.folderTheme": "classic"
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 100,
+  "editor.rulers": [
+    100
+  ],
+  "editor.wrappingIndent": "same",
+  "a-file-icon-vscode.folderTheme": "classic",
+  "files.autoSave": "onFocusChange", // muda de arquivo
 }
