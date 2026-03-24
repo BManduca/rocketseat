@@ -1,20 +1,32 @@
 {
-  "css.customData": [],
-  "css.lint.unknownAtRules": "ignore",
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "biome.enable": true,
+  "biome.lint.enable": true,
+  "biome.format.enable": true,
+  "biome.server.path": "./node_modules/.bin/biome",
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   },
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.fontSize": 14,
-  "editor.wordWrap": "wordWrapColumn",
-  "editor.wordWrapColumn": 100,
-  "editor.rulers": [100],
-  "editor.wrappingIndent": "same",
-  "a-file-icon-vscode.folderTheme": "classic",
-  "files.autoSave": "onFocusChange" // muda de arquivo
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }
