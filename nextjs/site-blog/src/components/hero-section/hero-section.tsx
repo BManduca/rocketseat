@@ -1,0 +1,44 @@
+import { ArrowRight, Clock, Store } from 'lucide-react'
+import Image from 'next/image'
+import { Button } from '../ui/button'
+
+export const HeroSection = () => {
+  return (
+    <section className="container relative flex items-center mt-16 justify-center">
+      <div>
+        <div>
+          <h1 className="text-gray-100 text-heading-hg">
+            Venda seus produtos como afiliado em um único lugar
+          </h1>
+        </div>
+        <div>
+          <div>
+            <div className="flex items-center gap-2">
+              <Clock className="text-cyan-100 h-4 w-4" />
+              <span className="text-gray-200">Crie o seu site em menos de 5 minutos</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Store className="text-cyan-100 h-4 w-4" />
+              <span className="text-gray-200">Acompanhe e otimize seu negócio online</span>
+            </div>
+          </div>
+          <div className="text-white flex flex-col gap-2 mt-5 items-center md:items-start lg:items-start">
+            <Button className="rounded-full w-fit">
+              Criar loja grátis <ArrowRight />
+            </Button>
+            <p className="text-gray-300 text-body-xs">Não precisa de cartão de crédito</p>
+          </div>
+        </div>
+        <div className="relative h-[20rem] hidden md:h-full order-first md:order-last items-center justify-center md:flex lg:flex">
+          <Image
+            src="/hero-section.svg"
+            alt="Ilustração com ícones de store, tag e sacola de compras"
+            height={400}
+            width={200}
+            className="h-full w-auto object-contain"
+          />
+        </div>
+      </div>
+    </section>
+  )
+}
