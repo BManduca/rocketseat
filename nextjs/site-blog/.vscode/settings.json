@@ -2,6 +2,9 @@
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 80,
+  "editor.rulers": [80],
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "biome.enable": true,
   "biome.lint.enable": true,
@@ -27,6 +30,10 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "css.validate": false,
+  "[css]": {
     "editor.defaultFormatter": "biomejs.biome"
   }
 }
