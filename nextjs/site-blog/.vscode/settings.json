@@ -11,9 +11,12 @@
   "biome.format.enable": true,
   "biome.server.path": "./node_modules/.bin/biome",
   "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   },
+  "tailwindCSS.experimental.classRegex": ["className=\"([^\"]*)\""],
+  "tailwindCSS.classAttributes": ["class", "className"],
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
