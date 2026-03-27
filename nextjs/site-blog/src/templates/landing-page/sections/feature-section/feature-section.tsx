@@ -1,16 +1,16 @@
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '../ui/button'
+import { Button } from '../../../../components/ui/button'
 
 export const FeatureSection = () => {
   return (
-    <section className="container bg-gray-700 grid gap-6 md:grid-cols-2 pb-8 pt-8 md:py-10">
+    <section className="container bg-gray-700 grid gap-6 md:grid-cols-2 py-10 md:py-16">
       <div className="flex flex-col gap-4 rounded-lg bg-gray-500 md:p-12 p-6">
         <span className="text-body-tag text-blue-200 bg-blue-400 px-2 py-1 rounded-sm w-fit uppercase">
           Simples
         </span>
-        <h2 className="text-gray-100 text-heading-lg">
+        <h2 className="font-sans text-gray-100 text-heading-lg">
           Crie um catálogo de produtos online em poucos minutos
         </h2>
       </div>
@@ -19,7 +19,7 @@ export const FeatureSection = () => {
         <span className="text-body-tag text-blue-200 bg-blue-400 px-2 py-1 rounded-sm w-fit uppercase">
           Prático
         </span>
-        <h2 className="text-gray-100 text-heading-lg">
+        <h2 className="font-sans text-gray-100 text-heading-lg">
           Venda para seu público através de uma plataforma única
         </h2>
       </div>
@@ -30,7 +30,7 @@ export const FeatureSection = () => {
             <span className="text-body-tag text-blue-200 bg-blue-400 px-2 py-1 rounded-sm w-fit uppercase">
               Personalizável
             </span>
-            <h2 className="text-gray-100 text-heading-lg">
+            <h2 className="font-sans text-gray-100 text-heading-lg">
               Tenha uma loja online personalizada com a cara da sua marca
             </h2>
 
