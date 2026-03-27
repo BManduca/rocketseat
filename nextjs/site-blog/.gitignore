@@ -68,3 +68,6 @@ desktop.ini
 # Outros caches
 .cache/
 .eslintcache
+
+# contentlayer
+.contentlayer
