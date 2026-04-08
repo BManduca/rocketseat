@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.wordWrap": "wordWrapColumn",
-  "editor.wordWrapColumn": 80,
+  "editor.wordWrapColumn": 90,
   "editor.rulers": [100],
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "biome.enable": true,
