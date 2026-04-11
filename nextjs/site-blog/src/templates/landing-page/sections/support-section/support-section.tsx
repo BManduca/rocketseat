@@ -16,9 +16,12 @@ export const SupportSection = () => {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-300 mb-4">
               <PaintbrushVertical className="h-6 w-6 text-white" />
             </div>
-            <strong className="text-heading-sm text-gray-100">Personalize seu site</strong>
+            <strong className="text-heading-sm text-gray-100">
+              Personalize seu site
+            </strong>
             <p className="text-body-sm text-gray-200">
-              Adicione sua logo, favicon, cores no seu catalago e tenha tudo com a sua cara.
+              Adicione sua logo, favicon, cores no seu catalago e tenha tudo com
+              a sua cara.
             </p>
           </div>
 
@@ -27,9 +30,12 @@ export const SupportSection = () => {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-200 mb-4">
               <Store className="h-6 w-6 text-white" />
             </div>
-            <strong className="text-heading-sm text-gray-100">Venda de qualquer loja</strong>
+            <strong className="text-heading-sm text-gray-100">
+              Venda de qualquer loja
+            </strong>
             <p className="text-body-sm text-gray-200">
-              Não importa a loja, o Site.Set permite que você insera qualquer link de afiliado.
+              Não importa a loja, o Site.Set permite que você insera qualquer
+              link de afiliado.
             </p>
           </div>
 
@@ -38,9 +44,12 @@ export const SupportSection = () => {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-300 mb-4">
               <HeartHandshake className="h-6 w-6 text-white" />
             </div>
-            <strong className="text-heading-sm text-gray-100">Receba suporte amigável</strong>
+            <strong className="text-heading-sm text-gray-100">
+              Receba suporte amigável
+            </strong>
             <p className="text-body-sm text-gray-200">
-              Nossa equipe estará sempre pronta para te atender para ajudar no que for preciso.
+              Nossa equipe estará sempre pronta para te atender para ajudar no
+              que for preciso.
             </p>
           </div>
         </div>

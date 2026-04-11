@@ -11,7 +11,10 @@ export const Footer = () => {
             <Link href="/termos-de-uso" className="hover:text-blue-200">
               Termos de uso
             </Link>
-            <Link href="/politica-de-privacidade" className="hover:text-blue-200">
+            <Link
+              href="/politica-de-privacidade"
+              className="hover:text-blue-200"
+            >
               Política de privacidade
             </Link>
             <Link href="/enviar-feedback" className="hover:text-blue-200">

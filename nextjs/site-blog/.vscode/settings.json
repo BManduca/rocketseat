@@ -4,6 +4,7 @@
   "editor.formatOnPaste": true,
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 90,
+  "editor.wrappingIndent": "indent",
   "editor.rulers": [100],
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "biome.enable": true,
@@ -11,10 +12,12 @@
   "biome.format.enable": true,
   "biome.server.path": "./node_modules/.bin/biome",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.fixAll.biome": "explicit",
-    "source.organizeImports.biome": "explicit"
+    "source.organizeImports.biome": "always",
+    "source.fixAll.biome": "always"
   },
+  "editor.tabCompletion": "on",
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
   "tailwindCSS.experimental.classRegex": ["className=\"([^\"]*)\""],
   "tailwindCSS.classAttributes": ["class", "className"],
   "[javascript]": {
@@ -24,10 +27,20 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
   },
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"

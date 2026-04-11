@@ -15,7 +15,14 @@ type PostCardProps = {
   author: Author
 }
 
-export const PostCard = ({ slug, title, description, image, date, author }: PostCardProps) => {
+export const PostCard = ({
+  slug,
+  title,
+  description,
+  image,
+  date,
+  author,
+}: PostCardProps) => {
   return (
     <Link
       href={`/blog/${slug}`}
@@ -31,7 +38,7 @@ export const PostCard = ({ slug, title, description, image, date, author }: Post
           </div>
           <Image
             src={image}
-            alt=""
+            alt={title}
             width={288}
             height={144}
             className="w-full h-40 object-cover object-center rounded-t-[8px]"
@@ -40,8 +47,12 @@ export const PostCard = ({ slug, title, description, image, date, author }: Post
 
         {/* Post info */}
         <div className="px-2 mt-4 space-y-4">
-          <h2 className="text-heading-sm text-gray-100 line-clamp-3">{title}</h2>
-          <p className="text-gray-300 text-body-sm line-clamp-3">{description}</p>
+          <h2 className="text-heading-sm text-gray-100 line-clamp-3">
+            {title}
+          </h2>
+          <p className="text-gray-300 text-body-sm line-clamp-3">
+            {description}
+          </p>
 
           {/* Post footer */}
           <div className="flex items-center gap-3 border-t border-gray-400 py-4">

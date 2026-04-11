@@ -6,7 +6,11 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-inter' })
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-inter',
+})
 const ptSansCaptions = PT_Sans_Caption({
   subsets: ['latin'],
   weight: '700',

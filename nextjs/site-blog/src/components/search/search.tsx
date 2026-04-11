@@ -22,7 +22,9 @@ export const Search = () => {
       const currentQuery = (router.query.q as string) || ''
       if (searchValue !== currentQuery) {
         router.push(
-          searchValue.trim() ? `/blog?q=${encodeURIComponent(searchValue.trim())}` : '/blog',
+          searchValue.trim()
+            ? `/blog?q=${encodeURIComponent(searchValue.trim())}`
+            : '/blog',
           undefined,
           { shallow: true, scroll: false },
         )
@@ -38,7 +40,9 @@ export const Search = () => {
 
       // O submit manual apenas reforça a busca imediata se necessário
       router.push(
-        searchValue.trim() ? `/blog?q=${encodeURIComponent(searchValue.trim())}` : '/blog',
+        searchValue.trim()
+          ? `/blog?q=${encodeURIComponent(searchValue.trim())}`
+          : '/blog',
         undefined,
         { shallow: true, scroll: false },
       )

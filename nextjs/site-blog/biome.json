@@ -9,14 +9,17 @@
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 100
+    "lineWidth": 80
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedImports": "error"
+        "noUnusedImports": {
+          "level": "error",
+          "fix": "safe"
+        }
       },
       "style": {
         "useImportType": "on",
@@ -26,7 +29,15 @@
         "noUnknownAtRules": {
           "level": "error",
           "options": {
-            "ignore": ["tailwind", "layer", "apply", "config", "variants", "responsive", "screen"]
+            "ignore": [
+              "tailwind",
+              "layer",
+              "apply",
+              "config",
+              "variants",
+              "responsive",
+              "screen"
+            ]
           }
         }
       }

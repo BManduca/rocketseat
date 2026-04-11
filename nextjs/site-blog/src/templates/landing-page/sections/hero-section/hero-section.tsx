@@ -33,7 +33,9 @@ export const HeroSection = () => {
                   Criar loja grátis <ArrowRight />
                 </Link>
               </Button>
-              <p className="text-gray-300 text-body-xs">Não precisa de cartão de crédito</p>
+              <p className="text-gray-300 text-body-xs">
+                Não precisa de cartão de crédito
+              </p>
             </div>
           </div>
         </div>
