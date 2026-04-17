@@ -1,5 +1,6 @@
 import { Inter, PT_Sans_Caption } from 'next/font/google'
 import { Toaster } from 'sonner'
+import { CallToAction } from '@/templates/landing-page/sections'
 import { Footer } from './footer'
 import { Header } from './header'
 
@@ -26,6 +27,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <Toaster />
       <Header />
       <main className="flex-1 flex flex-col mb-12 mt-10">{children}</main>
+      <CallToAction />
       <Footer />
     </div>
   )

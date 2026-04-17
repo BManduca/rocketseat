@@ -1,4 +1,4 @@
-import { Link2 } from 'lucide-react'
+import { Link } from 'lucide-react'
 import { useCallback, useMemo } from 'react'
 import { toast } from 'sonner'
 import { useClipboard } from '../use-clipboard'
@@ -69,7 +69,7 @@ export const useShare = ({
       {
         provider: 'clipboard',
         name: isCopied ? 'Link copiado!' : 'Copiar link',
-        icon: <Link2 className="h-4 w-4" />,
+        icon: <Link className="h-4 w-4" />,
         action: () => share('clipboard'),
       },
     ],
