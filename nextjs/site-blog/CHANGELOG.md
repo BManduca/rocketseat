@@ -11,6 +11,27 @@ Este arquivo registra todas as alterações notáveis feitas neste projeto. O fo
     - Corrigida a tipagem das propriedades do componente `Image` do Next.js, removendo fallbacks desnecessários após a validação do post.
     - Melhorada a semântica do `alt` na imagem do autor.
 
+## [0.1.2] - 2026-04-20
+
+### Alterado
+- **Listagem do Blog (`src/pages/blog/index.tsx`)**:
+    - Implementado `getStaticProps` para pré-renderizar os posts em ordem decrescente de data.
+    - A página passou a receber os dados via props, removendo a dependência direta de dados dentro do template.
+- **Detalhe do Post (`src/pages/blog/[slug].tsx`)**:
+    - Implementados `getStaticPaths` e `getStaticProps` para geração estática dos posts.
+    - Definidos os 5 posts mais recentes para pré-renderização inicial com `fallback: 'blocking'`.
+    - Incluído retorno `notFound` para slugs inexistentes.
+- **Templates (`src/templates/blog/blog-list.tsx` e `src/templates/blog/post-page.tsx`)**:
+    - Refatorados para receber `posts` e `post` via props tipadas.
+    - Removida a leitura direta de `allPosts` e de `router.query` no template de post.
+    - Ajustada a URL de compartilhamento para usar `post.slug` diretamente.
+
+### Removido
+- Removidas páginas de demonstração de estratégia de renderização:
+    - `src/pages/ssg.tsx`
+    - `src/pages/ssr.tsx`
+    - `src/pages/isr.tsx`
+
 ## [0.1.0] - 2026-04-13
 
 ### Adicionado

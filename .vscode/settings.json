@@ -1,0 +1,55 @@
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 90,
+  "editor.wrappingIndent": "indent",
+  "editor.rulers": [100],
+  "js/ts.tsdk.path": "nextjs/site-blog/node_modules/typescript/lib",
+  "biome.enable": true,
+  "biome.lint.enable": true,
+  "biome.format.enable": true,
+  "biome.server.path": "nextjs/site-blog/node_modules/.bin/biome",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "always",
+    "source.fixAll.biome": "always"
+  },
+  "editor.tabCompletion": "on",
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  "tailwindCSS.experimental.classRegex": ["className=\"([^\"]*)\""],
+  "tailwindCSS.classAttributes": ["class", "className"],
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "css.validate": false,
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}
