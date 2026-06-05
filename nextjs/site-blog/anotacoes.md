@@ -66,6 +66,11 @@
 - RSC Patterns
     - Composition
     - [DOCS Composition patterns](https://nextjs.org/docs/14/app/building-your-application/rendering/composition-patterns)
+<br>
+- Quando utilizar RSC?
+    ![](/public/assets/react_router_componentes_quando_utilizar.png)
+
+<br>
 
 - Considerações
     - ✅ Prós

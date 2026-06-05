@@ -15,3 +15,13 @@ export const getStaticProps = (async () => {
     props: { posts: sortedPosts },
   }
 }) satisfies GetStaticProps<BlogListProps>
+
+/* 
+  Pages Router
+
+  / -> pages/index.tsx
+
+  App Router
+
+  / -> app/page.tsx
+*/
