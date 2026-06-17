@@ -1,38 +1,41 @@
+'use client'
+
 import { CircleX, SearchIcon } from 'lucide-react'
-import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 export const Search = () => {
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const router = useRouter()
-  // estado local para o input (permitindo acentos)
-  const [searchValue, setSearchValue] = useState('')
+  const searchParams = useSearchParams()
+  const query = searchParams?.get('q') ?? ''
+  const hasQuery = !!searchParams?.has('q')
 
-  // sincronizando o estado local com a URL apenas no carregamento inicial ou quando o router estiver pronto
+  // estado local para o input (permitindo acentos)
+  const [searchValue, setSearchValue] = useState(query)
+
+  // sincronizando o estado local com a URL se a URL mudar externamente (ex: botão de voltar)
   useEffect(() => {
-    if (router.isReady && router.query.q) {
-      setSearchValue(decodeURIComponent(router.query.q as string))
-    }
-  }, [router.isReady, router.query.q])
+    setSearchValue(query)
+  }, [query])
 
   // debounce: atualiza a URL 300ms após o usuário parar de digitar
   useEffect(() => {
     const handler = setTimeout(() => {
-      // só atualiza se o valor for diferente do que já esta na URL para evitar loops
-      const currentQuery = (router.query.q as string) || ''
-      if (searchValue !== currentQuery) {
+      // só atualiza se o valor for diferente do que já está na URL para evitar loops
+      if (searchValue !== query) {
         router.push(
           searchValue.trim()
             ? `/blog?q=${encodeURIComponent(searchValue.trim())}`
             : '/blog',
-          undefined,
-          { shallow: true, scroll: false },
+          { scroll: false },
         )
       }
     }, 300)
 
     return () => clearTimeout(handler)
-  }, [searchValue, router])
+  }, [searchValue, query, router])
 
   const handleSearch = useCallback(
     (event: React.FormEvent) => {
@@ -43,8 +46,7 @@ export const Search = () => {
         searchValue.trim()
           ? `/blog?q=${encodeURIComponent(searchValue.trim())}`
           : '/blog',
-        undefined,
-        { shallow: true, scroll: false },
+        { scroll: false },
       )
     },
     [searchValue, router],
@@ -58,6 +60,12 @@ export const Search = () => {
     setSearchValue('')
   }
 
+  useEffect(() => {
+    if (hasQuery) {
+      inputRef.current?.focus()
+    }
+  }, [hasQuery])
+
   return (
     <form onSubmit={handleSearch} className="relative group w-full md:w-60">
       <SearchIcon
@@ -67,6 +75,7 @@ export const Search = () => {
         )}
       />
       <input
+        ref={inputRef}
         type="text"
         placeholder="Buscar"
         value={searchValue}
