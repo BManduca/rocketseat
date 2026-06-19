@@ -89,3 +89,58 @@
             - Nada de sessionStorage, localStorage, window, document...
         - Complexidade
             - Novo paradigma no Ecossistema React.js
+
+
+### SEO
+
+- Ex.: Google, Bing, Yahoo
+- SEO
+  - Search Engine Optimization
+    - Otimização para mecanismos de busca
+  - Estratégias e Técnicas para melhorar o posicionamento de uma página nos motores de busca.
+  
+
+- Por que é importante?
+  - Foco é ter tráfego orgânico (não pago)
+    - Quanto melhor seu score, melhor...
+    - SEO permite que a gente consiga alcançar esses scores mais altos
+  - Aumenta na taxa de conversão
+  - Visibilidade da marca
+  - Vantagem competitiva
+
+
+- Como funciona?
+  - Alinhamento entre estrutura, conteúdo e fatores externos
+    - Estrutura: a página em si
+    - Conteúdo: o que você coloca na página
+    - Fatores externos: tem um ecossistema inteiro por trás, então não é so a página em si que vai ajudar no SEO 
+
+
+- Tipos:
+  - On-Page SEO
+    - Relaciona diretamente com o conteúdo da página
+    - Exemplos:
+      - Otimização de palavras-chave
+      - Qualidade de conteúdo
+      - Meta tags
+      - Textos alternativos para imagens
+      - Links internos
+
+  - Off-Page SEO
+    - Inclui atividades for do website
+    - Exemplos:
+      - Marketing em redes sociais
+      - Construção de links
+
+  - Technical SEO
+    - Melhoria de alguns elementos do website
+    - Exemplos:
+      - Otimização de performance
+      - Mobile responsives
+      - HTTPS
+      - XML sitemaps
+
+- Considerações
+  - Inclui múltiplas ações
+  - O foco é em atrair tráfego orgânico
+    
