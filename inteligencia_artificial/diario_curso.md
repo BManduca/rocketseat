@@ -242,3 +242,66 @@ graph LR
   - quanto menor a temperatura, menor será a criatividade, ou seja, quanto mais proximo do 0, mais deterministico, mais repetitivo, menos criativo.
 
 
+## Context
+- Pensa como uma memória a curto prazo, de uma conversa com alguém
+
+    ![Referência para contexto](./assets/contexto2.png)
+
+1. O que é context?
+    - Basicamente é tudo que você envia para a LLM, seja instrução ou a conversa inteira que você já teve com ela.
+    - Como podemos ver na imagem, existe uma conversa anterior, então esse contexto ajuda a LLM a entender o que está acontecendo na conversa.
+    - E no principio, quando iniciamos o contexto, é basicamente como um quadro em branco, aonde geralmente iniciamos com 'System prompt', aonde falamos pra IA como ela deve agir, qual o tom de voz, qual o publico alvo, etc... 
+    - Logo em seguida mandamos mais informações, bem como um chat literalmente, aonde vamos acumulando mensagens...
+      - No contexto é bem relevante entender isso...porque ao mandar mais informações no contexto, ele vai se acumular com as informações antigas...
+
+2. Porque o fato de acumulo de mensagens é relevante?
+ - Context window (limites de contexto)
+   - Define os limites do contexto
+   - Chega um momento que esse limite ou essa janela é extrapolado e a informação mais antiga é esquecida.
+   - Existem 'Truques' na janela de contexto, que é super relevante para trabalhar de uma maneira inteligente, de modo que a IA não esqueça do que foi falado anteriormente.
+   ![Representação da janela de contexto](./assets/definicao_contexto_uso_tokens.png)
+   - O melhor momento para trabalhar com uma tarefa da  inteligencia artificial é quando iniciamos um novo chat ou também, como por exemplo no gemini, quando damos o comando /clear e zeramos o contexto. Cerca de 30% => 60k tokens (very nice spot)
+   - Na parte do meio, que são ainda em torno de 30% => 60k tokens (sometimes ok, starts degrading)
+   - Já dos 60% para frente, é aonde começa ficar literalmente 'retardada'ou degradada... e é aonde muitos comentam: "Nossa, minha IA não esta boa como antes!"
+     - 40% => 80k (dumb section context rot)
+     - Apodrecimento do contexto
+     - pede um resumo da janela atual, desliga, da um /clear ou fecha e abre novamente...
+
+ - Context rot
+   - Conversa longa demais
+   - perda de contexto
+   - Apodrecimento do contexto
+   - Respostas não fazem sentido, inventa, delira
+   - Solução: apaga o contexto e inicia novamente
+
+   - Compact context
+   - Sintese do contexto anterior (da janela)
+     - Resumo do contexto
+     - Perda de direcionamentos relevantes
+     - Inteligência artifical não é perfeita
+     - ela não veio para te substituir, mas sim para te auxiliar nas demais tarefas do dia a dia...
+     - Para que ela possa te auxiliar de forma correta, você precisa direciona-la corretamente.
+     - É uma ferramente sensacional e quanto mais nós tivermos domínio sobre ela, mais usaremos ela de uma maneira saúdavel, menos hype e mais uso inteligente...
+       
+
+3. Context Expansion
+   - Algumas estratégias de expansão de contexto vem de encontro a uma dificuldade obvia
+   - A LLM é treinada até determinado ponto
+   - Forma de trazer atualidades para o contexto
+     - RAG (Retrieval Augmented Generation)
+       - Serve para injetar documentos e informações que não estejam em lugar nenhum, confidenciais talvez
+       - Existe uma estratégia de ser guardado em um banco de dados, que é chamado de vetorial, para que seja resgatado realmente a nível de contexto/semântica
+     - Tools (ferramentas)
+       - APIs => vou conectar por exemplo com as issues do github e trazendo para o contexto...
+     - MCP (Model Context Protocol)
+       - Criar um protocolo, um conjuntinho de regras, aonde é definido os padrões para que todas as empresas sigam esse conjunto de regras, posteriormente seja adicionado na ferramenta e todo mundo tenha acesso as APIs
+       - Apartir desse ponto ja exige atenção, pois é nesse ponto que o contexto já começa a ficar apodrecido...
+         - Porque a galera começa a colocar os 200 MCPs criados, que nunca se quer vão ser utilizados...para uma tarefa especifica que será iniciada e o que acontece?
+           - o novo chat já é injetado com essa quantidade enorme de coisas..que talvez nem sejam utilizadas
+           - para arrumar é so desativar...
+           - Assim as respostas já serão melhores
+     - Skills
+       - Seriam habilidades extras que a IA pode desenvolver
+       - habilidades específicas
+         - Nome e descrição...
+     - Markdown(.md)
