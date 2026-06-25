@@ -1,0 +1,63 @@
+# 🤖 IA Generativa - Anotações e Estudos
+
+> Repositório de anotações, diagramas e conceitos práticos desenvolvidos durante o curso de **Inteligência Artificial Generativa** da Rocketseat.
+
+---
+
+## 📌 Visão Geral
+
+Este diretório é dedicado a registrar a evolução dos estudos sobre IA Generativa, compreendendo desde os fundamentos históricos e a matemática probabilística por trás dos modelos até as técnicas avançadas de Engenharia de Prompt e controle de parâmetros de LLMs (Large Language Models).
+
+---
+
+## 📁 Estrutura dos Arquivos
+
+*   [diario_curso.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/diario_curso.md): Diário de bordo detalhado com todas as notas teóricas, definições de parâmetros, diagramas de fluxo e conceitos estudados.
+*   [criacao_diagramas_markdown.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/criacao_diagramas_markdown.md): Guia prático documentando como estruturar e estilizar diagramas Mermaid diretamente em arquivos Markdown (`.md`).
+*   [assets/](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/assets): Pasta contendo as representações gráficas e capturas de tela dos conceitos de parametrização e técnicas de prompt.
+
+---
+
+## 🧪 Conteúdos Abordados
+
+### 1. Fundamentos e Linha do Tempo da IA
+*   Evolução histórica (do Teste de Turing de 1950 até as arquiteturas modernas pós-artigo *Attention is All You Need* em 2017).
+*   Relacionamento dos conceitos entre Inteligência Artificial, Machine Learning, Deep Learning, Processamento de Linguagem Natural (NLP) e LLMs.
+
+### 2. Engenharia de Prompt (Técnicas)
+*   **Few-Shot**: Uso de múltiplos exemplos estruturados para guiar o formato da resposta.
+*   **Role Method**: Definição de papéis, contexto e restrições para a persona da IA.
+*   **Chain of Thought (CoT)**: Orientação de raciocínio passo a passo para resolução de problemas complexos.
+*   **Tree of Thought (ToT)**: Exploração de caminhos e tomada de decisão através de ramificações lógicas de pensamentos.
+
+### 3. Anatomia de um Prompt Estruturado
+*   Formatos comuns (XML, Markdown, JSON, YAML).
+*   Elementos cruciais de um bom prompt: *Price, Play, Reasoning, Instructions, Constraints e Examples*.
+*   Uso de agentes e modelagem programática de prompts (e.g., framework DSPy).
+
+### 4. Funcionamento Interno e Ajustes de Parâmetros
+*   Conceito de **Tokens** e funcionamento da **Janela de Contexto**.
+*   Modelagem probabilística não determinística.
+*   **Top K** (número máximo de palavras candidatas).
+*   **Top P** (corte probabilístico acumulado).
+*   **Temperature** (grau de aleatoriedade/criatividade na geração das respostas).
+
+---
+
+## 📊 Visualização com Mermaid
+
+Muitos dos fluxos e esquemas deste curso estão ilustrados utilizando diagramas **Mermaid.js**, renderizados nativamente por plataformas como o GitHub e editores de markdown compatíveis. Veja um exemplo do fluxo básico de interação:
+
+```mermaid
+graph LR
+    subgraph FewShot ["Fluxo Padrão de Prompt"]
+        direction LR
+        Input["📥 Input <br> (Prompt / Instrução)"] --> LLM{"🤖 LLM <br> (Processamento)"}
+        LLM --> Response["📤 Response <br> (Saída / Resposta)"]
+    end
+
+    style FewShot fill:#121214,stroke:#7c7c8a,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+    style Input fill:#1f2335,stroke:#2ac3de,stroke-width:2px,color:#fff
+    style LLM fill:#414868,stroke:#f7768e,stroke-width:2px,color:#fff
+    style Response fill:#1f2335,stroke:#9ece6a,stroke-width:2px,color:#fff
+```
