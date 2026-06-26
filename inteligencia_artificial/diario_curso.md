@@ -305,3 +305,155 @@ graph LR
        - habilidades específicas
          - Nome e descrição...
      - Markdown(.md)
+
+## Limitations and Care
+
+Abaixo está o diagrama representativo das limitações das IAs Generativas, abordando alucinações, vieses e os mecanismos de defesa (guardrails) utilizados para controlá-los:
+
+```mermaid
+graph TD
+    %% Bloco Central (Limitações e Cuidados)
+    subgraph LC ["⚠️ Limitations and Care"]
+        direction TB
+        H["Hallucination (Alucinação)"]
+        B["Biases (Viesses)"]
+        G["Guardrails (Diretrizes/Mecanismos)"]
+    end
+
+    %% Ramificações de Hallucination
+    H --> H1["🔍 O que é? <br> Respostas incorretas geradas com alta confiança."]
+    H --> H2["⚙️ Causas: <br> • Limitação dos dados de treino <br> • Padrões probabilísticos falhos"]
+    H --> H3["🛡️ Mitigação: <br> • RAG/MCP <br> • Temperatura baixa <br> • Chain of Thought <br> • Few-shot"]
+
+    %% Ramificações de Biases
+    B --> B1["🔍 O que é? <br> Preconceitos ou distorções herdados dos dados históricos."]
+    B --> B2["⚠️ Impactos: <br> • Respostas discriminatórias <br> • Falta de neutralidade factual"]
+    B --> B3["🛡️ Mitigação: <br> • Curadoria ativa de dados <br> • Fine-tuning de alinhamento (RLHF)"]
+
+    %% Ramificações de Guardrails
+    G --> G1["🔍 O que é? <br> Filtros de segurança entre o usuário e a LLM."]
+    G --> G2["⚙️ Ações comuns: <br> • Bloqueio de termos sensíveis <br> • Formatação rígida de saída (JSON)"]
+    G --> G3["🛠️ Ferramentas: <br> • NeMo Guardrails <br> • Llama Guard"]
+
+    %% Estilização Visual (Estética Dark/Ajustada)
+    style LC fill:#121214,stroke:#7c7c8a,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+    style H fill:#1f2335,stroke:#f7768e,stroke-width:2px,color:#fff
+    style B fill:#1f2335,stroke:#e0af68,stroke-width:2px,color:#fff
+    style G fill:#1f2335,stroke:#9ece6a,stroke-width:2px,color:#fff
+
+    style H1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style H2 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style H3 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+
+    style B1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style B2 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style B3 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+
+    style G1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style G2 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style G3 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+```
+
+### Hallucination
+- IA inventa fatos falsos
+- Baseado em probabilidade estatística
+- Respostas parecem muito convicentes
+- Falta consulta a fatos
+- Prioriza fluidez sobre verdade
+
+### Biases
+- Dados refletem preconceitos humanos.
+- IA replica padrões tendenciosos.
+- Falta diversidade no treinamento.
+- Respostas podem ser injustas.
+- Exige monitoramento humano contante.
+
+### Guardrails
+```mermaid
+graph LR
+    subgraph Guardrails ["Guardrails"]
+        direction LR
+        G1["guardrails"] ~~~ I["input"] ~~~ G2["guardrails"] ~~~ L{"LLM"} ~~~ G3["guardrails"] ~~~ R["response"]
+    end
+
+    style Guardrails fill:#85a4c4,stroke:#9ece6a,stroke-width:2px,color:#fff
+    style G1 fill:#0a0a0a,stroke:#ef2513,stroke-width:1px, stroke-dasharray: 5 5,color:#cfcfff
+    style I fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style G2 fill:#0a0a0a,stroke:#ef2513,stroke-width:1px,color:#cfcfff
+    style L fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style G3 fill:#0a0a0a,stroke:#ef2513,stroke-width:1px,color:#cfcfff
+    style R fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+```
+
+- Guardrails => são proteções que podemos encontrar em curvas mais acentuadas em rodovias ou estadas, ou seja, uma camada de segurança
+- Conforme o grafico a cima, teriamos essas proteções em questões de níveis:
+  - teria um guardrails anterior a uma conversa (input)
+  - teria um guardrails para chegar na LLM
+  - teria um guardrail anterior a resposta (response)
+- O guardrails: "can be prompt or code"
+  1. Behavioral (System level policies)
+    - reject some topics
+    - rate limit / auth
+    - brand reputation
+  2. Input (prompt filtering)
+    - detect jailbreak
+    - filter hate speech
+    - block X, Y information
+  3. Output (filter/moderation)
+    - fact check
+    - keyword/phrases
+    - format
+
+- Exemplo
+```
+// Pseudocode example for a JavaScript developer
+async function getSafeAIResponse(prompt) {
+    // 1. Input Guardrail: Check prompt for safety
+    const promptModerationResult = await moderationService.check(prompt)
+    if (promptModerationResult.isUnsafe) {
+        return "I cannot process that request!"
+    }
+
+    // 2. Generate AI response
+    const aiResponse = await llm.generate(prompt)
+
+    // 3. Output Guardrail: Check AI response for safety
+    const responseModerationResult = await moderationService.check(aiResponse)
+    if (responseModerationResult.isUnsafe) {
+        return "I'm sorry. I cannot provide that information!"
+    }
+
+    return aiResponse
+}
+```
+
+- "You are helpfull and harmless AI assistant"
+- "You must notgenerate hate speech, sexually explicit content or promote violence."
+
+## Warnings
+```mermaid
+graph TD
+    %% Bloco Central (Warnings)
+    subgraph Warnings ["⚠️ Warnings"]
+        direction TB
+        D["Deepfakes"]
+        E["Ethics (Ética)"]
+        B["Brain rot"]
+    end
+
+    %% Ramificação Deepfakes
+    D --> D1["• Máscaras digitais ultra-realistas. <br> • Troca rostos e vozes. • Usa redes neurais avançadas. <br> • Recria movimentos e expressões. <br> • Gera conteúdos sintéticos convincentes. "]
+    %% Ramificação Ethics
+    E --> E1["• Reduzir vieses e preconceitos. <br> • Proteger privacidade dos dados. <br> • Respeitar direitos autorais. <br> • Garantir transparência nos processos. <br> • Promover uso seguro, justo... <br>"]
+    %% Ramificação Brain rot
+    B --> B1["• Cerébro perde força criativa. <br> • Dependência gera passividade mental. <br> • Falta exercício do racíocínio. <br> • IA substitui pensamento crítico. <br> • Atrofia da habilidade intelectual. <br>"]
+    
+    style Warnings fill:#121214,stroke:#7c7c8a,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+    style D fill:#1f2335,stroke:#f7768e,stroke-width:2px,color:#fff
+    style E fill:#1f2335,stroke:#e0af68,stroke-width:2px,color:#fff
+    style B fill:#1f2335,stroke:#9ece6a,stroke-width:2px,color:#fff
+    style D1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style E1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+    style B1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+
+```
