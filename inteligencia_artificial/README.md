@@ -37,10 +37,16 @@ Este diretório é dedicado a registrar a evolução dos estudos sobre IA Genera
 
 ### 4. Funcionamento Interno e Ajustes de Parâmetros
 *   Conceito de **Tokens** e funcionamento da **Janela de Contexto**.
+*   **Degradação de Contexto (Context Rot)** e estratégias para lidar com esquecimento de informações em conversas longas.
+*   **Expansão de Contexto**: Uso de RAG (Retrieval Augmented Generation), conexão com APIs/Ferramentas externas e **MCP (Model Context Protocol)**.
 *   Modelagem probabilística não determinística.
-*   **Top K** (número máximo de palavras candidatas).
-*   **Top P** (corte probabilístico acumulado).
-*   **Temperature** (grau de aleatoriedade/criatividade na geração das respostas).
+*   **Top K**, **Top P** e **Temperature** (controle de amostragem e criatividade na geração das respostas).
+
+### 5. Limitações, Cuidados e Segurança (Limitations & Care)
+*   **Hallucination (Alucinação)**: Compreensão de por que modelos inventam fatos falsos e técnicas de mitigação.
+*   **Biases (Vieses)**: Como preconceitos humanos históricos nos dados de treino são replicados e formas de remediá-los.
+*   **Guardrails**: Implementação de barreiras de proteção a nível de Comportamento, Entrada (Input filtering) e Saída (Output moderation) usando código e prompts específicos.
+*   **Warnings (Avisos de Segurança e Ética)**: Discussão sobre a proliferação de Deepfakes, impactos éticos e de direitos autorais, e a dependência cognitiva da IA ("Brain rot").
 
 ---
 
