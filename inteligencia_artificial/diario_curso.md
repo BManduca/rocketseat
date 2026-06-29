@@ -457,3 +457,116 @@ graph TD
     style B1 fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
 
 ```
+
+## Engenharia de Prompt vs. Engenharia de Contexto
+
+- Porque travamos na primeira aula?
+  - Modelo mental errado:
+    - A IA não é um dev senior mágico?
+      - Estavamos com o pensamento a IA não vai ser o **ponto chave** de virada, para que eu possa evoluir, aprender, para que eu posso conseguir entregar essa demanda?
+      - No começo da IA estavamos muito com essa mentalidade
+    - Com esse pensamento, iriamos cair no erro de delegar para ela de forma errada
+  - Prompts não sustentam a arquitetura de um software
+- Funcionamento da IA: Tokens e estatística
+- Engenharia => Construção
+- "Pedreirinho" de código => IA
+- Nós seremos os Engenheiros => que iremos escrever para ela, o que ela precisa fazer
+- Objetivo: Tranformar a IA de um gerador de código aleátorio, em um ajudante real... Um copiloto daquilo que desejamos fazer...
+
+## Expectativa vs. Realidade
+
+### Expectativa
+```mermaid
+graph LR
+  subgraph Expectativa ["Expectativa"]
+    direction LR
+    I["Ideia vaga"] --> P["Prompt simples"] --> R(("Resultado incrível"))
+  end
+
+  style Expectativa fill:#121214,stroke:#7c7c8a,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+  style I fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+  style P fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+  style R fill:#027712,stroke:#fcfcfc, stroke-width:1px,color:#fff
+
+```
+
+### Realidade
+- IA: "Aqui está o que eu acho que você precisa..." (papagaios estocasticos)
+
+```mermaid
+graph TD
+  subgraph ProblemasGerados["Problemas Gerados"]
+    direction TB
+    A["Alucinação: <br> Inventa bibliotecas"]
+    CG["Código genérico: <br> Tutorial Hello World"]
+    DT["Débito técnico: <br> Não segue padrões"]
+
+    A ~~~ DT
+    CG ~~~ DT
+  end
+
+  style ProblemasGerados fill:#121214,stroke:#f7768e,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+  style A fill:#24283b,stroke:#e1e1e6,stroke-width:1px,color:#fff
+  style CG fill:#24283b,stroke:#e1e1e6,stroke-width:1px,color:#fff
+  style DT fill:#24283b,stroke:#e1e1e6,stroke-width:1px,color:#fff
+```
+
+
+## Engenharia de contexto
+- Novo modelo mental
+  - IA como dev Genial e Literal
+
+- Quando falamos de Engenharia de contexto estamos falando de:
+  - De uma "arte", de uma percepção de preencher esse quadro branco com restrições, com informações.. com tudo que a IA precisa saber em "todo" o tempo, para que ela nunca se perca do caminho correto, para que ela nunca desvie....
+
+### Janela de Contexto
+- Memória operacional limitada
+  - Basicamente é um caderno que a IA pode consultar, mas ele apaga ao longo do tempo (não é infinito)
+  - Remete muito a aquele aluno que faz a prova com consulta
+  - Não adianta colocar simplesmente: "Crie uma API de usuários em Node"
+    - A IA tem conteúdo infinito
+    - E ela não sabe qual banco de dados você usa
+    - Não sabe se você usa React, Vue, Angular...
+    - Em node?
+      - Ela pode utilizar express, fastify, nest..
+      - Pode usar SQL, MySQL, Postgres, SQLite, MongoDB...
+      - A IA vai escolher o que for mais comum na internet, tipo tutorial mais genérico que ela presencia "perto" dela e vei gerar o código
+      - Desta forma, vai ter um gasto muito maior refatorando código, do que ter feito na mão...
+
+
+## Prompt Engineering != Context Engineering
+```mermaid
+flowchart LR
+  subgraph PEdifCE["Prompt Engineering != Context Engineering"]
+    direction LR
+    PE["Prompt Engineering: <br> Palavas mágicas e fragilidade"]
+    CE["Context Engineering: <br> Ambiente e restrições robustas"]
+
+    PE ~~~ |≠| CE
+  end
+
+  style PEdifCE fill:#121214,stroke:#7c7c8a,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+  style PE fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+  style CE fill:#24283b,stroke:#565f89,stroke-width:1px,color:#cfcfff
+
+```
+
+## Workflow Profissional
+- Objetivo: Reduzir o espaço de busca
+- Você se torna o arquiteto e a IA o "pedreirinho"
+
+
+## Especificação para desenvolvimento (Spec)
+- Busca leitura
+  - Maior contato com palavras
+  - Maior contato com frases
+  - Capacidade altíssima de interpretação de texto
+  - Capacidade altíssima de interpretação de contextos, do mundo ao seu redor...
+  - Maior repertório de palavras
+  - O que tudo isso pode te trazer como retorno?
+    - Um melhor entendimento de regra de negócio
+    - interpretação do que o cliente precisa
+    - Escrita de especificação para a IA executar o que realmente precisa ser executado...
+  - Não é somente sobre sair aceitando tudo que a IA 'escreve', mas sim quationar, ler e entender tudo que esta sendo aplicado, para assim garantir que tudo esteja correto ou refinar quando necessário.
+  
+
