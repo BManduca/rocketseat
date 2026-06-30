@@ -1,0 +1,44 @@
+@baseUrl = http://localhost:3333
+
+### Criar Feedback - Positivo
+POST {{baseUrl}}/feedbacks
+Content-Type: application/json
+
+{
+  "content": "O serviço é ótimo, adorei a experiência!"
+}
+
+### Criar Feedback - Negativo
+POST {{baseUrl}}/feedbacks
+Content-Type: application/json
+
+{
+  "content": "O sistema está muito lento e com erro constante"
+}
+
+### Criar Feedback - Neutro
+POST {{baseUrl}}/feedbacks
+Content-Type: application/json
+
+{
+  "content": "Utilizei o serviço normalmente hoje"
+}
+
+### Criar Feedback - Erro de Validação (Muito curto)
+POST {{baseUrl}}/feedbacks
+Content-Type: application/json
+
+{
+  "content": "ok"
+}
+
+### Criar Feedback - Erro de Validação (Muito longo, > 500 caracteres)
+POST {{baseUrl}}/feedbacks
+Content-Type: application/json
+
+{
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam efficitur sodales nulla. Sed tempor, nulla a elementum finibus, tortor ante hendrerit leo, et cursus neque diam tempor ligula. Cras in eleifend dolor, eget commodo diam. Suspendisse non eleifend ex, at accumsan velit. Suspendisse ut dolor id massa dictum condimentum. Sed in neque vel nunc interdum sollicitudin. Phasellus ultrices, ex vitae scelerisque tempor, ligula nisl dapibus mauris, sit amet eleifend turpis justo sit amet felis. Pellentesque feugiat tristique tristique sodales."
+}
+
+### Listar todos os Feedbacks
+GET {{baseUrl}}/feedbacks

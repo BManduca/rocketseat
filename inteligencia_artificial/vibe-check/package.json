@@ -1,0 +1,29 @@
+{
+  "name": "vibe-check",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "API minimalista para coleta de feedbacks anônimos com análise de sentimento",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.1",
+  "dependencies": {
+    "fastify": "^5.9.0",
+    "uuid": "^14.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "@types/uuid": "^11.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}
