@@ -570,3 +570,44 @@ flowchart LR
   - Não é somente sobre sair aceitando tudo que a IA 'escreve', mas sim quationar, ler e entender tudo que esta sendo aplicado, para assim garantir que tudo esteja correto ou refinar quando necessário.
   
 
+  ## Diagrama Workflow
+  - Legenda
+    - PRD => Product Requirement Document
+      - o 'Como?' => O time decidir o que ela vai fazer e como vai fazer
+      - Regras de Negócio
+      - Requirementos/Requsições
+      - Escopo funcional
+      - Features => Atualização dentro de uma aplicação existente
+      - Define as regras do jogo
+
+    - SDD => System Design Document
+      - 2 Contextos
+        - Spec Driven Development => Desenvolvimento guiado por especificação
+        - Software Design Document => Documento que ira definir a técnica
+          - Qual a stack será utilizada
+          - Qual tabela será usada no banco de dados
+          - Qual o JSON de resposta
+        
+
+  ```mermaid
+  flowchart TD
+      subgraph WorkflowProfissional["Workflow Profissional"]
+        direction TB
+        IM[\"<b>Intenção Macro</b><br>Quero uma API"/]
+        PRD[\"<b>PRD</b><br>Escopo<br>Funcional"/]
+        RT[\"<b>Restrições<br>Técnicas</b><br>SDD"/]
+        CAF(("Código<br>alinhado e funcional"))
+
+        %% Fluxo de cima para baixo
+        IM --> PRD
+        PRD --> RT
+        RT --> CAF
+      end
+
+      %% Estilização para simular o afunilamento e combinar com o tema escuro (Tokyonight)
+      style WorkflowProfissional fill:#121214,stroke:#7c7c8a,stroke-width:2px,stroke-dasharray: 5 5,color:#fff
+      style IM fill:#1a1b26,stroke:#2ac3de,stroke-width:1px,color:#fff,font-size:15px
+      style PRD fill:#1f2335,stroke:#bb9af3,stroke-width:1px,color:#fff,font-size:12px
+      style RT fill:#24283b,stroke:#9ece6a,stroke-width:1px,color:#fff,font-size:10px
+      style CAF fill: #a5d6ff,stroke:#027712, stroke-width:2px,color:#000
+  ```
