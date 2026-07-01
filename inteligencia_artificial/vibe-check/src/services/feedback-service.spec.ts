@@ -1,9 +1,19 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterAll } from 'vitest'
 
-import { createFeedback } from './feedback-service.js'
+import { createFeedback, getAllFeedbacks, clearFeedbacks, closeDatabase } from './feedback-service.js'
 import { Sentiment } from '../types/feedback.js'
 
 describe('feedback-service', () => {
+  // Limpar os feedbacks antes de cada teste para garantir isolamento total
+  beforeEach(() => {
+    clearFeedbacks()
+  })
+
+  // Fechar a conexão do banco de dados ao final da suíte de testes
+  afterAll(() => {
+    closeDatabase()
+  })
+
   // ─── Validação de Conteúdo ────────────────────────────────────
 
   describe('validação de conteúdo', () => {
@@ -118,6 +128,70 @@ describe('feedback-service', () => {
       const f1 = createFeedback({ content: 'Primeiro feedback do teste' })
       const f2 = createFeedback({ content: 'Segundo feedback do teste' })
       expect(f1.id).not.toBe(f2.id)
+    })
+  })
+
+  // ─── Persistência com SQLite ──────────────────────────────────
+
+  describe('persistência com SQLite', () => {
+    it('deve persistir o feedback criado no banco de dados', () => {
+      const created = createFeedback({ content: 'Feedback persistido no banco' })
+      const allFeedbacks = getAllFeedbacks()
+
+      expect(allFeedbacks).toHaveLength(1)
+      expect(allFeedbacks[0].id).toBe(created.id)
+      expect(allFeedbacks[0].content).toBe(created.content)
+    })
+
+    it('deve retornar uma lista vazia quando não há feedbacks', () => {
+      const allFeedbacks = getAllFeedbacks()
+      expect(allFeedbacks).toEqual([])
+    })
+
+    it('deve retornar múltiplos feedbacks persistidos', () => {
+      createFeedback({ content: 'Primeiro feedback de teste' })
+      createFeedback({ content: 'Segundo feedback de teste' })
+      createFeedback({ content: 'Terceiro feedback de teste' })
+
+      const allFeedbacks = getAllFeedbacks()
+      expect(allFeedbacks).toHaveLength(3)
+    })
+
+    it('deve retornar feedbacks ordenados por data de criação (mais recente primeiro)', () => {
+      createFeedback({ content: 'Feedback mais antigo criado' })
+      createFeedback({ content: 'Feedback mais recente criado' })
+
+      const allFeedbacks = getAllFeedbacks()
+
+      expect(allFeedbacks).toHaveLength(2)
+      expect(allFeedbacks[0].createdAt >= allFeedbacks[1].createdAt).toBe(true)
+    })
+
+    it('deve mapear corretamente created_at do banco para createdAt no TypeScript', () => {
+      createFeedback({ content: 'Feedback para validar mapeamento' })
+      const allFeedbacks = getAllFeedbacks()
+
+      expect(allFeedbacks[0]).toHaveProperty('createdAt')
+      expect(allFeedbacks[0]).not.toHaveProperty('created_at')
+    })
+
+    it('deve isolar os dados entre testes (via beforeEach)', () => {
+      // Este teste valida que o beforeEach limpa os dados corretamente.
+      // Se os dados de outro teste vazarem, haverá mais de 0 feedbacks antes da criação.
+      const beforeCreate = getAllFeedbacks()
+      expect(beforeCreate).toHaveLength(0)
+
+      createFeedback({ content: 'Feedback para teste de isolamento' })
+      const afterCreate = getAllFeedbacks()
+      expect(afterCreate).toHaveLength(1)
+    })
+
+    it('deve preservar a integridade dos dados com caracteres especiais', () => {
+      const content = 'Feedback com acentuação: café, coração e emojis 🎉🚀✅'
+      createFeedback({ content })
+
+      const allFeedbacks = getAllFeedbacks()
+      expect(allFeedbacks[0].content).toBe(content)
     })
   })
 })

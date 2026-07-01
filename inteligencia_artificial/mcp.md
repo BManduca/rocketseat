@@ -1,0 +1,15 @@
+# MCP (Model Context Protocol)
+- Sem o MCP, o agent vai estar isolado dentro do código
+- 'Ele' vai tentar baseado nos conhecimentos prévios que ele tem, adivinhar o que nós queremos realizar/fazer
+- Basicamente "É como mandar alguém construir uma casa **sem a planta**, esperando que adivinhe tudo..."
+- Com MCP conectado
+  - O agent de IA, ele vai ter um **contexto** real do nosso projeto..
+  - Por exemplo:
+    - o agent pode ter acesso a documentações atualizadas, para poder implementar uma feature mais acertiva
+    - Ele pode ter acesso a uma biblioteca de componentes
+    - Ele pode ter acesso ao nosso Banco de Dados
+    - Ele pode ter acesso ao seu "Status Deploy", ou seja, da plublicação do seu App..
+- "...e com o MCP é como mandar com a **planta e materiais certos** e acesso direto ao terreno"
+- Resumindo:
+  - MCP (Model Context Protocol) é uma forma padronizada de conectar a IA a ferramentas do seu projeto. **Sem ele, o modelo alucina "alucina" mais porque tenta adivinhar o que não vê**
+  - Com MCP, a IA acessa a documentação atualizada, os componentes reais e o banco de dados. **Ela para de chutar e começa a tomar decisões com base em fatos.**
