@@ -14,6 +14,10 @@ Este diretório é dedicado a registrar a evolução dos estudos sobre IA Genera
 
 *   [diario_curso.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/diario_curso.md): Diário de bordo detalhado com todas as notas teóricas, definições de parâmetros, diagramas de fluxo e conceitos estudados.
 *   [criacao_diagramas_markdown.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/criacao_diagramas_markdown.md): Guia prático documentando como estruturar e estilizar diagramas Mermaid diretamente em arquivos Markdown (`.md`).
+*   [mermaid_formas_nos.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/mermaid_formas_nos.md): Guia rápido de referência com as formas de nós e sintaxes comuns utilizadas nos diagramas Mermaid.
+*   [mcp.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/mcp.md): Documentação conceitual sobre o Model Context Protocol (MCP) e sua importância em fornecer contexto real do projeto aos agentes.
+*   [Guia_Modos_Antigravity_IA.md](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/Guia_Modos_Antigravity_IA.md): Guia explicativo sobre os diferentes modos de operação do agente de IA do Antigravity IDE (Ask, Plan, Fast, Debug, Multitask).
+*   [vibe-check/](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/vibe-check): Projeto prático da API VibeCheck desenvolvido em TypeScript com Fastify e SQLite (via better-sqlite3) para coleta e análise de sentimentos em feedbacks anônimos.
 *   [assets/](file:///home/brunnomdp/Projetos/Development/rocketseat/inteligencia_artificial/assets): Pasta contendo as representações gráficas e capturas de tela dos conceitos de parametrização e técnicas de prompt.
 
 ---
@@ -47,6 +51,17 @@ Este diretório é dedicado a registrar a evolução dos estudos sobre IA Genera
 *   **Biases (Vieses)**: Como preconceitos humanos históricos nos dados de treino são replicados e formas de remediá-los.
 *   **Guardrails**: Implementação de barreiras de proteção a nível de Comportamento, Entrada (Input filtering) e Saída (Output moderation) usando código e prompts específicos.
 *   **Warnings (Avisos de Segurança e Ética)**: Discussão sobre a proliferação de Deepfakes, impactos éticos e de direitos autorais, e a dependência cognitiva da IA ("Brain rot").
+
+### 6. Desenvolvimento Orientado a Contexto e Agentes (Agentic Coding)
+*   Diferença conceitual entre Engenharia de Prompt e Engenharia de Contexto.
+*   Modos de operação e workflow com agentes de IA (Ask, Plan, Fast, Debug, Multitask) utilizando o **Antigravity IDE**.
+*   Uso prático do **Model Context Protocol (MCP)** para integrar agentes à infraestrutura do projeto (banco de dados, arquivos locais, documentação).
+
+### 7. Projeto Prático: VibeCheck API
+*   Desenvolvimento de uma API REST com **TypeScript** e **Fastify** seguindo especificações de PRD (Product Requirement Document) e SDD (System Design Document).
+*   Persistência local robusta utilizando **SQLite** com a biblioteca `better-sqlite3`.
+*   Estruturação de banco de dados relacional com integridade referencial, UUIDs e logs do SQLite.
+*   Testes unitários e de integração utilizando **Vitest**, isolando o ambiente de banco de dados real através de conexões SQLite em memória (`:memory:`) durante a suíte de testes.
 
 ---
 
