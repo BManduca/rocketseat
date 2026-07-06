@@ -234,12 +234,14 @@ curl -X POST http://localhost:3333/feedbacks \
 
 ### Checklist de Validação
 
-- [ ] Servidor inicia sem erros
-- [ ] `POST /feedbacks` com conteúdo válido retorna `201` com ID, sentiment e timestamp
-- [ ] Feedback com < 10 caracteres retorna `400`
-- [ ] Feedback com > 500 caracteres retorna `400`
-- [ ] Palavras positivas geram `POSITIVE`
-- [ ] Palavras negativas geram `NEGATIVE`
-- [ ] Texto neutro gera `NEUTRAL`
-- [ ] Nenhum dado pessoal (IP, User-ID) é armazenado
-- [ ] TypeScript compila sem erros (`pnpm build`)
+> Verificado em 2026-07-06.
+
+- [x] Servidor inicia sem erros — ✅ `pnpm dev` inicia e escuta na porta 3333
+- [x] `POST /feedbacks` com conteúdo válido retorna `201` com ID, sentiment e timestamp — ✅ Retorna JSON com `id`, `sentiment` e `createdAt`
+- [x] Feedback com < 10 caracteres retorna `400` — ✅ `{"error":"Feedback must be between 10 and 500 characters"}`
+- [x] Feedback com > 500 caracteres retorna `400` — ✅ Mesma mensagem de erro
+- [x] Palavras positivas geram `POSITIVE` — ✅ Texto com "ótimo" retornou `POSITIVE`
+- [x] Palavras negativas geram `NEGATIVE` — ✅ Texto com "lento"/"erro" retornou `NEGATIVE`
+- [x] Texto neutro gera `NEUTRAL` — ✅ Texto genérico retornou `NEUTRAL`
+- [x] Nenhum dado pessoal (IP, User-ID) é armazenado — ✅ Código e tabela SQLite armazenam apenas `id`, `content`, `sentiment`, `created_at`
+- [x] TypeScript compila sem erros (`pnpm build`) — ✅ `tsc` finalizou sem erros

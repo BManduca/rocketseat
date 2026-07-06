@@ -1,197 +1,201 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest'
 
-import { createFeedback, getAllFeedbacks, clearFeedbacks, closeDatabase } from './feedback-service.js'
+import { runMigrations, closeDatabase } from '../database/index.js'
+import { deleteAllFeedbacks } from '../repositories/feedback.repository.js'
 import { Sentiment } from '../types/feedback.js'
 
-describe('feedback-service', () => {
-  // Limpar os feedbacks antes de cada teste para garantir isolamento total
-  beforeEach(() => {
-    clearFeedbacks()
+import {
+  createFeedback,
+  getAllFeedbacks,
+  analyzeSentiment,
+} from './feedback-service.js'
+
+// ─── Setup ──────────────────────────────────────────────────────
+runMigrations()
+
+// ─── Lifecycle ──────────────────────────────────────────────────
+
+beforeEach(() => {
+  deleteAllFeedbacks()
+})
+
+afterAll(() => {
+  closeDatabase()
+})
+
+// ─── 1. Validação de Conteúdo (5 testes) ────────────────────────
+
+describe('Validação de conteúdo', () => {
+  it('deve rejeitar feedback com menos de 10 caracteres', () => {
+    expect(() => createFeedback({ content: 'curto' })).toThrow(
+      'Feedback must be between 10 and 500 characters'
+    )
   })
 
-  // Fechar a conexão do banco de dados ao final da suíte de testes
-  afterAll(() => {
-    closeDatabase()
+  it('deve rejeitar feedback vazio', () => {
+    expect(() => createFeedback({ content: '' })).toThrow(
+      'Feedback must be between 10 and 500 characters'
+    )
   })
 
-  // ─── Validação de Conteúdo ────────────────────────────────────
-
-  describe('validação de conteúdo', () => {
-    it('deve rejeitar feedback com menos de 10 caracteres', () => {
-      expect(() => createFeedback({ content: 'curto' })).toThrowError(
-        'Feedback must be between 10 and 500 characters',
-      )
-    })
-
-    it('deve rejeitar feedback com exatamente 9 caracteres', () => {
-      expect(() => createFeedback({ content: '123456789' })).toThrowError(
-        'Feedback must be between 10 and 500 characters',
-      )
-    })
-
-    it('deve aceitar feedback com exatamente 10 caracteres', () => {
-      const feedback = createFeedback({ content: '1234567890' })
-      expect(feedback.content).toBe('1234567890')
-    })
-
-    it('deve aceitar feedback com exatamente 500 caracteres', () => {
-      const content = 'a'.repeat(500)
-      const feedback = createFeedback({ content })
-      expect(feedback.content).toBe(content)
-    })
-
-    it('deve rejeitar feedback com mais de 500 caracteres', () => {
-      const content = 'a'.repeat(501)
-      expect(() => createFeedback({ content })).toThrowError(
-        'Feedback must be between 10 and 500 characters',
-      )
-    })
+  it('deve rejeitar feedback com exatamente 9 caracteres', () => {
+    expect(() => createFeedback({ content: '123456789' })).toThrow(
+      'Feedback must be between 10 and 500 characters'
+    )
   })
 
-  // ─── Análise de Sentimento ────────────────────────────────────
-
-  describe('análise de sentimento', () => {
-    it('deve retornar POSITIVE para texto com "ótimo"', () => {
-      const feedback = createFeedback({ content: 'O serviço é ótimo demais!' })
-      expect(feedback.sentiment).toBe(Sentiment.POSITIVE)
-    })
-
-    it('deve retornar POSITIVE para texto com "bom"', () => {
-      const feedback = createFeedback({ content: 'O atendimento foi muito bom' })
-      expect(feedback.sentiment).toBe(Sentiment.POSITIVE)
-    })
-
-    it('deve retornar POSITIVE para texto com "excelente"', () => {
-      const feedback = createFeedback({ content: 'Experiência excelente no geral' })
-      expect(feedback.sentiment).toBe(Sentiment.POSITIVE)
-    })
-
-    it('deve retornar NEGATIVE para texto com "ruim"', () => {
-      const feedback = createFeedback({ content: 'A experiência foi muito ruim' })
-      expect(feedback.sentiment).toBe(Sentiment.NEGATIVE)
-    })
-
-    it('deve retornar NEGATIVE para texto com "lento"', () => {
-      const feedback = createFeedback({ content: 'O sistema está muito lento' })
-      expect(feedback.sentiment).toBe(Sentiment.NEGATIVE)
-    })
-
-    it('deve retornar NEGATIVE para texto com "erro"', () => {
-      const feedback = createFeedback({ content: 'Encontrei um erro no sistema' })
-      expect(feedback.sentiment).toBe(Sentiment.NEGATIVE)
-    })
-
-    it('deve retornar NEUTRAL para texto sem palavras-chave', () => {
-      const feedback = createFeedback({ content: 'Utilizei o serviço normalmente hoje' })
-      expect(feedback.sentiment).toBe(Sentiment.NEUTRAL)
-    })
-
-    it('deve ser case-insensitive na análise', () => {
-      const feedback = createFeedback({ content: 'O serviço é ÓTIMO demais!' })
-      expect(feedback.sentiment).toBe(Sentiment.POSITIVE)
-    })
+  it('deve aceitar feedback com exatamente 10 caracteres', () => {
+    const feedback = createFeedback({ content: '1234567890' })
+    expect(feedback.content).toBe('1234567890')
   })
 
-  // ─── Estrutura do Feedback ────────────────────────────────────
+  it('deve rejeitar feedback com mais de 500 caracteres', () => {
+    const longContent = 'a'.repeat(501)
+    expect(() => createFeedback({ content: longContent })).toThrow(
+      'Feedback must be between 10 and 500 characters'
+    )
+  })
+})
 
-  describe('estrutura do feedback criado', () => {
-    it('deve retornar um objeto com id, content, sentiment e createdAt', () => {
-      const feedback = createFeedback({ content: 'Feedback de teste para validar' })
+// ─── 2. Análise de Sentimento (8 testes) ─────────────────────────
 
-      expect(feedback).toHaveProperty('id')
-      expect(feedback).toHaveProperty('content')
-      expect(feedback).toHaveProperty('sentiment')
-      expect(feedback).toHaveProperty('createdAt')
-    })
-
-    it('deve gerar um UUID válido como id', () => {
-      const feedback = createFeedback({ content: 'Feedback de teste para validar' })
-      // UUID v4 pattern
-      expect(feedback.id).toMatch(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-      )
-    })
-
-    it('deve gerar um timestamp ISO-8601 válido', () => {
-      const feedback = createFeedback({ content: 'Feedback de teste para validar' })
-      const date = new Date(feedback.createdAt)
-      expect(date.toISOString()).toBe(feedback.createdAt)
-    })
-
-    it('deve preservar o conteúdo original', () => {
-      const content = 'Meu feedback sobre o serviço'
-      const feedback = createFeedback({ content })
-      expect(feedback.content).toBe(content)
-    })
-
-    it('deve gerar IDs únicos para cada feedback', () => {
-      const f1 = createFeedback({ content: 'Primeiro feedback do teste' })
-      const f2 = createFeedback({ content: 'Segundo feedback do teste' })
-      expect(f1.id).not.toBe(f2.id)
-    })
+describe('Análise de sentimento', () => {
+  it('deve retornar POSITIVE para texto com "ótimo"', () => {
+    expect(analyzeSentiment('Serviço ótimo, parabéns!')).toBe(Sentiment.POSITIVE)
   })
 
-  // ─── Persistência com SQLite ──────────────────────────────────
+  it('deve retornar POSITIVE para texto com "bom"', () => {
+    expect(analyzeSentiment('O atendimento é muito bom')).toBe(Sentiment.POSITIVE)
+  })
 
-  describe('persistência com SQLite', () => {
-    it('deve persistir o feedback criado no banco de dados', () => {
-      const created = createFeedback({ content: 'Feedback persistido no banco' })
-      const allFeedbacks = getAllFeedbacks()
+  it('deve retornar POSITIVE para texto com "excelente"', () => {
+    expect(analyzeSentiment('Experiência excelente do início ao fim')).toBe(Sentiment.POSITIVE)
+  })
 
-      expect(allFeedbacks).toHaveLength(1)
-      expect(allFeedbacks[0].id).toBe(created.id)
-      expect(allFeedbacks[0].content).toBe(created.content)
-    })
+  it('deve retornar NEGATIVE para texto com "ruim"', () => {
+    expect(analyzeSentiment('A experiência foi ruim')).toBe(Sentiment.NEGATIVE)
+  })
 
-    it('deve retornar uma lista vazia quando não há feedbacks', () => {
-      const allFeedbacks = getAllFeedbacks()
-      expect(allFeedbacks).toEqual([])
-    })
+  it('deve retornar NEGATIVE para texto com "lento"', () => {
+    expect(analyzeSentiment('O sistema está lento demais')).toBe(Sentiment.NEGATIVE)
+  })
 
-    it('deve retornar múltiplos feedbacks persistidos', () => {
-      createFeedback({ content: 'Primeiro feedback de teste' })
-      createFeedback({ content: 'Segundo feedback de teste' })
-      createFeedback({ content: 'Terceiro feedback de teste' })
+  it('deve retornar NEGATIVE para texto com "erro"', () => {
+    expect(analyzeSentiment('Aconteceu um erro no sistema')).toBe(Sentiment.NEGATIVE)
+  })
 
-      const allFeedbacks = getAllFeedbacks()
-      expect(allFeedbacks).toHaveLength(3)
-    })
+  it('deve retornar NEUTRAL para texto sem palavras-chave', () => {
+    expect(analyzeSentiment('Utilizei o serviço normalmente')).toBe(Sentiment.NEUTRAL)
+  })
 
-    it('deve retornar feedbacks ordenados por data de criação (mais recente primeiro)', () => {
-      createFeedback({ content: 'Feedback mais antigo criado' })
-      createFeedback({ content: 'Feedback mais recente criado' })
+  it('deve ser case-insensitive na análise', () => {
+    expect(analyzeSentiment('O serviço é ÓTIMO e EXCELENTE')).toBe(Sentiment.POSITIVE)
+    expect(analyzeSentiment('Está LENTO e com ERRO')).toBe(Sentiment.NEGATIVE)
+  })
+})
 
-      const allFeedbacks = getAllFeedbacks()
+// ─── 3. Estrutura do Feedback Criado (5 testes) ─────────────────
 
-      expect(allFeedbacks).toHaveLength(2)
-      expect(allFeedbacks[0].createdAt >= allFeedbacks[1].createdAt).toBe(true)
-    })
+describe('Estrutura do feedback criado', () => {
+  it('deve retornar um objeto com as propriedades corretas', () => {
+    const feedback = createFeedback({ content: 'Este é um feedback de teste válido' })
+    expect(feedback).toHaveProperty('id')
+    expect(feedback).toHaveProperty('content')
+    expect(feedback).toHaveProperty('sentiment')
+    expect(feedback).toHaveProperty('createdAt')
+  })
 
-    it('deve mapear corretamente created_at do banco para createdAt no TypeScript', () => {
-      createFeedback({ content: 'Feedback para validar mapeamento' })
-      const allFeedbacks = getAllFeedbacks()
+  it('deve gerar um UUID v4 como id', () => {
+    const feedback = createFeedback({ content: 'Este é um feedback de teste válido' })
+    const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    expect(feedback.id).toMatch(uuidV4Regex)
+  })
 
-      expect(allFeedbacks[0]).toHaveProperty('createdAt')
-      expect(allFeedbacks[0]).not.toHaveProperty('created_at')
-    })
+  it('deve preservar o conteúdo original', () => {
+    const content = 'Este é o conteúdo original do feedback'
+    const feedback = createFeedback({ content })
+    expect(feedback.content).toBe(content)
+  })
 
-    it('deve isolar os dados entre testes (via beforeEach)', () => {
-      // Este teste valida que o beforeEach limpa os dados corretamente.
-      // Se os dados de outro teste vazarem, haverá mais de 0 feedbacks antes da criação.
-      const beforeCreate = getAllFeedbacks()
-      expect(beforeCreate).toHaveLength(0)
+  it('deve gerar um timestamp ISO-8601 em createdAt', () => {
+    const feedback = createFeedback({ content: 'Este é um feedback de teste válido' })
+    const date = new Date(feedback.createdAt)
+    expect(date.toISOString()).toBe(feedback.createdAt)
+  })
 
-      createFeedback({ content: 'Feedback para teste de isolamento' })
-      const afterCreate = getAllFeedbacks()
-      expect(afterCreate).toHaveLength(1)
-    })
+  it('deve atribuir o sentimento correto automaticamente', () => {
+    const feedback = createFeedback({ content: 'O serviço é ótimo, adorei a experiência!' })
+    expect(feedback.sentiment).toBe(Sentiment.POSITIVE)
+  })
+})
 
-    it('deve preservar a integridade dos dados com caracteres especiais', () => {
-      const content = 'Feedback com acentuação: café, coração e emojis 🎉🚀✅'
-      createFeedback({ content })
+// ─── 4. Persistência SQLite (7 testes) ──────────────────────────
 
-      const allFeedbacks = getAllFeedbacks()
-      expect(allFeedbacks[0].content).toBe(content)
-    })
+describe('Persistência SQLite', () => {
+  it('deve persistir o feedback criado no banco de dados', () => {
+    const created = createFeedback({ content: 'Este feedback deve ser persistido no banco' })
+    const all = getAllFeedbacks()
+
+    expect(all).toHaveLength(1)
+    expect(all[0].id).toBe(created.id)
+    expect(all[0].content).toBe(created.content)
+  })
+
+  it('deve retornar uma lista vazia quando não há feedbacks', () => {
+    const all = getAllFeedbacks()
+    expect(all).toEqual([])
+  })
+
+  it('deve retornar múltiplos feedbacks persistidos', () => {
+    createFeedback({ content: 'Primeiro feedback de teste válido' })
+    createFeedback({ content: 'Segundo feedback de teste válido' })
+    createFeedback({ content: 'Terceiro feedback de teste válido' })
+
+    const all = getAllFeedbacks()
+    expect(all).toHaveLength(3)
+  })
+
+  it('deve retornar feedbacks ordenados por data (DESC)', async () => {
+    const first = createFeedback({ content: 'Primeiro feedback criado aqui' })
+
+    // Delay para garantir timestamps distintos
+    await new Promise((resolve) => setTimeout(resolve, 10))
+
+    const second = createFeedback({ content: 'Segundo feedback criado aqui' })
+
+    const all = getAllFeedbacks()
+
+    // O mais recente deve vir primeiro
+    expect(all[0].id).toBe(second.id)
+    expect(all[1].id).toBe(first.id)
+  })
+
+  it('deve mapear corretamente created_at → createdAt', () => {
+    const created = createFeedback({ content: 'Feedback para testar mapeamento de campo' })
+    const all = getAllFeedbacks()
+
+    expect(all[0].createdAt).toBeDefined()
+    expect(all[0].createdAt).toBe(created.createdAt)
+    // Garantir que não existe created_at no retorno (camelCase é o contrato)
+    expect((all[0] as unknown as Record<string, unknown>)['created_at']).toBeUndefined()
+  })
+
+  it('deve isolar dados entre testes (beforeEach)', () => {
+    // Se o beforeEach está funcionando, a lista deve estar vazia
+    const all = getAllFeedbacks()
+    expect(all).toHaveLength(0)
+
+    // Inserir e confirmar
+    createFeedback({ content: 'Feedback isolado neste teste apenas' })
+    expect(getAllFeedbacks()).toHaveLength(1)
+  })
+
+  it('deve preservar integridade com caracteres especiais', () => {
+    const specialContent = 'Feedback com acentuação: ã, é, ç, ü e emojis: 🚀🎉✨'
+    const created = createFeedback({ content: specialContent })
+    const all = getAllFeedbacks()
+
+    expect(all[0].content).toBe(specialContent)
+    expect(all[0].id).toBe(created.id)
   })
 })

@@ -597,11 +597,17 @@ flowchart LR
         PRD[\"<b>PRD</b><br>Escopo<br>Funcional"/]
         RT[\"<b>Restrições<br>Técnicas</b><br>SDD"/]
         CAF(("Código<br>alinhado e funcional"))
+        CE["<b>Contexto Extra</b>"]
+        MCP["MCP"]
+        RAG["RAG"]
 
         %% Fluxo de cima para baixo
         IM --> PRD
         PRD --> RT
         RT --> CAF
+        CAF --> CE
+        CE --> MCP
+        CE --> RAG
       end
 
       %% Estilização para simular o afunilamento e combinar com o tema escuro (Tokyonight)
@@ -609,5 +615,31 @@ flowchart LR
       style IM fill:#1a1b26,stroke:#2ac3de,stroke-width:1px,color:#fff,font-size:15px
       style PRD fill:#1f2335,stroke:#bb9af3,stroke-width:1px,color:#fff,font-size:12px
       style RT fill:#24283b,stroke:#9ece6a,stroke-width:1px,color:#fff,font-size:10px
-      style CAF fill: #a5d6ff,stroke:#027712, stroke-width:2px,color:#000
+      style CAF fill:#a5d6ff,stroke:#027712,stroke-width:2px,color:#000
+      style CE fill:#1f2335,stroke:#e0af68,stroke-width:1px,color:#fff
+      style MCP fill:#24283b,stroke:#f7768e,stroke-width:1px,color:#fff
+      style RAG fill:#24283b,stroke:#7aa2f7,stroke-width:1px,color:#fff
   ```
+
+  ### Contexto extra
+  #### RAG (Retrieval-Augmented Generation)
+    - O que é?
+      - É uma arquitetura que permite que os modelos de linguagem acessem e utilizem informações externas antes de gerar uma resposta.
+      - Dar um contexto "Escrito" de documentos, como '.docx'. '.ppt'
+      - Utilizado para ser mais performático e usar menos tokens
+      - Busca conteúdo em documentos e envia apenas o necessário
+      - Ex: Um projeto que tem 500 páginas de documentação
+        - Você fala: 'Quero fazer uma feature de login'
+        - A IA(LLM) vai ler as 500 páginas e vai entender o contexto
+        - E vai gerar o código baseado nesse contexto
+      - 
+
+  #### MCP (Model Context Protocol)
+    - O que é?
+      - A IA "tem" o conteúdo infinito da internet disponível
+      - Mas ela desconhece como é o DB do seu projeto, os seus dados de usuário...
+      - Ele foi criado como um BFF (Backend for Frontend) ou middle-end, ou seja, um intermediador entre chats específicos e as APIs, com sentido de trazer contexto específico
+      - São ferramentas(tools) que a IA pode executar para trazer o contexto que ela precisa
+        - Ex: "Como é o DB do meu projeto?"
+          - A IA vai executar o MCP designado para essa função
+          - E vai trazer a informação que ela precisa

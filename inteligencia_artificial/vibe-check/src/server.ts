@@ -1,8 +1,12 @@
 import Fastify from 'fastify'
 
+import { runMigrations } from './database/index.js'
 import { feedbackRoutes } from './routes/feedback-routes.js'
 
 const app = Fastify({ logger: true })
+
+// Inicializa o schema do banco de dados
+runMigrations()
 
 app.register(feedbackRoutes)
 
