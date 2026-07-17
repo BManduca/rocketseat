@@ -1,3 +1,5 @@
+import { prisma } from '@/lib/prisma'
+import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
@@ -14,8 +16,31 @@ export async function createAccount(app: FastifyInstance) {
         }),
       },
     },
-    () => {
-      return 'Usuário criado!'
+    async (request, reply) => {
+      const { name, email, password } = request.body
+
+      const userWithSameEmail = await prisma.user.findUnique({
+        where: { email },
+      })
+
+      if (userWithSameEmail) {
+        return reply
+          .status(400)
+          .send('user with the same e-mail already exists!')
+      }
+
+      // hash(password, salt)
+      // salt seria o "número de rodadas" de segurança, ou seja, a força com que o hash é gerado
+      const passwordHash = await hash(password, 6)
+
+      await prisma.user.create({
+        data: {
+          name,
+          email,
+          passwordHash,
+        },
+      })
+      return reply.status(201).send()
     }
   )
 }
