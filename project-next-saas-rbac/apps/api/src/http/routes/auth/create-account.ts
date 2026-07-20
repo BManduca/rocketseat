@@ -9,6 +9,8 @@ export async function createAccount(app: FastifyInstance) {
     '/users',
     {
       schema: {
+        tags: ['Auth'],
+        summary: 'Create a new account',
         body: z.object({
           name: z.string(),
           email: z.string().email(),
@@ -29,6 +31,15 @@ export async function createAccount(app: FastifyInstance) {
           .send('user with the same e-mail already exists!')
       }
 
+      const [, domain] = email.split('@')
+
+      const autoJoinOrganization = await prisma.organization.findFirst({
+        where: {
+          domain,
+          shouldAttachUsersByDomain: true,
+        },
+      })
+
       // hash(password, salt)
       // salt seria o "número de rodadas" de segurança, ou seja, a força com que o hash é gerado
       const passwordHash = await hash(password, 6)
@@ -38,6 +49,11 @@ export async function createAccount(app: FastifyInstance) {
           name,
           email,
           passwordHash,
+          member_on: autoJoinOrganization
+            ? {
+                create: { organizationId: autoJoinOrganization.id },
+              }
+            : undefined,
         },
       })
       return reply.status(201).send()
