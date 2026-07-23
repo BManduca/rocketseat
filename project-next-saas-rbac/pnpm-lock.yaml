@@ -38,6 +38,9 @@ importers:
       '@saas/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@saas/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       bcryptjs:
         specifier: ^3.0.3
         version: 3.0.3
@@ -47,6 +50,9 @@ importers:
       fastify:
         specifier: ^5.10.0
         version: 5.10.0
+      fastify-plugin:
+        specifier: ^6.0.0
+        version: 6.0.0
       fastify-type-provider-zod:
         specifier: ^7.0.0
         version: 7.0.0(@fastify/swagger@9.8.1)(fastify@5.10.0)(openapi-types@12.1.3)(zod@4.4.3)
@@ -132,6 +138,28 @@ importers:
       '@saas/tsconfig':
         specifier: workspace:*
         version: link:../../config/typescript-config
+
+  packages/env:
+    dependencies:
+      '@t3-oss/env-nextjs':
+        specifier: ^0.13.11
+        version: 0.13.11(typescript@5.9.2)(valibot@1.2.0(typescript@5.9.2))(zod@4.4.3)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@saas/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@saas/prettier':
+        specifier: workspace:*
+        version: link:../../config/prettier
+      '@saas/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/typescript-config
+      '@types/node':
+        specifier: ^26.1.1
+        version: 26.1.1
 
 packages:
 
@@ -565,6 +593,40 @@ packages:
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
+
+  '@t3-oss/env-core@0.13.11':
+    resolution: {integrity: sha512-sM7GYY+KL7H/Hl0BE0inWfk3nRHZOLhmVn7sHGxaZt9FAR6KqREXAE+6TqKfiavfXmpRxO/OZ2QgKRd+oiBYRQ==}
+    peerDependencies:
+      arktype: ^2.1.0
+      typescript: '>=5.0.0'
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0 || ^4.0.0
+    peerDependenciesMeta:
+      arktype:
+        optional: true
+      typescript:
+        optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
+
+  '@t3-oss/env-nextjs@0.13.11':
+    resolution: {integrity: sha512-NC+3j7YWgpzdFu1t5y/8wqibTK0lm5RS4bjXA1n8uwik3wIR4iZM4Fa+U2BaMa5k3Qk8RZiYhoAIX0WogmGkzg==}
+    peerDependencies:
+      arktype: ^2.1.0
+      typescript: '>=5.0.0'
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0 || ^4.0.0
+    peerDependenciesMeta:
+      arktype:
+        optional: true
+      typescript:
+        optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
 
   '@turbo/darwin-64@2.10.4':
     resolution: {integrity: sha512-m1MUEI4MJ69r5CwfMYxmHi0H0rrgiYCBOp0tgBZ9x/YVvOb5uu/lRIDyDwdtH054R2yWeQaIigUGu6aCX9f8cA==}
@@ -2806,6 +2868,20 @@ snapshots:
   '@rtsao/scc@1.1.0': {}
 
   '@standard-schema/spec@1.1.0': {}
+
+  '@t3-oss/env-core@0.13.11(typescript@5.9.2)(valibot@1.2.0(typescript@5.9.2))(zod@4.4.3)':
+    optionalDependencies:
+      typescript: 5.9.2
+      valibot: 1.2.0(typescript@5.9.2)
+      zod: 4.4.3
+
+  '@t3-oss/env-nextjs@0.13.11(typescript@5.9.2)(valibot@1.2.0(typescript@5.9.2))(zod@4.4.3)':
+    dependencies:
+      '@t3-oss/env-core': 0.13.11(typescript@5.9.2)(valibot@1.2.0(typescript@5.9.2))(zod@4.4.3)
+    optionalDependencies:
+      typescript: 5.9.2
+      valibot: 1.2.0(typescript@5.9.2)
+      zod: 4.4.3
 
   '@turbo/darwin-64@2.10.4':
     optional: true

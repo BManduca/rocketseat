@@ -130,3 +130,15 @@ Ocorre ao tentar deletar uma organização ou usuário que possui registros vinc
      pnpm db:migrate
      ```
   3. No arquivo `seed.ts`, certificar-se de deletar registros em ordem (tabelas filhas antes das tabelas pai).
+
+---
+
+### Prisma Studio exibe `No tables found`
+
+Ocorre quando o Prisma Studio é aberto mas as tabelas ainda não existem no banco de dados ou o `.env` não foi carregado corretamente. Para mais detalhes, consulte [prisma-studio.md](file:///home/brunnomdp/Projetos/Development/rocketseat/project-next-saas-rbac/docs/prisma-studio.md).
+
+- **Solução:**
+  1. Certifique-se de que o container do banco está ativo (`docker compose up -d`).
+  2. Execute as migrações: `pnpm db:migrate`
+  3. Execute o seed: `pnpm db:seed`
+  4. Abra o Studio com o script do projeto: `pnpm --filter @saas/api db:studio`

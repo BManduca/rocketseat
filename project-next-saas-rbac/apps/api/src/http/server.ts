@@ -11,10 +11,14 @@ import {
 
 // importação de rotas
 import fastifyJwt from '@fastify/jwt'
+import { env } from '@saas/env'
 import { errorHandler } from './error-handler'
+import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
 import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
+import { requestPasswordRecover } from './routes/auth/request-password-recover'
+import { resetPassword } from './routes/auth/reset-password'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -32,7 +36,16 @@ app.register(fastifySwagger, {
       description: 'Full-stack SaaS app with multi-tenant & RBAC',
       version: '1.0.0',
     },
-    servers: [],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'JWT obtained from authentication route.',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -42,18 +55,21 @@ app.register(fastifySwaggerUi, {
 })
 
 app.register(fastifyJwt, {
-  secret: 'my-jwt-secret',
+  secret: env.JWT_SECRET,
 })
 
 app.register(fastifyCors)
 
 app.register(createAccount)
 app.register(authenticateWithPassword)
+app.register(authenticateWithGithub)
 app.register(getProfile)
+app.register(requestPasswordRecover)
+app.register(resetPassword)
 
 app
   .listen({
-    port: 3333,
+    port: env.SERVER_PORT,
   })
   .then(() => {
     console.log('🔥 HTTP server running!')
