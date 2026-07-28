@@ -20,10 +20,19 @@ async function seed() {
 
   const passwordHash = await hash('123456', 1)
 
-  const user = await prisma.user.create({
+  const primaryUser = await prisma.user.create({
     data: {
       name: 'Arthur da Silva',
       email: 'arthursilva@mail.com',
+      avatarUrl: faker.image.avatarGitHub(),
+      passwordHash,
+    },
+  })
+
+  const secondaryUser = await prisma.user.create({
+    data: {
+      name: 'Brunno Manduca',
+      email: 'brunnomanduca@acme.com',
       avatarUrl: 'https://github.com/BManduca.png',
       passwordHash,
     },
@@ -54,7 +63,7 @@ async function seed() {
       slug: 'acme-admin',
       avatarUrl: faker.image.avatarGitHub(),
       shouldAttachUsersByDomain: true,
-      ownerId: user.id,
+      ownerId: primaryUser.id,
       projects: {
         createMany: {
           data: [
@@ -64,7 +73,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -75,7 +85,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -86,7 +97,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -98,8 +110,12 @@ async function seed() {
         createMany: {
           data: [
             {
-              userId: user.id,
+              userId: primaryUser.id,
               role: 'ADMIN',
+            },
+            {
+              userId: secondaryUser.id,
+              role: 'MEMBER',
             },
             {
               userId: anotherUser.id,
@@ -120,7 +136,7 @@ async function seed() {
       name: 'Acme Inc (Member)',
       slug: 'acme-member',
       avatarUrl: faker.image.avatarGitHub(),
-      ownerId: user.id,
+      ownerId: primaryUser.id,
       projects: {
         createMany: {
           data: [
@@ -130,7 +146,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -141,7 +158,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -152,7 +170,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -164,12 +183,16 @@ async function seed() {
         createMany: {
           data: [
             {
-              userId: user.id,
+              userId: primaryUser.id,
               role: 'MEMBER',
             },
             {
-              userId: anotherUser.id,
+              userId: secondaryUser.id,
               role: 'ADMIN',
+            },
+            {
+              userId: anotherUser.id,
+              role: 'MEMBER',
             },
             {
               userId: anotherUser2.id,
@@ -186,7 +209,7 @@ async function seed() {
       name: 'Acme Inc (Billing)',
       slug: 'acme-billing',
       avatarUrl: faker.image.avatarGitHub(),
-      ownerId: user.id,
+      ownerId: primaryUser.id,
       projects: {
         createMany: {
           data: [
@@ -196,7 +219,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -207,7 +231,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -218,7 +243,8 @@ async function seed() {
               description: faker.lorem.paragraph(),
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
-                user.id,
+                primaryUser.id,
+                secondaryUser.id,
                 anotherUser.id,
                 anotherUser2.id,
               ]),
@@ -230,12 +256,16 @@ async function seed() {
         createMany: {
           data: [
             {
-              userId: user.id,
+              userId: primaryUser.id,
               role: 'BILLING',
             },
             {
-              userId: anotherUser.id,
+              userId: secondaryUser.id,
               role: 'ADMIN',
+            },
+            {
+              userId: anotherUser.id,
+              role: 'MEMBER',
             },
             {
               userId: anotherUser2.id,

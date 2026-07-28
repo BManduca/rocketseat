@@ -66,11 +66,58 @@ Execute o comando configurado que carrega as variáveis do arquivo `.env`:
 
 ---
 
+## 🛠️ Criando Migrações ao Alterar Tabelas (`schema.prisma`)
+
+Sempre que houver alteração nos modelos, enums ou colunas no arquivo `schema.prisma`, é necessário criar e aplicar uma nova **migration** para atualizar o banco de dados.
+
+### 1. Criar e aplicar migração em desenvolvimento
+
+- **Recomendado (com nome explicativo para a migration):**
+  - Dentro do diretório `apps/api`:
+    ```bash
+    pnpm env:load prisma migrate dev --name nome_da_alteracao
+    ```
+    *(Exemplo: `pnpm env:load prisma migrate dev --name add_user_avatar`)*
+
+- **Execução interativa/padrão:**
+  - Dentro de `apps/api`:
+    ```bash
+    pnpm db:migrate
+    ```
+  - Da raiz do monorepo:
+    ```bash
+    pnpm --filter @saas/api db:migrate
+    ```
+
+### 🔍 O que esse comando faz?
+1. **Compara** o arquivo `schema.prisma` com o estado atual do PostgreSQL.
+2. **Gera** o arquivo SQL da migration dentro de `apps/api/prisma/migrations/`.
+3. **Aplica** a alteração no banco de dados local.
+4. **Executa** o `prisma generate` para atualizar as tipagens no `@prisma/client`.
+
+---
+
+### 💡 Outros Comandos Úteis do Prisma
+
+- **Sincronizar o banco rapidamente sem gerar histórico de migration (útil para prototipagem):**
+  ```bash
+  pnpm env:load prisma db push
+  ```
+
+- **Aplicar migrações pendentes em ambiente de Produção/CI:**
+  ```bash
+  pnpm env:load prisma migrate deploy
+  ```
+
+---
+
 ## ⚡ Resumo dos Comandos
 
 | Etapa | Comando | Descrição |
 |---|---|---|
 | **1. Banco** | `docker compose up -d` | Sobe o container PostgreSQL |
-| **2. Migrações** | `pnpm db:migrate` | Cria todas as tabelas no banco |
-| **3. Seed** | `pnpm db:seed` | Popula o banco com dados de teste |
-| **4. Studio** | `pnpm --filter @saas/api db:studio` | Abre a interface do Prisma Studio |
+| **2. Migrações** | `pnpm db:migrate` | Cria e aplica migrações no banco |
+| **3. Criar Migration Nomeada** | `pnpm env:load prisma migrate dev --name <nome>` | Cria migration com nome específico |
+| **4. Seed** | `pnpm db:seed` | Popula o banco com dados de teste |
+| **5. Studio** | `pnpm --filter @saas/api db:studio` | Abre a interface visual do Prisma Studio |
+

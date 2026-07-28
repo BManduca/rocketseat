@@ -55,5 +55,10 @@ export function defineAbilityFor(user: User) {
     },
   })
 
+  // o 'this' dentro da função 'can' será sempre a própria função 'can'
+  ability.can = ability.can.bind(ability)
+  // o 'this' dentro da função 'cannot' será sempre a própria função 'cannot'
+  ability.cannot = ability.cannot.bind(ability)
+
   return ability
 }
