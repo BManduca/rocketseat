@@ -6,8 +6,10 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
+    "db:generate": "pnpm --filter @saas/api db:generate",
     "db:migrate": "pnpm --filter @saas/api db:migrate",
-    "db:seed": "pnpm --filter @saas/api db:seed"
+    "db:seed": "pnpm --filter @saas/api db:seed",
+    "test": "pnpm --filter @saas/api test"
   },
   "devDependencies": {
     "turbo": "^2.10.4",
