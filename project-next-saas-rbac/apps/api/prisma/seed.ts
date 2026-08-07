@@ -276,6 +276,93 @@ async function seed() {
       },
     },
   })
+
+  await prisma.organization.create({
+    data: {
+      name: 'Rocketseat-Inc',
+      domain: 'rocketseat-inc.com',
+      slug: 'rocketseat-inc',
+      avatarUrl: faker.image.avatarGitHub(),
+      ownerId: secondaryUser.id,
+      projects: {
+        createMany: {
+          data: [
+            {
+              name: 'Projeto colaborativo para treinamento de novos devs',
+              slug: 'treinamento-de-novos-devs',
+              description:
+                'Projeto para colaboração e aprendizado de novos devs',
+              avatarUrl: faker.image.avatarGitHub(),
+              ownerId: faker.helpers.arrayElement([
+                primaryUser.id,
+                secondaryUser.id,
+                anotherUser.id,
+                anotherUser2.id,
+              ]),
+            },
+            {
+              name: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
+              description: faker.lorem.paragraph(),
+              avatarUrl: faker.image.avatarGitHub(),
+              ownerId: faker.helpers.arrayElement([
+                primaryUser.id,
+                secondaryUser.id,
+                anotherUser.id,
+                anotherUser2.id,
+              ]),
+            },
+            {
+              name: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
+              description: faker.lorem.paragraph(),
+              avatarUrl: faker.image.avatarGitHub(),
+              ownerId: faker.helpers.arrayElement([
+                primaryUser.id,
+                secondaryUser.id,
+                anotherUser.id,
+                anotherUser2.id,
+              ]),
+            },
+            {
+              name: faker.lorem.words(5),
+              slug: faker.lorem.slug(5),
+              description: faker.lorem.paragraph(),
+              avatarUrl: faker.image.avatarGitHub(),
+              ownerId: faker.helpers.arrayElement([
+                primaryUser.id,
+                secondaryUser.id,
+                anotherUser.id,
+                anotherUser2.id,
+              ]),
+            },
+          ],
+        },
+      },
+      members: {
+        createMany: {
+          data: [
+            {
+              userId: primaryUser.id,
+              role: 'BILLING',
+            },
+            {
+              userId: secondaryUser.id,
+              role: 'ADMIN',
+            },
+            {
+              userId: anotherUser.id,
+              role: 'MEMBER',
+            },
+            {
+              userId: anotherUser2.id,
+              role: 'MEMBER',
+            },
+          ],
+        },
+      },
+    },
+  })
 }
 
 seed().then(() => {
