@@ -1,6 +1,9 @@
 import fastifyCors from '@fastify/cors'
+// importação de rotas
+import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
+import { env } from '@saas/env'
 import { fastify } from 'fastify'
 import {
   jsonSchemaTransform,
@@ -9,9 +12,6 @@ import {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 
-// importação de rotas
-import fastifyJwt from '@fastify/jwt'
-import { env } from '@saas/env'
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
@@ -19,6 +19,15 @@ import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
+import { acceptInvite } from './routes/invites/accept-invite'
+import { createInvite } from './routes/invites/create-invite'
+import { getInvite } from './routes/invites/get-invite'
+import { getInvites } from './routes/invites/get-invites'
+import { rejectInvite } from './routes/invites/reject-invite'
+import { revokeInvite } from './routes/invites/revoke-invite'
+import { getMembers } from './routes/members/get-members'
+import { removeMember } from './routes/members/remove-member'
+import { updateMember } from './routes/members/update-member'
 import { createOrganization } from './routes/orgs/create-organization'
 import { getMembership } from './routes/orgs/get-membership'
 import { getOrganization } from './routes/orgs/get-organization'
@@ -31,9 +40,6 @@ import { deleteProject } from './routes/projects/delete-project'
 import { getProject } from './routes/projects/get-project'
 import { getProjects } from './routes/projects/get-projects'
 import { updateProject } from './routes/projects/update-project'
-import { getMembers } from './routes/members/get-members'
-import { updateMember } from './routes/members/update-member'
-import { removeMember } from './routes/members/remove-member'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -105,3 +111,11 @@ app.register(updateProject)
 app.register(getMembers)
 app.register(updateMember)
 app.register(removeMember)
+
+// 📩 Invites
+app.register(createInvite)
+app.register(getInvite)
+app.register(getInvites)
+app.register(acceptInvite)
+app.register(rejectInvite)
+app.register(revokeInvite)
