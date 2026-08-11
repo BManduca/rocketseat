@@ -4,6 +4,7 @@
   "private": true,
   "exports": {
     "./library": "./library.js",
+    "./next": "./next.js",
     "./next-js": "./next.js",
     "./node": "./node.js"
   },

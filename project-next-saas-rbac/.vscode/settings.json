@@ -5,12 +5,16 @@
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.removeUnusedImports": "always",
+    "source.organizeImports": "always",
     "source.fixAll.eslint": "always"
   },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
   "prettier.printWidth": 80,
   "prettier.trailingComma": "all",
-  "prettier.singleQuote": true,
+  "prettier.singleQuote": false,
   "prettier.semi": false,
 
   "editor.fontFamily": "'Fira Code', monospace",

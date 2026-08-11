@@ -1,0 +1,20 @@
+{
+  "extends": "@saas/tsconfig/nextjs.json",
+  "compilerOptions": {
+    // indicação url de base da aplicação 
+    // quando colocamoas '.', isso quer dizer que vai ser da raiz do projeto
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
