@@ -1,8 +1,10 @@
-import { prisma } from '@/lib/prisma'
 import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { prisma } from '@/lib/prisma'
+
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function resetPassword(app: FastifyInstance) {
@@ -36,17 +38,24 @@ export async function resetPassword(app: FastifyInstance) {
 
       const passwordHash = await hash(password, 6)
 
-      await prisma.user.update({
-        where: {
-          id: tokenFromCode.userId,
-        },
-        data: {
-          passwordHash,
-        },
-      })
+      await prisma.$transaction([
+        prisma.user.update({
+          where: {
+            id: tokenFromCode.userId,
+          },
+          data: {
+            passwordHash,
+          },
+        }),
+        prisma.token.delete({
+          where: {
+            id: code,
+          },
+        }),
+      ])
 
       // resposta de sucesso, porém sem conteúdo, por isso 204
       return reply.status(204).send()
-    }
+    },
   )
 }
