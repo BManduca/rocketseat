@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from '@prisma/client'
-import { hash } from 'bcryptjs'
-import { Pool } from 'pg'
+import { faker } from "@faker-js/faker"
+import { PrismaPg } from "@prisma/adapter-pg"
+import { PrismaClient } from "@prisma/client"
+import { hash } from "bcryptjs"
+import { Pool } from "pg"
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL })
 const adapter = new PrismaPg(pool)
@@ -18,12 +18,12 @@ async function seed() {
   await prisma.account.deleteMany()
   await prisma.user.deleteMany()
 
-  const passwordHash = await hash('123456', 1)
+  const passwordHash = await hash("123456", 1)
 
   const primaryUser = await prisma.user.create({
     data: {
-      name: 'Arthur da Silva',
-      email: 'arthursilva@mail.com',
+      name: "Arthur da Silva",
+      email: "arthursilva@mail.com",
       avatarUrl: faker.image.avatarGitHub(),
       passwordHash,
     },
@@ -31,9 +31,9 @@ async function seed() {
 
   const secondaryUser = await prisma.user.create({
     data: {
-      name: 'Brunno Manduca',
-      email: 'brunnomanduca@acme.com',
-      avatarUrl: 'https://github.com/BManduca.png',
+      name: "Brunno Manduca",
+      email: "brunnomanduca@acme.com",
+      avatarUrl: "https://github.com/BManduca.png",
       passwordHash,
     },
   })
@@ -58,9 +58,9 @@ async function seed() {
 
   await prisma.organization.create({
     data: {
-      name: 'Acme Inc (Admin)',
-      domain: 'acme.com',
-      slug: 'acme-admin',
+      name: "Acme Inc (Admin)",
+      domain: "acme.com",
+      slug: "acme-admin",
       avatarUrl: faker.image.avatarGitHub(),
       shouldAttachUsersByDomain: true,
       ownerId: primaryUser.id,
@@ -111,19 +111,19 @@ async function seed() {
           data: [
             {
               userId: primaryUser.id,
-              role: 'ADMIN',
+              role: "ADMIN",
             },
             {
               userId: secondaryUser.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
             {
               userId: anotherUser.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
             {
               userId: anotherUser2.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
           ],
         },
@@ -133,8 +133,8 @@ async function seed() {
 
   await prisma.organization.create({
     data: {
-      name: 'Acme Inc (Member)',
-      slug: 'acme-member',
+      name: "Acme Inc (Member)",
+      slug: "acme-member",
       avatarUrl: faker.image.avatarGitHub(),
       ownerId: primaryUser.id,
       projects: {
@@ -184,19 +184,19 @@ async function seed() {
           data: [
             {
               userId: primaryUser.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
             {
               userId: secondaryUser.id,
-              role: 'ADMIN',
+              role: "ADMIN",
             },
             {
               userId: anotherUser.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
             {
               userId: anotherUser2.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
           ],
         },
@@ -206,8 +206,8 @@ async function seed() {
 
   await prisma.organization.create({
     data: {
-      name: 'Acme Inc (Billing)',
-      slug: 'acme-billing',
+      name: "Acme Inc (Billing)",
+      slug: "acme-billing",
       avatarUrl: faker.image.avatarGitHub(),
       ownerId: primaryUser.id,
       projects: {
@@ -257,19 +257,19 @@ async function seed() {
           data: [
             {
               userId: primaryUser.id,
-              role: 'BILLING',
+              role: "BILLING",
             },
             {
               userId: secondaryUser.id,
-              role: 'ADMIN',
+              role: "ADMIN",
             },
             {
               userId: anotherUser.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
             {
               userId: anotherUser2.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
           ],
         },
@@ -279,19 +279,19 @@ async function seed() {
 
   await prisma.organization.create({
     data: {
-      name: 'Rocketseat-Inc',
-      domain: 'rocketseat-inc.com',
-      slug: 'rocketseat-inc',
+      name: "Rocketseat-Inc",
+      domain: "rocketseat-inc.com",
+      slug: "rocketseat-inc",
       avatarUrl: faker.image.avatarGitHub(),
       ownerId: secondaryUser.id,
       projects: {
         createMany: {
           data: [
             {
-              name: 'Projeto colaborativo para treinamento de novos devs',
-              slug: 'treinamento-de-novos-devs',
+              name: "Projeto colaborativo para treinamento de novos devs",
+              slug: "treinamento-de-novos-devs",
               description:
-                'Projeto para colaboração e aprendizado de novos devs',
+                "Projeto para colaboração e aprendizado de novos devs",
               avatarUrl: faker.image.avatarGitHub(),
               ownerId: faker.helpers.arrayElement([
                 primaryUser.id,
@@ -344,19 +344,19 @@ async function seed() {
           data: [
             {
               userId: primaryUser.id,
-              role: 'BILLING',
+              role: "BILLING",
             },
             {
               userId: secondaryUser.id,
-              role: 'ADMIN',
+              role: "ADMIN",
             },
             {
               userId: anotherUser.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
             {
               userId: anotherUser2.id,
-              role: 'MEMBER',
+              role: "MEMBER",
             },
           ],
         },
@@ -366,5 +366,5 @@ async function seed() {
 }
 
 seed().then(() => {
-  console.log('Database seeded!')
+  console.log("Database seeded!")
 })
