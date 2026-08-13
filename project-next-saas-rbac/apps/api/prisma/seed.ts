@@ -56,6 +56,14 @@ async function seed() {
     },
   })
 
+  await prisma.user.create({
+    data: {
+      name: "Social User Test",
+      email: "social@acme.com",
+      avatarUrl: faker.image.avatarGitHub(),
+    },
+  })
+
   await prisma.organization.create({
     data: {
       name: "Acme Inc (Admin)",

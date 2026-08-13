@@ -1,24 +1,26 @@
-import { prisma } from '@/lib/prisma'
-import { compare } from 'bcryptjs'
-import type { FastifyInstance } from 'fastify'
-import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
-import { BadRequestError } from '../_errors/bad-request-error'
+import { compare } from "bcryptjs"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
+
+import { prisma } from "@/lib/prisma"
+
+import { BadRequestError } from "../_errors/bad-request-error"
 
 export async function authenticateWithPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/sessions/password',
+    "/sessions/password",
     {
       schema: {
-        tags: ['Auth'],
-        summary: 'Authenticate with email & password',
+        tags: ["Auth"],
+        summary: "Authenticate with email & password",
         body: z.object({
           email: z
-            .string({ message: 'E-mail is required.' })
-            .email('Invalid e-mail format.'),
+            .string({ message: "E-mail is required." })
+            .email("Invalid e-mail format."),
           password: z
-            .string({ message: 'Password is required.' })
-            .min(1, 'Password is required.'),
+            .string({ message: "Password is required." })
+            .min(1, "Password is required."),
         }),
         response: {
           201: z.object({
@@ -35,22 +37,22 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       })
 
       if (!userFromEmail) {
-        throw new BadRequestError('Invalid credentials.')
+        throw new BadRequestError("Invalid credentials!")
       }
 
       if (userFromEmail.passwordHash === null) {
         throw new BadRequestError(
-          'User does not have a password, use social login!'
+          "User does not have a password, use social login!",
         )
       }
 
       const isPasswordValid = await compare(
         password,
-        userFromEmail.passwordHash
+        userFromEmail.passwordHash,
       )
 
       if (!isPasswordValid) {
-        throw new BadRequestError('Invalid credentials!')
+        throw new BadRequestError("Invalid credentials!")
       }
 
       const token = await reply.jwtSign(
@@ -59,12 +61,12 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         },
         {
           sign: {
-            expiresIn: '7d',
+            expiresIn: "7d",
           },
-        }
+        },
       )
 
       return reply.status(201).send({ token })
-    }
+    },
   )
 }
