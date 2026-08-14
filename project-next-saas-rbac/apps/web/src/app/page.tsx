@@ -1,9 +1,6 @@
-import { Button } from "@/components/ui/button"
+import { auth } from "@/auth/auth"
 
-export default function Home() {
-  return (
-    <Button className="m-4 cursor-pointer bg-green-500 text-white hover:bg-green-400">
-      Sign-in
-    </Button>
-  )
+export default async function Home() {
+  const { user } = await auth()
+  return <pre>{JSON.stringify(user, null, 2)}</pre>
 }
