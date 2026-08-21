@@ -1,20 +1,21 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { roleSchema } from '@saas/auth'
-import type { FastifyInstance } from 'fastify'
-import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import { roleSchema } from "@saas/auth"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
+
+import { auth } from "@/http/middlewares/auth"
+import { prisma } from "@/lib/prisma"
 
 export async function getOrganizations(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .get(
-      '/organizations',
+      "/organizations",
       {
         schema: {
-          tags: ['organizations'],
-          summary: 'Get organization where user is a member',
+          tags: ["organizations"],
+          summary: "Get organization where user is a member",
           security: [{ bearerAuth: [] }],
           response: {
             200: z.object({
@@ -25,7 +26,7 @@ export async function getOrganizations(app: FastifyInstance) {
                   slug: z.string(),
                   avatarUrl: z.string().url().nullable(),
                   role: roleSchema,
-                })
+                }),
               ),
             }),
           },
@@ -64,12 +65,12 @@ export async function getOrganizations(app: FastifyInstance) {
               ...org,
               role: members[0].role,
             }
-          }
+          },
         )
 
         return {
           organizations: organizationWithUserRole,
         }
-      }
+      },
     )
 }

@@ -1,21 +1,23 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { createSlug } from '@/utils/create-slug'
-import type { FastifyInstance } from 'fastify'
-import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
-import { BadRequestError } from '../_errors/bad-request-error'
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
+
+import { auth } from "@/http/middlewares/auth"
+import { prisma } from "@/lib/prisma"
+import { createSlug } from "@/utils/create-slug"
+
+import { BadRequestError } from "../_errors/bad-request-error"
 
 export async function createOrganization(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .post(
-      '/organizations',
+      "/organizations",
       {
         schema: {
-          tags: ['organizations'],
-          summary: 'Create  a new organization',
+          tags: ["organizations"],
+          summary: "Create  a new organization",
           security: [{ bearerAuth: [] }],
           body: z.object({
             name: z.string(),
@@ -42,7 +44,7 @@ export async function createOrganization(app: FastifyInstance) {
 
           if (organizationByDomain) {
             throw new BadRequestError(
-              'Another organization with same domain already exists.'
+              "Another organization with same domain already exists.",
             )
           }
         }
@@ -57,7 +59,7 @@ export async function createOrganization(app: FastifyInstance) {
             members: {
               create: {
                 userId,
-                role: 'ADMIN',
+                role: "ADMIN",
               },
             },
           },
@@ -66,6 +68,6 @@ export async function createOrganization(app: FastifyInstance) {
         return reply.status(201).send({
           organizationId: organization.id,
         })
-      }
+      },
     )
 }
