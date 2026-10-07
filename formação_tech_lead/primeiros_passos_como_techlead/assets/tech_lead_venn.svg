@@ -1,0 +1,40 @@
+<svg viewBox="0 0 600 520" width="600" height="520" xmlns="http://www.w3.org/2000/svg" style="background: #0F172A; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Filtro de sombra suave -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Círculo Técnico (Ciano / Azul) -->
+  <circle cx="230" cy="210" r="135" fill="#38BDF8" fill-opacity="0.30" stroke="#38BDF8" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Círculo Líder (Roxo) -->
+  <circle cx="370" cy="210" r="135" fill="#A855F7" fill-opacity="0.30" stroke="#A855F7" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Círculo Comunicador (Esmeralda / Verde) -->
+  <circle cx="300" cy="330" r="135" fill="#34D399" fill-opacity="0.30" stroke="#34D399" stroke-width="2.5" filter="url(#glow)"/>
+
+  <!-- Textos Principais dos Círculos -->
+  <text x="175" y="160" text-anchor="middle" fill="#38BDF8" font-size="16" font-weight="bold">💻 TÉCNICO</text>
+  <text x="175" y="180" text-anchor="middle" fill="#94A3B8" font-size="11">Código, Arquitetura,</text>
+  <text x="175" y="195" text-anchor="middle" fill="#94A3B8" font-size="11">Padrões &amp; Qualidade</text>
+
+  <text x="425" y="160" text-anchor="middle" fill="#C084FC" font-size="16" font-weight="bold">👥 LÍDER</text>
+  <text x="425" y="180" text-anchor="middle" fill="#94A3B8" font-size="11">Mentoria, Gestão,</text>
+  <text x="425" y="195" text-anchor="middle" fill="#94A3B8" font-size="11">Cultura &amp; Conflitos</text>
+
+  <text x="300" y="420" text-anchor="middle" fill="#34D399" font-size="16" font-weight="bold">🗣️ COMUNICADOR</text>
+  <text x="300" y="438" text-anchor="middle" fill="#94A3B8" font-size="11">Alinhamento, Negócio</text>
+  <text x="300" y="453" text-anchor="middle" fill="#94A3B8" font-size="11">&amp; Stakeholders</text>
+
+  <!-- Interseções Secundárias (Duas áreas) -->
+  <text x="300" y="160" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="600">Mentor Técnico</text>
+  <text x="220" y="300" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="600">Technical Writer</text>
+  <text x="380" y="300" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="600">Product Manager</text>
+
+  <!-- Centro: Interseção Central (Tech Lead) -->
+  <circle cx="300" cy="250" r="44" fill="#8257E5" stroke="#FFFFFF" stroke-width="2.5" filter="url(#glow)"/>
+  <text x="300" y="246" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="bold">🚀</text>
+  <text x="300" y="260" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="800">TECH LEAD</text>
+</svg>

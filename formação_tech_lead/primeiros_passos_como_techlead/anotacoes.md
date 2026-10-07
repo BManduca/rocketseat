@@ -15,24 +15,11 @@
    <br />
    -> Em outras palavras, é a intersecção entre Técnico, Líder e Comunicador.
 
-   ```mermaid
-   flowchart TD
-       T["💻 <b>Especialista Técnico</b><br/><small>Arquitetura, Código & Padrões</small>"]
-       L["👥 <b>Líder de Pessoas</b><br/><small>Mentoria, Gestão & Cultura</small>"]
-       C["🗣️ <b>Comunicador & Negócio</b><br/><small>Ponte com Gestão & Stakeholders</small>"]
+   <div align="center">
 
-       TL{{"🚀 <b>TECH LEAD</b><br/><i>Interseção dos 3 Pilares</i>"}}
+   ![Diagrama de Intersecção do Tech Lead](./assets/tech_lead_venn.svg)
 
-       T ==> TL
-       L ==> TL
-       C ==> TL
-
-       %% Estilização moderna com alto contraste
-       style T fill:#0F172A,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC
-       style L fill:#0F172A,stroke:#A855F7,stroke-width:2px,color:#F8FAFC
-       style C fill:#0F172A,stroke:#34D399,stroke-width:2px,color:#F8FAFC
-       style TL fill:#8257E5,stroke:#FFFFFF,stroke-width:3px,color:#FFFFFF
-   ```
+   </div>
 
 2. Responsabilidades do Tech Lead
 
@@ -90,3 +77,84 @@
        - Como posso ajudar?
    - Diversidade de Equipe
      - É preciso saber como Líder entender o que cada um esta buscando e criar uma coesão no seu time, para que cada um se sinta desafiado na medida correta e também estar progredindo na velocidade correta.
+
+## Tipos de Lideranças
+
+### Liderança Técnica vs. Liderança Não Técnica
+
+1. Liderança Técnica
+
+- Técnico + Comunicador
+  - Implementações:
+    - O tech lead que vai sempre estar revisando os PRs, vai estar ativamente guiando seus liderados nas adoções técnicas.
+    - É preciso imaginar que no dia a dia, estaremos lidando com pessoas de níveis diferentes, mas o importante é conseguir mostrar uma visão técnica muito bem solidificada, aonde você possa olhar para as pessoas e dizer 'você precisa corrigir especificamente isso, dentro do código, por causa de escalabilidade...' como por exemplo.
+  - Eficiência dos processos: Trabalhar lado a lado com PM, para organizar tasks, analisar tasks grandes e quebrar em tarefas menores, que possam ser 'atacadas' de forma paralela pelo time.
+  - Conhecimento especifico:
+    - Muito importante o Tech lead ser aprofundado em alguma área específica...
+    - Saber diferenciar/advogar quais são os prós e contras de algumas arquiteturas de sistema
+      - Ex.: Quando eu devo utilizar um Monolito ou Microserviços
+        - Monolito -> Nos leva para projetos menores, mais consolidade, sendo até mais fácil de gerenciar/trabalhar porque ele não é distribuido, mas chega determinados momentos que podem acontecer gargalos, resultando na situação de não ter tanta replicação...
+        - Microserviços -> Nos leva para projetos maiores, mais complexos, aonde ele é distribuido, sendo até mais difícil de gerenciar/trabalhar, mas não acontecem gargalos, mas podem ficar mais caros...
+        - Saber transformar um Monolito em Microserviços
+        - Na parte técnica é necessário saber mostrar para as pessoas, para os stakeholders, quais são os prós e contras de cada tecnologia/arquitetura, para que o time possa se preocupar com a abordagem da implementação e o tech lead com a parte da arquitetura ou teórica de como o sistema vai evoluir depois de um tempo.
+  - Busca definir a arquitetura de um novo sistema
+  - Orienta a equipe na adoção de uma nova tecnologia
+  - Realiza code reviews com foco em qualidade e boas práticas
+
+  <div align="center">
+
+  ![Diagrama de interseção do Technical Writer](./assets/tech_lead_venn_technical_writer.svg)
+
+1. Liderança Não Técnica
+
+- Responsabilidades
+  - Definir estratégias e metas organizacionais
+  - Gerenciar recursos, prazos e orçamentos
+  - Desenvolver a cultura e o ambiente de trabalho
+    - Liderar para um lado mais 'humano' de soft skills
+    - Olhar para os valores da empresa
+    - Olhar para o lado de que time eu vou querer criar
+
+  - Coordenar equipes multidisciplinares
+    - Um exemplo é olhar para o Spotify hoje, aonde é adotado o conceito de 'Tribos', aonde a arquitetura organizacional é baseada em:
+      - Tribos:
+        - É o agrupamento de vários Squads que trabalham em uma área de negócio relacionada (ex.: Tribo de 'Música', Tribo de 'Pagamentos').
+        - A Tribo funciona como uma 'incubadora' para os 'Squads', oferecendo um exossitema colaborativo.
+        - Geralmente uma Tribo tem entre 40 e 150 pessoas para manter a coesão social e evitar burocracia excessiva.
+      - Squads
+        - É a menor unidade organizacional, análoga a um time Scrum(geralmente de 5 a 8 pessoas)
+        - São autônomos e multidisciplinares, ou seja, possuem desenvolvedores, designers, especialistas em Produto (PO), etc.
+        - Cada Squad tem uma missão de longo prazo (ex.: Melhorar o onboarding do usuário ou gerenciar a parte de pagamentos) e decide como vai atingir seus objetivos.
+      - Capítulos
+        - Como as pessoas estão espalhadas em Squads focados em produto, pode haver isolamento técnico.
+        - O Capítulo resolve isso reunindo profissionais da mesma especialidade (ex.: todos os desenvolvedores Front-end de uma tribo ou todos os QAs).
+        - O líder do capítulo ajuda no desenvolvimento de carreira e na padronização de boas práticas técnicas.
+      - Guildas
+        - É uma comunidade orgânica e voluntária de interesse comum que atravessa toda a empresa.
+        - Qualquer pessoa pode criar ou participar de uma guilda (ex.: Guilda de Agile, Guilda de Testes Automatizados, Guilda de IA).
+        - Serve para compartilhar conhecimento e alinhar padrões em nível global na companhia.
+
+  - Desenvolver talentos e gerir performance
+    - É importante olhar para o âmbito individual de cada um do seu time e saber quais os pontos fortes e fracos dessa pessoa, para que possa ser possível guiar essa pessoa, para que ela possa ter uma evolução na carreira. Como líder é necessário trazer desafios que aquela pessoa precisa participar para crescer.
+    - Dar feedback na hora correta.
+    - Reconhecer os pontos fortes dessa pessoa para que ela se senta acolhida dentro do time.
+    -
+
+- <div align="center">
+
+  ![Diagrama de interseção do Product Manager](./assets/tech_lead_venn_leader_communicator.svg)
+
+### Qual a motivação?
+
+- Ambos os estilos são essenciais e complementares.
+- Em que área você se encaixa mais agora?
+- Desenvolver quais habilidades para equilibrar a liderança?
+
+### Comparativo: Liderança Técnica vs. Liderança Não Técnica
+
+| Aspecto                    | Liderança Técnica                            | Liderança Não Técnica                       |
+| :------------------------- | :------------------------------------------- | :------------------------------------------ |
+| **Foco Principal**         | Aspectos técnicos e soluções tecnológicas.   | Gestão de pessoas e estratégias de negócio. |
+| **Conhecimento**           | Profundo conhecimento técnico.               | Habilidades gerenciais e estratégicas.      |
+| **Responsabilidades**      | Decisões técnicas, qualidade do produto      | Metas organizacionais, cultura da equipe    |
+| **Interação com a Equipe** | Orientação técnica, mentorias especializadas | Desenvolvimento profissional, feedback      |
