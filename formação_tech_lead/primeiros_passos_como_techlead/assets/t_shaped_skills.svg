@@ -1,0 +1,48 @@
+<svg viewBox="0 0 540 520" width="540" height="520" xmlns="http://www.w3.org/2000/svg" style="background: #0F172A; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Sombra suave -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Gradiente Roxo para a Barra Horizontal -->
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333EA" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <!-- Gradiente Amarelo para a Barra Vertical -->
+    <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.25"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Barra Horizontal: Amplitude de Habilidades -->
+  <rect x="70" y="45" width="400" height="90" rx="10" 
+        fill="url(#purpleGrad)" stroke="#A855F7" stroke-width="2.5" stroke-dasharray="8 6" filter="url(#shadow)"/>
+  
+  <text x="270" y="85" text-anchor="middle" fill="#F3E8FF" font-size="16" font-weight="700" letter-spacing="0.5">
+    Amplitude de Habilidades
+  </text>
+  <text x="270" y="108" text-anchor="middle" fill="#C4B5FD" font-size="12" font-weight="400">
+    (Gestão de Pessoas • Comunicação • Negócios • Metodologias)
+  </text>
+
+  <!-- Barra Vertical: Profundidade Técnica -->
+  <rect x="220" y="135" width="100" height="290" rx="10" 
+        fill="url(#yellowGrad)" stroke="#FBBF24" stroke-width="2.5" stroke-dasharray="8 6" filter="url(#shadow)"/>
+
+  <!-- Texto Vertical "Profundidade Técnica" -->
+  <text x="270" y="275" text-anchor="middle" fill="#FEF3C7" font-size="15" font-weight="700" letter-spacing="0.5" transform="rotate(90 270 275)">
+    Profundidade Técnica
+  </text>
+
+  <!-- Base / Subtítulo "Técnico" -->
+  <text x="270" y="475" text-anchor="middle" fill="#FFFFFF" font-size="28" font-weight="900" letter-spacing="1">
+    Técnico
+  </text>
+  <text x="270" y="498" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500">
+    Especialização &amp; Domínio em Engenharia de Software
+  </text>
+</svg>

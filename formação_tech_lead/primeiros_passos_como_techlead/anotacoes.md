@@ -158,3 +158,61 @@
 | **Conhecimento**           | Profundo conhecimento técnico.               | Habilidades gerenciais e estratégicas.      |
 | **Responsabilidades**      | Decisões técnicas, qualidade do produto      | Metas organizacionais, cultura da equipe    |
 | **Interação com a Equipe** | Orientação técnica, mentorias especializadas | Desenvolvimento profissional, feedback      |
+
+## Habilidades em T
+
+### Profundidade Técnica e Amplitude
+
+1. Porque é importante desenvolver habilidades em T?
+   - Melhoria na Liderança.
+     - Sabendo quais são as áreas que eu devo focar mais o meu conhecimento e as áreas que eu tenho mais amplitude, eu vou conseguir despender mais tempo ali na parte liderança
+     - É necessário ter uma amplitude que não é só Técnica e para isso, será necessário se colocar em posições de decisões, momentos de decisões. Você vai ter uma autoridade nessa questão de liderança muito maior.
+       <br />
+       <br />
+   - Comunicação Eficaz.
+     - Justamente por saber quais são as áreas que a gente tem que ter no nosso desenvolvimento e ter a nossa amplitude, já podemos ver que o desenvolvimento de software agora vai funcionar linkando outras áreas da empresa
+       <br />
+       <br />
+   - Tomada de Decisão.
+     - uma das áreas mais importantes, para que como líder, eu possa ser justamente a pessoa que vai chegar para resolver conflitos, vai ser a pessoa que vai guias a sua equipe tecnicamente, então basicamente sai ali do papel de contribuidor individual, onde você vai estar sempre ali na frente das mudanças, fazendo todos os pull requests, para conseguir dar espaço para que o seu time inteiro vire essa força multiplicadora. Que o time inteiro consiga emular mais ou menos aquilo que você estava fazendo, que tanto você consiga aprender com ele, como eles consigam aprender com você. Para que ai a tomada de decisão, seja algo mais simples. Seja mudando alguma arquitetura, tomando uma decisão quanto a negócio, de quais são as features que devem ser feitas mediante um certo prazo. Então, porque você vai estar muito mais exposto a esse tipo de questionamento, esse tipo de pergunta, você vai ter uma melhora na sua tomada de decisão.
+       <br />
+       <br />
+2. Entendendo o Gráfico em T
+
+   <div align="center">
+
+   ![Ilustração Gráfico em T](./assets/t_shaped_skills.svg)
+
+   </div>
+
+   #### Barra (Eixo) Horizontal do 'T' -> Amplitude de Habilidades
+   - **Gestão de Pessoas e Liderança:** Como liderança técnica, é necessário aprender bastante sobre os pontos abaixo, não quer dizer que você precise ser o maior especialista, a idéia é que você conquiste uma ampla camada de conhecimento que vão ajudar a progredir na sua carreira.
+     - <span style="color: #4CAF50">Gestão de pessoas</span>
+     - <span style="color: #4CAF50">Motivação</span>
+     - <span style="color: #4CAF50">Desenvolvimento de talentos</span>
+
+   - **Comunicação e Mediação:** Como Líder o seu papel também é dar 'palco' para a sua equipe, ou seja, é entender que é preciso mostrar o que meus desenvolvedores estão fazendo, é preciso guia-los corretamente, se caso ocorrer conflitos, é preciso que o líder seja o divisor de águas, ou seja, ser a pessoa que vai chegar e vai de forma edificante resolver o conflito para que as pessoas consigam tirar algo positivo dele.
+     - <span style="color: #3b82f6">Apresentações</span>
+     - <span style="color: #3b82f6">Reuniões</span>
+     - <span style="color: #3b82f6">Resolução de conflitos</span>
+
+   - **Planejamento e Negócio:** Na parte de planejamento, vai ser a parte aonde terá mais contato com stakeholders, vai estar em contato direto com as implementações de certas metodologias ágeis. E é justamente nessa parte de gestão que vai ajudar você a ter uma visão mais ampla do negócio e não apenas do desenvolvimento em si.
+     - <span style="color: #ff6b00">Planejamento</span>
+     - <span style="color: #ff6b00">Acompanhamento</span>
+     - <span style="color: #ff6b00">Metodologias Ágeis</span>
+
+   #### Barra (Eixo) Vertical do 'T' -> Profundidade Técnica
+   - É preciso ter uma profundidade técnica excelente para quem já veio do desenvolvimento de software.
+   - Neste ponto é aonde será investido a maior aprofundamento como profissional, porque, será necessário ser muito bom em resolver os problemas e ter um domínio avançado em áreas como arquitetura de software, padrões de design, escalabilidade, segurança, etc.
+
+## Como desenvolver Habilidades em T?
+
+- O que está faltando?
+  - Como primeiro passo realmente entendero que está faltando para você nessas habilidades, pois, isso é algo pessoal.
+  - Algumas pessoas tem habilidades técnicas, mas falta soft skills ou vice-versa.
+  - É muito bom inicialmente ter essa introspecção para entender o que está faltando.
+- Liderança e Gestão
+  - Em seguida iniciar o processo de participar ativamente de reuniões de liderança e gestão, pois, ai você vai estar exposto a parte de tomada de decisão, basicamente tudo que é importante pro negócio da empresa, tanto as partes que são de tomada de decisão técnica como tomada de decisão não técnica, é extremamente importante que você esteja inserido ali, porque só assim você vai estar ali no ãmbito onde essas decisões vão estar sendo colocadas para você, que você vai estar sendo exposto para isso, consequentemente te tornando melhor nessa tomada de decisão e gestão.
+- Mentorias e Networking
+  - É necessário procurar alguém para ser o seu mentor e você dever ser o mentor de alguém, então aqui não é o bastante só que você tenha um mentor, mas sim que você se ponha na condição de mentor porque ai você vai estar exercitando skills necessárias para virar uma força potencializadora do seu time, que é exatamente importante.
+  - Outro ponto importante
