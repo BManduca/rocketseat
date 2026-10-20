@@ -204,15 +204,82 @@
    #### Barra (Eixo) Vertical do 'T' -> Profundidade Técnica
    - É preciso ter uma profundidade técnica excelente para quem já veio do desenvolvimento de software.
    - Neste ponto é aonde será investido a maior aprofundamento como profissional, porque, será necessário ser muito bom em resolver os problemas e ter um domínio avançado em áreas como arquitetura de software, padrões de design, escalabilidade, segurança, etc.
+   - Neste ponto é preciso ter 100% de certeza das decisões que você esta tomando, então essa seria a diferença de ter uma amplitude, ou seja, uma gama de habilidades aonde você não necessariamente precisa ser o expert, o excelente, terão outras pessoas para isso, mas que você precisa ter conhecimento, para que aonde você de fato precisa ser o expert, precisa ser a pessoa que vai passar a confiança, que vai ter o conhecimento de fato solidifcado, para que você consiga não só ter condição de fazer as suas tasks, mas de ajudar o seu time a atingir uma velocidade interessante.
 
 ## Como desenvolver Habilidades em T?
 
 - O que está faltando?
-  - Como primeiro passo realmente entendero que está faltando para você nessas habilidades, pois, isso é algo pessoal.
+  - Como primeiro passo realmente entendendo o que está faltando para você nessas habilidades, pois, isso é algo pessoal.
   - Algumas pessoas tem habilidades técnicas, mas falta soft skills ou vice-versa.
   - É muito bom inicialmente ter essa introspecção para entender o que está faltando.
 - Liderança e Gestão
   - Em seguida iniciar o processo de participar ativamente de reuniões de liderança e gestão, pois, ai você vai estar exposto a parte de tomada de decisão, basicamente tudo que é importante pro negócio da empresa, tanto as partes que são de tomada de decisão técnica como tomada de decisão não técnica, é extremamente importante que você esteja inserido ali, porque só assim você vai estar ali no ãmbito onde essas decisões vão estar sendo colocadas para você, que você vai estar sendo exposto para isso, consequentemente te tornando melhor nessa tomada de decisão e gestão.
 - Mentorias e Networking
   - É necessário procurar alguém para ser o seu mentor e você dever ser o mentor de alguém, então aqui não é o bastante só que você tenha um mentor, mas sim que você se ponha na condição de mentor porque ai você vai estar exercitando skills necessárias para virar uma força potencializadora do seu time, que é exatamente importante.
-  - Outro ponto importante
+  - Outro ponto importante que não pode ser ignorado, de certa forma, é o networking, pois é justamente esse ponto vai te fazer ter uma visão ou conhecimento de como outras empresas também já estão lidando com liderança, o que podemos estar apredendo com outros líderes, esse ponto é extremamente fundamental e extremamente importante.
+
+## Próximos passos
+1. Reflita sobre habilidades atuais
+  - É extremamente importante entender em qual cenário você está inserido no momento
+  - O que que te falta?
+  - Quais são as habilidades que você ainda não tem, para que você possa criar e entender minimanente o que você deve fazer a seguir.
+2. Identifique áreas em que você pode expandir
+  - Criar mentalmente quais áreas deseja expandir
+  - Buscar entender como que eu quero evoluir em determinadas skills que ainda estão me faltando
+3. Crie um [plano de ação](https://eight-tang-694.notion.site/Plano-de-A-o-para-Desenvolver-Habilidades-em-T-como-Tech-Lead-14225ff3155b80ac8eeac7989a8a2feb) para desenvolver
+
+## os 3 pilares da Liderança Técnica
+ - Técnico
+ - Comunicador
+ - Líder
+
+### Exemplos do Mundo Real
+
+- #### Domínio Técnico
+  1. Refrência para a equipe: Você será o ponto de consulta para dúvidas e desafios técnicos.
+    - Confiança na capacidade técnica
+    - Gerir a equipe com relação a capacidade técnica
+  2. Deciões informadas: Capacidade de escolher as melhores soluções tecnológicas.
+    - O qual você consegue explicar sobre determinada tecnologia
+    - O quão você consegue deixar o time confortável para implementar uma nova tecnologia
+  3. Orientações em melhores práticas: Guias a equipe na adoção de padrões de qualidade.
+    - Ser uma mentor para orientar a equipe nas melhores práticas e guiar a equipe na adoção dessas mesmas práticas
+
+- #### Comunicação e Colaboração
+  1. Alinhamento de objetivos: Garantir que todos na equipe entendam a visão e as metas do projeto.
+    - Trazer soluções que vão agregar ali dentro da empresa para solucionar um problema real.
+  2. Resolução de conflitos: Abordar e resolver desacordos de maneira construtiva.
+    - Conflitos são inevitáveis, até porque a equipe é feita de seres humanos.
+    - Como líder saber abordar problemas de maneira construtiva
+    - Saber identificar algumas fricções dentro do time e  conseguir resolver elas de uma forma que todoss saiam ganhando.
+  3. Engajamento da equipe: Promover um ambiente colaborativo e motivador.
+    - Ser a pessoa que vai estar criando forma de como a cultura do teu time vai estar sendo implementada dentro da empresa.
+
+- #### Visão Estratégica e Inovação
+  1. Competividade no mercado: Manter a organização atualizada com as últimas tendências.
+    - Buscar sempre garantir dentro da empresa que somos competitivos no mercado
+    - Que estão alinhados com o negócio
+    - Que os objetvos estratégicos da empresa estejam muito bem alinhados com os objetivos de tecnologia
+    - Ser uma pessoa que busca sempre estar trazendo uma boa cultura de inovação e que esta permitindo também que as pessoas que estão sendo lideradas possam estar implementando essa cultura de inovação, sendo criativas e inovadoras dentro do time.
+  2. Alinhamento com o negócio: Garantir que as soluções tecnológicas apoiem os objetivos estratégicos.
+  3. Cultura de inovação: Incentivar a equipe a pensar de forma inovadora.
+
+- #### Exemplos Práticos
+  1. Exemplo Prático 1
+    - Imagine liderar um projeto de desenvolvimento de software sem um conhecimento sólido da linguagem ou do framework utilizado. Isso vai resultar em decisões equivocadas, aumento de erros e desmotivação da equipe.
+  2. Exemplo Prático 2
+    - Ao implementar uma nova tecnologia, é crucial comunicar os benefícios, alinhar expectativas e incorporar feedbacks da equipe para uma transição suave.
+  3. Exemplo Prático 3
+    - Decidir migrar para a nuvem ou adotar inteligência artificial requer avaliar como essas tecnologias beneficiarão a empresa a longo prazo, além de planejar sua implementação de forma estratégica.
+
+
+### Abordando a carreira dessa forma, teremos:
+1. <span style="color: #ff6b00">Melhoria na Liderança</span>
+2. <span style="color: #ff6b00">Comunicação Eficaz</span>
+3. <span style="color: #ff6b00">Tomada de Decisão</span>
+
+
+### Para chegar no resultado esperado, é necessário que:
+1. Reflita sobre suas habilidades atuais.
+2. Identifique áreas em que você pode expandir.
+3. Crie um plano de ação para desenvolver.
