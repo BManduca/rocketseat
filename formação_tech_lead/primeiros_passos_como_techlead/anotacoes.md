@@ -219,67 +219,201 @@
   - Outro ponto importante que não pode ser ignorado, de certa forma, é o networking, pois é justamente esse ponto vai te fazer ter uma visão ou conhecimento de como outras empresas também já estão lidando com liderança, o que podemos estar apredendo com outros líderes, esse ponto é extremamente fundamental e extremamente importante.
 
 ## Próximos passos
+
 1. Reflita sobre habilidades atuais
-  - É extremamente importante entender em qual cenário você está inserido no momento
-  - O que que te falta?
-  - Quais são as habilidades que você ainda não tem, para que você possa criar e entender minimanente o que você deve fazer a seguir.
+
+- É extremamente importante entender em qual cenário você está inserido no momento
+- O que que te falta?
+- Quais são as habilidades que você ainda não tem, para que você possa criar e entender minimanente o que você deve fazer a seguir.
+
 2. Identifique áreas em que você pode expandir
-  - Criar mentalmente quais áreas deseja expandir
-  - Buscar entender como que eu quero evoluir em determinadas skills que ainda estão me faltando
+
+- Criar mentalmente quais áreas deseja expandir
+- Buscar entender como que eu quero evoluir em determinadas skills que ainda estão me faltando
+
 3. Crie um [plano de ação](https://eight-tang-694.notion.site/Plano-de-A-o-para-Desenvolver-Habilidades-em-T-como-Tech-Lead-14225ff3155b80ac8eeac7989a8a2feb) para desenvolver
 
 ## os 3 pilares da Liderança Técnica
- - Técnico
- - Comunicador
- - Líder
+
+- Técnico
+- Comunicador
+- Líder
 
 ### Exemplos do Mundo Real
 
 - #### Domínio Técnico
   1. Refrência para a equipe: Você será o ponto de consulta para dúvidas e desafios técnicos.
-    - Confiança na capacidade técnica
-    - Gerir a equipe com relação a capacidade técnica
+  - Confiança na capacidade técnica
+  - Gerir a equipe com relação a capacidade técnica
   2. Deciões informadas: Capacidade de escolher as melhores soluções tecnológicas.
-    - O qual você consegue explicar sobre determinada tecnologia
-    - O quão você consegue deixar o time confortável para implementar uma nova tecnologia
+  - O qual você consegue explicar sobre determinada tecnologia
+  - O quão você consegue deixar o time confortável para implementar uma nova tecnologia
   3. Orientações em melhores práticas: Guias a equipe na adoção de padrões de qualidade.
-    - Ser uma mentor para orientar a equipe nas melhores práticas e guiar a equipe na adoção dessas mesmas práticas
+  - Ser uma mentor para orientar a equipe nas melhores práticas e guiar a equipe na adoção dessas mesmas práticas
 
 - #### Comunicação e Colaboração
   1. Alinhamento de objetivos: Garantir que todos na equipe entendam a visão e as metas do projeto.
-    - Trazer soluções que vão agregar ali dentro da empresa para solucionar um problema real.
+  - Trazer soluções que vão agregar ali dentro da empresa para solucionar um problema real.
   2. Resolução de conflitos: Abordar e resolver desacordos de maneira construtiva.
-    - Conflitos são inevitáveis, até porque a equipe é feita de seres humanos.
-    - Como líder saber abordar problemas de maneira construtiva
-    - Saber identificar algumas fricções dentro do time e  conseguir resolver elas de uma forma que todoss saiam ganhando.
+  - Conflitos são inevitáveis, até porque a equipe é feita de seres humanos.
+  - Como líder saber abordar problemas de maneira construtiva
+  - Saber identificar algumas fricções dentro do time e conseguir resolver elas de uma forma que todoss saiam ganhando.
   3. Engajamento da equipe: Promover um ambiente colaborativo e motivador.
-    - Ser a pessoa que vai estar criando forma de como a cultura do teu time vai estar sendo implementada dentro da empresa.
+  - Ser a pessoa que vai estar criando forma de como a cultura do teu time vai estar sendo implementada dentro da empresa.
 
 - #### Visão Estratégica e Inovação
   1. Competividade no mercado: Manter a organização atualizada com as últimas tendências.
-    - Buscar sempre garantir dentro da empresa que somos competitivos no mercado
-    - Que estão alinhados com o negócio
-    - Que os objetvos estratégicos da empresa estejam muito bem alinhados com os objetivos de tecnologia
-    - Ser uma pessoa que busca sempre estar trazendo uma boa cultura de inovação e que esta permitindo também que as pessoas que estão sendo lideradas possam estar implementando essa cultura de inovação, sendo criativas e inovadoras dentro do time.
+  - Buscar sempre garantir dentro da empresa que somos competitivos no mercado
+  - Que estão alinhados com o negócio
+  - Que os objetvos estratégicos da empresa estejam muito bem alinhados com os objetivos de tecnologia
+  - Ser uma pessoa que busca sempre estar trazendo uma boa cultura de inovação e que esta permitindo também que as pessoas que estão sendo lideradas possam estar implementando essa cultura de inovação, sendo criativas e inovadoras dentro do time.
   2. Alinhamento com o negócio: Garantir que as soluções tecnológicas apoiem os objetivos estratégicos.
   3. Cultura de inovação: Incentivar a equipe a pensar de forma inovadora.
 
 - #### Exemplos Práticos
   1. Exemplo Prático 1
-    - Imagine liderar um projeto de desenvolvimento de software sem um conhecimento sólido da linguagem ou do framework utilizado. Isso vai resultar em decisões equivocadas, aumento de erros e desmotivação da equipe.
+  - Imagine liderar um projeto de desenvolvimento de software sem um conhecimento sólido da linguagem ou do framework utilizado. Isso vai resultar em decisões equivocadas, aumento de erros e desmotivação da equipe.
   2. Exemplo Prático 2
-    - Ao implementar uma nova tecnologia, é crucial comunicar os benefícios, alinhar expectativas e incorporar feedbacks da equipe para uma transição suave.
+  - Ao implementar uma nova tecnologia, é crucial comunicar os benefícios, alinhar expectativas e incorporar feedbacks da equipe para uma transição suave.
   3. Exemplo Prático 3
-    - Decidir migrar para a nuvem ou adotar inteligência artificial requer avaliar como essas tecnologias beneficiarão a empresa a longo prazo, além de planejar sua implementação de forma estratégica.
-
+  - Decidir migrar para a nuvem ou adotar inteligência artificial requer avaliar como essas tecnologias beneficiarão a empresa a longo prazo, além de planejar sua implementação de forma estratégica.
 
 ### Abordando a carreira dessa forma, teremos:
+
 1. <span style="color: #ff6b00">Melhoria na Liderança</span>
 2. <span style="color: #ff6b00">Comunicação Eficaz</span>
 3. <span style="color: #ff6b00">Tomada de Decisão</span>
 
-
 ### Para chegar no resultado esperado, é necessário que:
+
 1. Reflita sobre suas habilidades atuais.
 2. Identifique áreas em que você pode expandir.
 3. Crie um plano de ação para desenvolver.
+
+# Gestão Técnica e Arquitetura
+
+## Estratégias Técnicas
+
+1. Exemplo Prático 1
+   - Imagine que você esteja trabalhando em uma aplicação de e-commerce. De repente, a equipe recebe um pedido urgente para melhorar a performance de uma página de produto que carrega lentamente. Você tem duas opções:
+     1. Solução Local
+        - Analisar toda a arquitetura em si e otimizar a consulta ao banco de dados apenas para a página de produto.
+        - Mudança controlada foca em parte específica do sistema.
+        - A entrega rápida dentro do prazo garantindo a velocidade do time.
+
+     2. Solução Global
+        - Verificar múltiplas partes do sistema.
+        - Atualizar a camada de dados para utilizar um cache global.
+        - Aprimoramento de desempenho em todas as páginas do site.
+        - Entrega mais demorada.
+
+## <span style="color: #57ffb6ba">Otimizações</span> - <span style="color: #914dffff">Locais vs. Globais</span>
+
+```mermaid
+flowchart LR
+    B1["Frontend"]
+    B2["API Gateway"]
+    B3["Service A: Produtos"]
+    B4[Service B: Carrinho de Compras]
+    B5["Storage: Imagens de Produtos"]
+
+    subgraph "PostgreSQL"
+      DB1["PostgreSQL: Consulta de Produto"]
+      DB2["PostgreSQL: Consulta de Carrinho"]
+    end
+
+    B1 --> B2
+    B2 --> B3
+    B2 --> B4
+    B3 --> DB1
+    B4 --> DB2
+    DB1 --> B5
+    DB2 --> B5
+```
+
+1. Olhando a arquitetura do sistema de maneira macro e é decidido aplicar uma modificação no ponto DB1 e a princípio vai resolver o problema, será mantido a velocidade e vai desbloquear para eu possa me dedicar a outras tarefas
+   - Essa não é uma solução errada, porém, o que pode acontecer aqui é que para que a decisão seja tomada como mais propriedade, é necessário se perguntar outras coisas. Nesse quadro, não pode so olhar para a arquitetura do sistema, num vácuo e tomar essas decisões, até porque la na frente elas podem causar gargalos ainda maiores e nesse ponto é necessário saber:
+     - Como que ta a equipe?
+     - Temos tempo de fazer uma solução melhor?
+     - Nos temos tempo para chegar e fazer uma refatoração?
+     - Temos tempo para chegar aqui e realizar um [benchmark](#o-que-é-benchmark) e ver como essa solução se comporta?
+     - Temos pessoas suficiente no meu time?
+     - Eu consigo entregar isso no prazo estipulado?
+     - Nós temos tempo para testar diferentes soluções?
+   - Se caso uma das respostas para essas perguntas acima for não, essa solução seria a sua melhor abordagem, ou seja, fazer uma otimização local, para que possa desbloquear, para que possa ter tempo de trabalhar em soluções mais robustas no futuro.
+   - Desta forma, estaria pensando em uma solução por momento <span style="color: #ff0000; font-weight: bold;">Local</span>
+
+2. Mas, podemos ter o caso também, aonde agora, mudaram os requisitos, agora temos bastante tempo, estamos confortáveis, temos um time de sêniors no projeto, que vai poder sim avaliar as coisas de uma forma mais holistica, aonde a gente possa ver o sistema como um todo e também não queremos apenas trazer uma melhoria local, mas sim uma melhoria global para dentro do nosso sistema, resultando em uma experiência melhor para o usuário.
+   - Para isso podemos mudar a arquitetura do sistema, criar uma camada de cache.
+
+     ```mermaid
+     flowchart LR
+         B1["Frontend"]
+         B2["API Gateway"]
+         B3["Service A: Produtos"]
+         B4[Service B: Carrinho de Compras]
+         B5["Storage: Imagens de Produtos"]
+
+         subgraph "Cache"
+            C1["Redis Cache: Cache de Produtos"]
+            C2["Redis Cache: Cache de Carrinho"]
+         end
+
+         subgraph "PostgreSQL"
+           DB1["PostgreSQL: Consulta de Produto - Falha no Cache"]
+           DB2["PostgreSQL: Consulta de Carrinho - Falha no Cache"]
+         end
+
+         B1 --> B2
+         B2 --> B3
+         B2 --> B4
+         B3 --> C1
+         B4 --> C2
+         C1 --> DB1
+         C2 --> DB2
+         DB1 --> B5
+         DB2 --> B5
+     ```
+
+   - Aonde, agora todo mundo que for fazer uma consulta dentro do banco de dados para esse tipo de consulta ou coisas parecidas, tanto no carrinho de compras, como na listagem de produtos, nós teriamos aqui uma solução um pouco mais robusta.
+   - Porque isso é interessante?
+     - Se estivermos em um cenário, aonde temos a possibilidade de fazer a solução melhor, ela é sempre mais recomendada, quando temos pessoas que vão ter a capacidade de desenvolver essa solução melhor, aonde a gente consiga testar, consiga encaixar dentro de um prazo e pense no produto em si, com ele sendo um [Future-proof](#o-que-é-future-proof), para que possamos ter uma competitividade melhor, para que possamos entregar algo melhor no mercado e tudo isso vai ser definido no bom senso do Tech Lead de entender em qual situação o software se encontra, aonde o time se encontra e dependendo disso, iremos escolher tanto uma situação mais simples quanto uma solução mais robusta.
+     - Todas as soluções estão certas e o papel do Tech Lead é entender de forma estratégica, ou seja, usar o seu conhecimento técnico, de forma estratégica, para saber quando que iremos usar cada uma delas.
+
+### O que é Benchmark?
+
+Na prática, o benchmark consiste em medir o desempenho de um sistema, produto, software ou processo usando **testes padronizados** (chamados de benchmarks). O objetivo é comparar esses resultados com:
+
+1. **Outros concorrentes ou modelos** (para saber qual é superior em determinado quesito).
+2. **Versões anteriores** (para avaliar se uma atualização melhorou ou piorou o desempenho)
+3. **Padrões da indústria** (para verificar se o produto atinge o nível esperado pelo mercado)
+
+### O que é Future-proof?
+
+No contexto de tecnologia, engenharia e negócios, algo que é future-proof é projetado ou construído de tal forma que não se tornará obsoleto rapidamente, mesmo que o mercado mude, novas tecnologias apareçam ou os requisitos comecem a mudar drasticamente.
+
+- Exemplos:
+  1. Em software/Desenvolvimento: Escrever um código limpo, modular e escalável que aceite novas integrações no futuro sem precisar ser reescrito dom zero.
+  2. Em Hardware (ex.: Placas de vídeos ou consoles): Comprar um componente que tenha potência de sobra para rodar softwares que ainda vão ser lançados nos próximos anos.
+  3. Em Arquitetura/Negócios: Criar processos empresariais flexíveis o suficiente para sobreviver a crises ou a grandes reviravoltas digitais (como a inteligência artificial).
+
+# <span style="color: #57ffb6ba">Não Existe </span><span style="color: #914dffff">Fórmula Mágica</span>
+
+## O Equilíbrio é a 🔑
+
+Ao longo do processo de otimização e tomada de decisões técnicas, é importante entender que não há uma solução única que funcione para todos os cenários. A chave para o sucesso é balancear soluções locais e globais de acordo com as necessidades específicas do seu sistema e do momento que o projeto se encontra.
+
+## Como decidir?
+
+| Questionamento                                                                  | Solução Local | Solução Global |
+| :------------------------------------------------------------------------------ | :------------ | :------------- |
+| **Qual é o impacto a longo prazo da solução?**                                  | []            | []             |
+| **Quão crítica é a performance para o sistema agora e no futuro?**              | []            | []             |
+| **O problema é pontual ou recorrente?**                                         | []            | []             |
+| **Quanto tempo a equipe tem para implementar a solução?**                       | []            | []             |
+| **Qual será o custo de manutenção da solução escolhida?**                       | []            | []             |
+| **A equipe tem experiência para resolver o problema de forma global ou local?** | []            | []             |
+| **Quais são os riscos de não escalar a solução agora?**                         | []            | []             |
+| **Quais são as depedências externas do sistema?**                               | []            | []             |
+| **Quais são os requisitos de segurança e compilance?**                          | []            | []             |
+| **Como a solução impacta a escalabilidade do sistema?**                         | []            | []             |
