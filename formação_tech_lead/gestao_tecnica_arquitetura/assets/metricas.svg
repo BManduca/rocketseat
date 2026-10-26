@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" width="100%" height="100%">
+  <defs>
+    <!-- Marcador de Seta -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 2 2 L 8 5 L 2 8" fill="none" stroke="#18181b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Fundo escuro padrão Rocketseat / Dark Theme -->
+  <rect width="600" height="520" rx="16" fill="#121214" />
+
+  <!-- Círculo maior (Métricas) -->
+  <circle cx="300" cy="260" r="215" fill="#F4BE53" />
+
+  <!-- Título METRICAS -->
+  <text 
+    x="300" 
+    y="120" 
+    text-anchor="middle" 
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+    font-size="18" 
+    font-weight="700" 
+    letter-spacing="1.5" 
+    fill="#18181b">METRICAS</text>
+
+  <!-- Círculo menor (Ponto central / Métrica consolidada) -->
+  <circle cx="205" cy="260" r="48" fill="#FFFFFF" />
+
+  <!-- Indicador 1: Alertas de CPU alta -->
+  <line x1="305" y1="225" x2="262" y2="225" stroke="#18181b" stroke-width="1.4" marker-end="url(#arrow)" />
+  <text 
+    x="315" 
+    y="229" 
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+    font-size="13" 
+    font-weight="500" 
+    fill="#18181b">Alertas de CPU alta</text>
+
+  <!-- Indicador 2: Disponibilidade de endpoints -->
+  <line x1="305" y1="260" x2="262" y2="260" stroke="#18181b" stroke-width="1.4" marker-end="url(#arrow)" />
+  <text 
+    x="315" 
+    y="264" 
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+    font-size="13" 
+    font-weight="500" 
+    fill="#18181b">Disponibilidade de endpoints</text>
+
+  <!-- Indicador 3: Tempo de resposta -->
+  <line x1="305" y1="295" x2="262" y2="295" stroke="#18181b" stroke-width="1.4" marker-end="url(#arrow)" />
+  <text 
+    x="315" 
+    y="299" 
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+    font-size="13" 
+    font-weight="500" 
+    fill="#18181b">Tempo de resposta</text>
+</svg>

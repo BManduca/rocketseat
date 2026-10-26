@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <!-- Fundo escuro padrão Rocketseat / Dark Theme -->
+  <rect width="960" height="540" rx="16" fill="#121214" />
+
+  <!-- ==================== CÍRCULO MAIOR: OBSERVABILIDADE ==================== -->
+  <!-- Círculo roxo central que engloba os três pilares -->
+  <circle cx="480" cy="270" r="248" fill="#5F379B" />
+
+  <!-- ==================== CÍRCULO 1: TRACING ==================== -->
+  <g id="tracing-pillar">
+    <!-- Disco Tracing -->
+    <circle cx="325" cy="270" r="76" fill="#8F78D3" />
+    
+    <!-- Título Tracing -->
+    <text 
+      x="325" 
+      y="226" 
+      text-anchor="middle" 
+      font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+      font-size="11" 
+      font-weight="700" 
+      letter-spacing="1.2" 
+      fill="#23103D">TRACING</text>
+
+    <!-- Centro Tracing -->
+    <circle cx="325" cy="270" r="24" fill="#C9BCED" />
+  </g>
+
+  <!-- ==================== CÍRCULO 2: MÉTRICAS ==================== -->
+  <g id="metricas-pillar">
+    <!-- Disco Métricas (Tonalidade mauve/rosada da sobreposição) -->
+    <circle cx="480" cy="270" r="76" fill="#B36F9F" />
+    
+    <!-- Título Métricas -->
+    <text 
+      x="480" 
+      y="226" 
+      text-anchor="middle" 
+      font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+      font-size="11" 
+      font-weight="700" 
+      letter-spacing="1.2" 
+      fill="#23103D">METRICAS</text>
+
+    <!-- Centro Métricas -->
+    <circle cx="480" cy="270" r="24" fill="#E4C1DA" />
+  </g>
+
+  <!-- ==================== CÍRCULO 3: LOGS ==================== -->
+  <g id="logs-pillar">
+    <!-- Disco Logs -->
+    <circle cx="635" cy="270" r="76" fill="#8775B8" />
+    
+    <!-- Título Logs -->
+    <text 
+      x="635" 
+      y="226" 
+      text-anchor="middle" 
+      font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+      font-size="11" 
+      font-weight="700" 
+      letter-spacing="1.2" 
+      fill="#23103D">LOGS</text>
+
+    <!-- Centro Logs -->
+    <circle cx="635" cy="270" r="24" fill="#C4B9DF" />
+  </g>
+
+  <!-- ==================== TEXTO CENTRAL: OBSERVABILIDADE ==================== -->
+  <text 
+    x="480" 
+    y="277" 
+    text-anchor="middle" 
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" 
+    font-size="20" 
+    font-weight="900" 
+    letter-spacing="1.8" 
+    fill="#14111D">OBSERVABILIDADE</text>
+</svg>
