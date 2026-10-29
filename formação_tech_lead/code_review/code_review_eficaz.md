@@ -31,6 +31,49 @@
 - ### No que devemos focar?
   - Legibilidade e Manutenibilidade
   - Performance
+    - Utiliza de estratégias para diminuir o tanto de round-trips que iremos ter ou deixar o código realmente veloz, para que ele consiga ser um bom código
   - Segurança
+    - Existe falha de segurança?
+    - Existe algum vetor de ataque que estamos deixando aberto, por causa do PR?
+    - É muito interessante endereçar isso dentro do Code Review
   - Escalabilidade
+    - Meu código é escalavel?
+    - Consigo replicar meu código de maneira escalavel?
   - Testabilidade
+    - Foi aplicado teste?
+    - passou 100%?
+
+  - Com o tempo, você como Tech Lead, vai enfrentar muito no dia a dia, no trabalho, o fato de revisar vários e vários Pull Requests, criando assim uma memória muscular muito boa e assim, ficamos capazes de identificar alguns problemas que se repetem várias vezes e assim, quando batemos o olhos, conseguimos identificar a causa ou algo que pode estar afetando aquela funcionalidade.
+  - O bom desse to-do list, porque podemos pensar em formar de automatizar certos critérios, por exemplo:
+    - Segurança:
+      - Já temos várias ferramentas que dentro de Pull Requests, identificam alguns vetores de ataque.
+    - Escalabilidade:
+      - Identificar um código 'espaguete' e pedir algumas melhorias.
+
+## <span style="color: #68ffc5ee">Cultura de </span><span style="color: #914dffff">Feedback Positivo</span>
+- Ponto muito importante, é se preocupar em criar uma cultura de feedback positivo
+- Muitos desenvolvedores que ja tem uma bagagem muito bem consolidada, muitas vezes não sabe comentar em um PR
+
+- ### Cultura de Feedback Positivo
+  - Porque isso é importante?
+    - Erros vão sempre acontecer, como líder temos que saber sobre isso, nossa função é mitigar esses erros
+    - Preciso criar um time que seja eficiente e que se sinta confortável, que mesmo sabendo que errando, eles vão conseguir chegar na solução correta.
+
+  - Encoraje o feedback positivo
+    - É importante que ao abrir um PR, eu vá e comente algo positivo, como 'gostei do seu esforço', 'essa funcionalidade ficou muito boa', 'acho que pode melhorar nesses pontos..'
+    - É importante usar uma linguagem clara, direta e que não deixe dúvidas, uma linguagem que não seja pessoal, que não seja vista como algo 'Eu estou dizendo isso para VOCÊ...', mas sim como 'Eu quero que você aprenda isso...'
+  - Foque no aprendizado contínuo
+  - Estabeleça um ambiente seguro
+
+- ### Tech Lead Durante o Code Review
+  - Define as expectativas de qualidade de código para a sua equipe.
+    - Buscar sempre documentar, para ficar o mais claro possivel para o time, para saber quais são as expectativas no momento de abrir um PR, na hora de puxar algum código.
+  - Seja um exemplo de feedback construtivo.
+  - Fomente uma mentalidade de melhoria contínua.
+    - Para que tenha um time que saiba que mesmo errando, eles conseguem chegar na solução juntos.
+
+
+## Lições 
+- Avalie o código com foco em legibilidade, performance, segurança, escalabilidade e testabilidade.
+- Use ferramentas de automação para tornar o processo de revisão mais eficiente.
+- Crie uma cultura de aprendizado contínuo, onde todos no time se sintam à vontade para compartilhar conhecimento.
