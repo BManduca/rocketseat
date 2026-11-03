@@ -1,0 +1,18 @@
+{
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "cz-git": "^1.14.0",
+    "husky": "^9.1.7"
+  },
+  "scripts": {
+    "commit": "git-cz",
+    "prepare": "husky",
+    "test": "echo \"Rodando testes...\" && exit 0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  }
+}
