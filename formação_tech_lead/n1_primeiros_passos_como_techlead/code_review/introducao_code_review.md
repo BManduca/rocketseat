@@ -59,7 +59,7 @@
 - Todo momento que estivemos implementando, vai existir Code Review.
 - Quando estiver planejando fazer o seu software, vai existir um Code Review.
   ![Fluxo code review](./ciclo_code_review.svg)
-- Planejamento de novas funcionalidades e assim termina com o clico completo do software
+- Planejamento de novas funcionalidades e assim termina com o ciclo completo do software
   ![Fluxo completo code review](./code_review_lifecycle.svg)
 
 ## Liçoes 📓
