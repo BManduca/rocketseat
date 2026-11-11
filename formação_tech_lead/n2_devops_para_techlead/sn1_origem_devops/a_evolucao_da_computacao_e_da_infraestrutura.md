@@ -117,4 +117,3 @@
   - Segurança e conformidade em ambientes distribuídose altamente automatizados.
     - Se eu tenho muita automação e tenho algo muito separado, a gente começa a se perguntar: "Aonde é que ta?", "Quem ta executando?", "Como ta executando?", então precisa ter uma trabalho muito forte de padronização para liberar acesso, liberar essas automações e liberar quem pode construir ou editar uma automação.
   - Necessidade de aprendizado contínuo devido à rápida evolução tecnólogica.
-  -

@@ -31,7 +31,7 @@
       style P4 fill:#f8d7da,stroke:#dc3545,stroke-width:2px,color:#721c24
   ```
 
-## Implementação das Pŕaticas Lean
+## Implementação das Práticas Lean
 
 - Inspirado pelo Sistema Toyota de Produção, o Lean Manufacturing revolucionou a indústria.
 - O tempo médio de produção foi reduzido para menos de três semanas.
