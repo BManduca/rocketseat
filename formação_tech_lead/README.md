@@ -42,29 +42,35 @@ flowchart TD
 
 ## 📚 Estrutura Detalhada dos Módulos
 
-### 🧭 Módulo 01: Primeiros Passos como Tech Lead
+### 🧭 Módulo 01: Primeiros Passos como Tech Lead (`n1_primeiros_passos_como_techlead`)
 > *Fundamentos da liderança técnica, transição de carreira, tomada de decisão e qualidade de código.*
 
-- [ ] **O Papel do Tech Lead**: Responsabilidades, limites de atuação e equilíbrio entre código, pessoas e negócio.
-- [ ] **Gestão Técnica e Arquitetura**:
-  - Soluções locais vs. soluções globais.
-  - Definição clara de escopos técnicos e mitigação de débitos.
-  - Fundamentos de arquitetura de sistemas escaláveis e observabilidade.
-- [ ] **Code Review & Engenharia de Qualidade**:
-  - Padrões de revisão sob o olhar de liderança técnica.
-  - Automação com linters, *commitlint* e *GitHub Actions*.
-  - Uso de convenções e Inteligência Artificial para otimizar o fluxo de PRs.
-- [ ] **Quiz Avaliativo**: Primeiros Passos como Tech Lead.
+- [x] **O Papel do Tech Lead** ([`sn1_primeiros_passos_como_techlead`](./n1_primeiros_passos_como_techlead/sn1_primeiros_passos_como_techlead/)):
+  - Responsabilidades, limites de atuação, habilidades em T (*T-Shaped*) e equilíbrio entre código, pessoas e negócio ([`primeiros_passos_tech_lead.md`](./n1_primeiros_passos_como_techlead/sn1_primeiros_passos_como_techlead/primeiros_passos_tech_lead.md)).
+- [x] **Gestão Técnica e Arquitetura** ([`sn2_gestao_tecnica_arquitetura`](./n1_primeiros_passos_como_techlead/sn2_gestao_tecnica_arquitetura/)):
+  - Estratégias técnicas, RFCs, ADRs, POCs e mitigação de débitos ([`estrategias_tecnicas.md`](./n1_primeiros_passos_como_techlead/sn2_gestao_tecnica_arquitetura/estrategias_tecnicas.md)).
+  - Conectando pontos entre visão local e visão global ([`conectando_pontos.md`](./n1_primeiros_passos_como_techlead/sn2_gestao_tecnica_arquitetura/conectando_pontos.md)).
+  - Fundamentos de arquitetura de sistemas escaláveis ([`arquitetura_sistemas.md`](./n1_primeiros_passos_como_techlead/sn2_gestao_tecnica_arquitetura/arquitetura_sistemas.md)).
+  - Observabilidade e monitoramento: Logs, Métricas e Traces ([`observabilidade.md`](./n1_primeiros_passos_como_techlead/sn2_gestao_tecnica_arquitetura/observabilidade.md)).
+- [x] **Code Review & Engenharia de Qualidade** ([`sn3_code_review`](./n1_primeiros_passos_como_techlead/sn3_code_review/)):
+  - Introdução e padrões de revisão sob o olhar de liderança técnica ([`introducao_code_review.md`](./n1_primeiros_passos_como_techlead/sn3_code_review/introducao_code_review.md), [`code_review_eficaz.md`](./n1_primeiros_passos_como_techlead/sn3_code_review/code_review_eficaz.md)).
+  - Padronização com *Conventional Commits* e boas práticas de *Pull Requests* ([`conventional_commits.md`](./n1_primeiros_passos_como_techlead/sn3_code_review/conventional_commits.md), [`pull_requests.md`](./n1_primeiros_passos_como_techlead/sn3_code_review/pull_requests.md)).
+  - Projeto prático de automação com *Commitlint*, *Husky*, *Commitizen* e *Semantic Release* ([`example_project_commit_techlead_class`](./n1_primeiros_passos_como_techlead/sn3_code_review/example_project_commit_techlead_class/)).
+- [x] **Quiz Avaliativo**: Primeiros Passos como Tech Lead.
 
 ---
 
-### ⚙️ Módulo 02: DevOps para Tech Lead
+### ⚙️ Módulo 02: DevOps para Tech Lead (`n2_devops_para_techlead`)
 > *Cultura ágil de operações, automação de esteiras, métricas de entrega e confiabilidade.*
 
-- [ ] **A Origem do DevOps**:
-  - Da Revolução Industrial ao Lean Manufacturing aplicado ao software.
-  - Eliminação de silos entre desenvolvimento e operações.
-- [ ] **Introdução ao DevOps para Líderes**:
+- [x] **A Origem do DevOps** ([`sn1_origem_devops`](./n2_devops_para_techlead/sn1_origem_devops/)):
+  - Contexto inicial do papel de DevOps junto à liderança técnica ([`origem_devops.md`](./n2_devops_para_techlead/sn1_origem_devops/origem_devops.md)).
+  - Da Revolução Industrial ao Lean Manufacturing (Sistema Toyota, Just-In-Time, Jidoka e Kaizen) aplicado ao software ([`a_revolucao_industrial.md`](./n2_devops_para_techlead/sn1_origem_devops/a_revolucao_industrial.md), [`objetivos_lean_manufacturing.md`](./n2_devops_para_techlead/sn1_origem_devops/objetivos_lean_manufacturing.md)).
+  - Evolução da computação e da infraestrutura: de Mainframes a Containers, Serverless e IaC ([`a_evolucao_da_computacao_e_da_infraestrutura.md`](./n2_devops_para_techlead/sn1_origem_devops/a_evolucao_da_computacao_e_da_infraestrutura.md)).
+  - O resultado da evolução tecnológica, disrupção de mercado e o software no centro do negócio ([`o_resultado_da_evolucao_da_tecnologia.md`](./n2_devops_para_techlead/sn1_origem_devops/o_resultado_da_evolucao_da_tecnologia.md)).
+  - Dívida técnica: causas comuns, impactos e estratégias de mitigação ([`divida_tecnica.md`](./n2_devops_para_techlead/sn1_origem_devops/divida_tecnica.md)).
+  - O conflito histórico entre áreas (Dev vs. Ops) e a eliminação de silos ([`o_conflito_entre_areas.md`](./n2_devops_para_techlead/sn1_origem_devops/o_conflito_entre_areas.md)).
+- [ ] **Introdução ao DevOps para Líderes** ([`sn2_introducao_à_devops_para_líderes`](./n2_devops_para_techlead/sn2_introducao_à_devops_para_líderes/)):
   - As Três Maneiras: Fluxo, Feedback Rápido e Aprendizado Contínuo com Experimentação.
   - O framework **CALMS** (*Culture, Automation, Lean, Measurement, Sharing*).
 - [ ] **Landscape e Ferramentas DevOps (CNCF)**:
@@ -134,36 +140,41 @@ flowchart TD
 
 ## 📂 Organização das Pastas do Repositório
 
-Sugestão de estrutura para organização das notas de estudo no repositório:
+Estrutura atual das notas de estudo padronizada por níveis (`n1`, `n2`...) e subníveis (`sn1`, `sn2`...):
 
 ```text
-.
+formação_tech_lead/
 ├── README.md
-├── 01-primeiros-passos-tech-lead/
-│   ├── papel-do-tech-lead.md
-│   ├── gestao-tecnica-e-arquitetura.md
-│   └── code-review-e-qualidade.md
-├── 02-devops-para-tech-lead/
-│   ├── cultura-devops-e-calms.md
-│   ├── branching-e-versao.md
-│   ├── dora-metrics.md
-│   ├── feature-toggles.md
-│   └── estrategias-de-deploy.md
-├── 03-produto-e-visao-estrategica/
-│   ├── metodologias-ageis-e-metricas.md
-│   ├── data-driven-decision-making.md
-│   ├── product-discovery-e-mvp.md
-│   └── negociacao-e-stakeholders.md
-├── 04-gestao-de-pessoas-e-soft-skills/
-│   ├── lideranca-e-disc.md
-│   ├── feedback-modelo-sci.md
-│   ├── inteligencia-emocional.md
-│   ├── comunicacao-assertiva.md
-│   └── saude-mental-e-performance.md
-└── templates-e-frameworks/
-    ├── template-1on1.md
-    ├── template-adr-architecture-decision-record.md
-    └── template-post-mortem.md
+├── documentos/
+│   └── guia_mermaid.md
+├── n1_primeiros_passos_como_techlead/
+│   ├── apresentações/
+│   ├── sn1_primeiros_passos_como_techlead/
+│   │   ├── assets/
+│   │   └── primeiros_passos_tech_lead.md
+│   ├── sn2_gestao_tecnica_arquitetura/
+│   │   ├── assets/
+│   │   ├── arquitetura_sistemas.md
+│   │   ├── conectando_pontos.md
+│   │   ├── estrategias_tecnicas.md
+│   │   └── observabilidade.md
+│   └── sn3_code_review/
+│       ├── code_review_eficaz.md
+│       ├── conventional_commits.md
+│       ├── introducao_code_review.md
+│       ├── pull_requests.md
+│       └── example_project_commit_techlead_class/
+└── n2_devops_para_techlead/
+    ├── apresentações/
+    ├── sn1_origem_devops/
+    │   ├── origem_devops.md
+    │   ├── a_revolucao_industrial.md
+    │   ├── objetivos_lean_manufacturing.md
+    │   ├── a_evolucao_da_computacao_e_da_infraestrutura.md
+    │   ├── o_resultado_da_evolucao_da_tecnologia.md
+    │   ├── divida_tecnica.md
+    │   └── o_conflito_entre_areas.md
+    └── sn2_introducao_à_devops_para_líderes/
 ```
 
 ---
@@ -172,10 +183,11 @@ Sugestão de estrutura para organização das notas de estudo no repositório:
 
 | Categoria | Tópicos & Tecnologias |
 |---|---|
-| **Liderança & Gestão** | DISC, Modelo SCI, Liderança Situacional, 1-on-1s, Avaliação de Desempenho |
-| **Engenharia & Qualidade** | Code Review, GitFlow, Trunk-Based Development, GitHub Actions, Commitlint |
-| **DevOps & Infra** | CALMS, DORA Metrics, CNCF Landscape, CI/CD, GitOps, Feature Flags |
-| **Estratégias de Deploy** | Rolling, Blue-Green, Canary Releases |
+| **Liderança & Gestão** | Perfil T-Shaped, DISC, Modelo SCI, Liderança Situacional, 1-on-1s, Avaliação de Desempenho |
+| **Arquitetura & Estratégia Técnica** | RFC, ADR, POC, Observabilidade (Logs, Métricas, Traces), Mitigação de Dívida Técnica |
+| **Engenharia & Qualidade** | Code Review, Conventional Commits, Pull Requests, Husky, Commitlint, Commitizen, Semantic Release |
+| **DevOps & Infra** | Lean Manufacturing (JIT, Jidoka, Kaizen), Evolução de Infraestrutura (VMs, Containers, Serverless, IaC), CALMS, DORA Metrics, CNCF, CI/CD, GitOps |
+| **Estratégias de Deploy** | Feature Flags, Rolling, Blue-Green, Canary Releases |
 | **Dados & Produto** | DDDM (Data-Driven Decision Making), Power BI, Product Discovery, MVP |
 | **Negociação & Estratégia** | BATNA, Principled Negotiation, MTP, Mapeamento de Stakeholders |
 | **Soft Skills** | Inteligência Emocional, Comunicação Assertiva, Mundo BANI, Segurança Psicológica |
