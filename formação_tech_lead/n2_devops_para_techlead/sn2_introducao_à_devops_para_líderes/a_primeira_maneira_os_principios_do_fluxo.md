@@ -1,4 +1,4 @@
-# A primeira maneira - Os princípios do Fluxo - Parte 1
+# A primeira maneira - Os princípios do Fluxo
 
 ## Introdução a Primeira Maneira
 
@@ -16,7 +16,7 @@
 
 ## Focos de atuação
 
-- [A primeira maneira - Os princípios do Fluxo - Parte 1](#a-primeira-maneira---os-princípios-do-fluxo---parte-1)
+- [A primeira maneira - Os princípios do Fluxo](#a-primeira-maneira---os-princípios-do-fluxo)
   - [Introdução a Primeira Maneira](#introdução-a-primeira-maneira)
   - [Focos de atuação](#focos-de-atuação)
     - [1. Tornar nosso trabalho visível](#1-tornar-nosso-trabalho-visível)
@@ -27,6 +27,7 @@
       - [Paralelização de Testes no CI/CD](#paralelização-de-testes-no-cicd)
         - [Como Funciona a Paralelização na Prática](#como-funciona-a-paralelização-na-prática)
         - [Principais Benefícios](#principais-benefícios)
+    - [6. Eliminar adversidades e desperdícios no fluxo de valor](#6-eliminar-adversidades-e-desperdícios-no-fluxo-de-valor)
 
 ---
 
@@ -286,3 +287,38 @@ A estratégia costuma envolver duas abordagens principais:
 1. **Feedback Acelerado:** Reduz o tempo de pipeline de dezenas de minutos para poucos minutos, permitindo que merges e deploys aconteçam com agilidade.
 2. **Escalabilidade:** Permite que a equipe continue escrevendo novos testes sem medo de tornar o processo de CI/CD inviável por lentidão.
 3. **Detecção Precoce de Gargalos:** Ajuda a identificar testes lentos ou instáveis (_flaky tests_) que poluem o pipeline.
+
+### 6. Eliminar adversidades e desperdícios no fluxo de valor
+
+- **O que é um desperdício?**
+  - Definição usada no Lean é:
+    - O uso de qualquer material ou recurso além do que o cliente exige e pelo qual está disposto a pagar.
+- **Interpretações atuais observam que "eliminar o desperdício" pode ser algo degradante e desumano.**
+- **O objetivo então é:**
+  - Reduzir a adversidade e incômodo em nosso trabalho diário por meio de aprendizado contínuo para atingir os objetivos da organização.
+- **Resumo: Qualquer coisa que cause atraso para o cliente.**
+
+- #### Categorias de adversidade e desperdício
+  - Trabalho parcialmente feito: Tarefas iniciadas mas não concluídas, acumulando trabalho em progresso (WIP) e aumentando o risco de retrabalho.
+  - Processos extras: Atividades que não agregam valor direto ao produto ou serviço. Aumentam o esforço e o tempo de execução.
+  - Recursos extras: Aumentam a complexidade e o esforço para testar e gerenciar funcionalidades e infraestrutura.
+  - Troca de tarefa: Profissionais que atuam em diversos projetos e fluxo de valor. Mudanças frequentes de foco entre tarefas diferentes, levando à perda de produtividade.
+    - Caso o profissional realmente precise atuar em vários projetos, separar melhor como que esse fluxo vai ser dividido, para que que a gente não tenha um problema de perda de produtividade.
+  - Espera: Períodos de inatividade devido a dependênicas, como aguardando aprovação ou recursos. Aumentam o tempo de ciclo e impedem que o cliente obtenha valor.
+  - Movimento: Deslocamentos desnecessários de pessoas, informações ou materiais dentro do processo. Transferências também criam movimentos e gera comunicação adicional para resolver problemas.
+  - Defeitos: Erros ou falhas que requerem retrabalho ou correção.
+  - Trabalho atípico ou manual: Tarefas realizadas manualmente que poderiam ser automatizadas ou padronizadas.
+  - Heroísmo: Profissionais e equipes que são colocados para agir excessivamente para realizar entregas e corrigir problemas, tornando isso um trabalho diário.
+
+- #### Nosso objetivo:
+  - Tornar as adversidades e desperdícios visíveis a todos.
+  - Fazer o que for necessário para diminuir ou eliminar esses problemas.
+
+- #### Resultado:
+  - Contribuição para atingir nosso principal objetivo de fluxo rápido.
+
+---
+
+**A importância da primeira maneira**
+
+- Melhorar nosso fluxo de trabalho é primordial para atingir os resultados de DevOps.
